@@ -8,7 +8,7 @@ function loadingReducer(state = initialState, action) {
         case ActionTypes.SET_LOADING:
             return { ...state, isLoading: action.payload };
         default:
-            return { ...state, isLoading: state };
+            return state;
     }
 }
 
