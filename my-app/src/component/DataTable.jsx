@@ -10,6 +10,10 @@ import { COLORS } from '../styles/constantVariables'
 import axios from "axios";
 import { toast, ToastContainer } from 'react-toastify';
 import DataTableContainer from './DataTableContainer';
+import { useDispatch, useSelector } from 'react-redux';
+import { setBookList } from '../store/actions/bookList';
+
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -33,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function DataTable({ length, ...props }) {
-
+    const dispatch = useDispatch();
     const classes = useStyles();
     const [data, setData] = useState([]);
     const [start, setStart] = useState(0)
@@ -43,6 +47,7 @@ export default function DataTable({ length, ...props }) {
         axios.get('http://localhost:5000/books')
             .then(response => {
                 setData(response.data);
+                dispatch(setBookList(response.data));
             }, error => {
                 toast.error(error);
             });
