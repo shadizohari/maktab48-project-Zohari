@@ -6,11 +6,11 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import Books from '../../component/Books';
+import DataTable from '../../component/DataTable';
 import { COLORS } from '../../styles/constantVariables';
-import Grid from '@material-ui/core/Grid';
-
-// import Wares from '../../'
+import Container from '@material-ui/core/Container';
+import logo from '../../img/logo3-orange.png';
+import DataTableHeader from '../../component/DataTableHeader';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -48,7 +48,20 @@ function a11yProps(index) {
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
-        backgroundColor: theme.palette.background.paper,
+        backgroundColor: COLORS.secondaryColor,
+        height:"100vh",
+    },
+    logo: {
+        width: "100px",
+        marginRight: "20px",
+    },
+    header_managment_panel: {
+        display: "flex",
+        alignItems: "center",
+        padding: "10px",
+    },
+    tab_label: {
+        fontSize: "20px",
     },
 }));
 
@@ -62,13 +75,13 @@ export default function TabsWrappedLabel() {
 
     return (
         <div className={classes.root}>
-            <Grid spacing={3}>
-                <Grid item xs={6}>
-                    <Typography variant="h5" className={classes.align_center}>
-                        پنل مدیریت فروشگاه
-             </Typography>
-                </Grid>
-            </Grid>
+            <Container maxWidth="lg" className={classes.header_managment_panel}>
+                <img className={classes.logo} src={logo} />
+
+                <Typography variant="h4" >
+                    پنل مدیریت فروشگاه
+                </Typography>
+            </Container>
 
             <AppBar position="static" style={{ background: COLORS.primeryColor }} >
                 <Tabs value={value}
@@ -80,21 +93,29 @@ export default function TabsWrappedLabel() {
                         value="one"
                         label="کالاها"
                         wrapped
+                        className={classes.tab_label}
                         {...a11yProps('one')}
                     />
-                    <Tab value="two" label="موجودی و قیمت‌ها" {...a11yProps('two')} />
-                    <Tab value="three" label="سفارش‌ها" {...a11yProps('three')} />
+                    <Tab value="two"
+                        label="موجودی و قیمت‌ها"
+                        className={classes.tab_label}
+                        {...a11yProps('two')} />
+                    <Tab value="three"
+                        label="سفارش‌ها"
+                        className={classes.tab_label}
+                        {...a11yProps('three')} />
                 </Tabs>
             </AppBar>
             <TabPanel value={value} index="one">
-                <Books />
+                <DataTableHeader titre="مدیریت کالا" textBtn="اضافه کردن کالا"/>
+                <DataTable />
             </TabPanel>
             <TabPanel value={value} index="two">
-                Item Two
-      </TabPanel>
+            <DataTableHeader titre="موجودی و قیمت‌ها" textBtn="ذخیره"/>
+            </TabPanel>
             <TabPanel value={value} index="three">
                 Item Three
-      </TabPanel>
+            </TabPanel>
         </div>
     );
 }
