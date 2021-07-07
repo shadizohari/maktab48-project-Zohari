@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function DataTableHeader({ titre, textBtn, ...props }) {
+export default function DataTableHeader({ titre, textBtn,handelClick, ...props }) {
     const classes = useStyles();
     return (
         <Container maxWidth="lg" className={classes.data_table_header}>
@@ -29,6 +29,7 @@ export default function DataTableHeader({ titre, textBtn, ...props }) {
                 variant="contained"
                 color={COLORS.accentColor}
                 className={classes.accentColor}
+                onClick={handelClick}
             >
                 {textBtn}
             </Button>

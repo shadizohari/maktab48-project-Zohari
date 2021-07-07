@@ -9,7 +9,7 @@ import ManagementPanel from './pages/management-panel/ManagementPanel';
 import { ProtectedRoute } from './ProtectedRoute';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
-
+import { ModalProvider } from './context/modalContext'
 // rtl
 import { create } from 'jss';
 import rtl from 'jss-rtl';
@@ -29,13 +29,15 @@ export default function App() {
     <StylesProvider jss={jss}>
       <ThemeProvider theme={theme}>
         <Provider store={store}>
-          <Router>
-            <Switch>
-              {/* <Route path="/" exact component={textfield} /> */}
-              <Route path="/Admin-panel" exact component={Login} />
-              <ProtectedRoute path="/Admin-panel/Ware-Management" exact component={ManagementPanel} />
-            </Switch>
-          </Router>
+          <ModalProvider>
+            <Router>
+              <Switch>
+                {/* <Route path="/" exact component={textfield} /> */}
+                <Route path="/Admin-panel" exact component={Login} />
+                <ProtectedRoute path="/Admin-panel/Ware-Management" exact component={ManagementPanel} />
+              </Switch>
+            </Router>
+          </ModalProvider>
         </Provider>
       </ThemeProvider>
     </StylesProvider>

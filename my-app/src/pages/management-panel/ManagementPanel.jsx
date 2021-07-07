@@ -1,4 +1,5 @@
-import React from 'react';
+import React,{useContext} from 'react';
+import { ModalContext } from "../../context/modalContext";
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -11,6 +12,7 @@ import { COLORS } from '../../styles/constantVariables';
 import Container from '@material-ui/core/Container';
 import logo from '../../img/logo3-orange.png';
 import DataTableHeader from '../../component/DataTableHeader';
+import ModalAddBook from '../../component/ModalAddBook';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -73,6 +75,15 @@ export default function TabsWrappedLabel() {
         setValue(newValue);
     };
 
+    const { modal, handleModal, modalContent } = useContext(ModalContext);
+
+    const addBook = () => {
+      handleModal(<ModalAddBook/>);
+    };
+
+
+
+
     return (
         <div className={classes.root}>
             <Container maxWidth="lg" className={classes.header_managment_panel}>
@@ -107,7 +118,7 @@ export default function TabsWrappedLabel() {
                 </Tabs>
             </AppBar>
             <TabPanel value={value} index="one">
-                <DataTableHeader titre="مدیریت کالا" textBtn="اضافه کردن کالا"/>
+                <DataTableHeader titre="مدیریت کالا" textBtn="اضافه کردن کالا" handelClick={addBook}/>
                 <DataTable />
             </TabPanel>
             <TabPanel value={value} index="two">
