@@ -17,6 +17,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Container from '@material-ui/core/Container';
+// import { ApiBooks } from '../api/ApiBooks';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -61,13 +62,12 @@ export default function DataTable({ ...props }) {
     useEffect(() => {
         axios.get('http://localhost:5000/books')
             .then(response => {
-                console.log(response.data)
-                setData(response.data);
-                setLength(response.data.length)
-                dispatch(setBookList(response.data));
-            }, error => {
-                toast.error(error);
-            });
+                if (response.data) {
+                    setData(response.data);
+                    setLength(response.data.length)
+                    dispatch(setBookList(response.data));
+                }
+            }).catch((err) => toast.error("request failed!"));
     }, [])
     function filter(e) {
         setValue(true);
@@ -87,16 +87,20 @@ export default function DataTable({ ...props }) {
 
         }
     }
+
     function mapBookList(data) {
+        // function delete(){
+           
+        // }
         return (data.map((row, index) => (index < end && index >= start) ? (
             <TableRow key={row.id}>
                 <TableCell>{index + 1}</TableCell>
-                <TableCell> <Avatar className={classes.img_size} src={row.avatar} /></TableCell>
+                <TableCell> <Avatar className={classes.img_size} src={row.img} /></TableCell>
                 <TableCell>{row.name}</TableCell>
                 <TableCell>{row.subject}</TableCell>
                 <TableCell>ویرایش</TableCell>
-                <TableCell>حذف</TableCell>
-            </TableRow>
+                {/* <TableCell onClick={() => delete (row.id)}>حذف</TableCell> */}
+            </TableRow >
         ) : false)
         )
     }
@@ -123,6 +127,7 @@ export default function DataTable({ ...props }) {
         setActivePageNumber(num);
     }
 
+    
     return (
         <div>
             <DataTableContainer>
@@ -158,13 +163,14 @@ export default function DataTable({ ...props }) {
                 </TableBody>
 
             </DataTableContainer>
-            
+
             <Container maxWidth="lg" className={classes.btn_pagination}>
                 {array.map((num, index) => (
-                    <Button style={{margin:"5px"}} className={activePageNumber === index+1 ? classes.accentColor : ""} key={num} variant="contained" onClick={() => { changePage(num) }}>{num}</Button>
+                    <Button style={{ margin: "5px" }} className={activePageNumber === index + 1 ? classes.accentColor : ""} key={num} variant="contained" onClick={() => { changePage(num) }}>{num}</Button>
                 ))}
             </Container>
-         
+            <ToastContainer />
+
         </div>
     );
 }

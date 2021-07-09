@@ -5,11 +5,10 @@ import './assets/sass/main.scss';
 import { Provider } from 'react-redux';
 import { ConfigureStore } from './store/ConfigureStore';
 import Login from './pages/management-panel/Login';
-import ManagementPanel from './pages/management-panel/ManagementPanel';
+import ProductsPanel from './pages/management-panel/ProductsPanel';
 import { ProtectedRoute } from './ProtectedRoute';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
-import { ModalProvider } from './context/modalContext'
 // rtl
 import { create } from 'jss';
 import rtl from 'jss-rtl';
@@ -29,20 +28,21 @@ export default function App() {
     <StylesProvider jss={jss}>
       <ThemeProvider theme={theme}>
         <Provider store={store}>
-          <ModalProvider>
             <Router>
               <Switch>
-                {/* <Route path="/" exact component={textfield} /> */}
-                <Route path="/Admin-panel" exact component={Login} />
-                <ProtectedRoute path="/Admin-panel/Ware-Management" exact component={ManagementPanel} />
+                {/* <Route path="/" exact /> */}
+                <Route path="/admin-panel" exact component={Login} />
+                <ProtectedRoute path="/admin-panel/products" exact component={ProductsPanel} />
+                {/* <ProtectedRoute path="/admin-panel/stock-prices" exact />
+                <ProtectedRoute path="/admin-panel/orders" exact /> */}
               </Switch>
             </Router>
-          </ModalProvider>
         </Provider>
       </ThemeProvider>
     </StylesProvider>
   );
 }
 
+// ProductsPanel
 
-
+// ManagementPanel

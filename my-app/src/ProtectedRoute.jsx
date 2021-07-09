@@ -14,7 +14,7 @@ export const ProtectedRoute = ({ component: Component, ...rest }) => {
           return (
             <Redirect
               to={{
-                pathname: "/Admin-panel",
+                pathname: "/admin-panel",
                 state: {
                   from: props.location,
                 },

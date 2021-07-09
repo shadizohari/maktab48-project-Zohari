@@ -9,9 +9,9 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
-import { ApiLogin } from '../../api/Api'
+import { ApiLogin } from '../../api/ApiLogin'
 import LayoutLoading from '../../component/LayoutLoading';
-import { COLORS } from '../../styles/constantVariables';
+import { COLORS, MARGIN } from '../../styles/constantVariables';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { setLoading } from '../../store/actions/isLoading';
@@ -40,10 +40,10 @@ const useStyles = makeStyles((theme) => ({
     paper: {
         padding: theme.spacing(8, 4),
     },
-    submit: {
-        margin: theme.spacing(4, 0),
-        padding: theme.spacing(1.5, 0),
-        backgroundColor: COLORS.accentColor,
+    margin_3: {
+        marginBottom: MARGIN.margin_3,
+        marginTop: MARGIN.margin_3,
+
     },
     align_center: {
         textAlign: 'center',
@@ -71,18 +71,16 @@ export default function Login() {
     useEffect(() => {
         if (res) {
             res.then((x) => {
-                console.log(res);
-                if (x.data && x.data.status === "Error") {
-                    toast.error("request failed!");
-
-                } else if (x.data && x.data.token) {
-                    console.log(x.data.token)
-                    localStorage.setItem("token", x.data.token);
-                    history.push("/Admin-panel/Ware-Management");
-                } else if (!x.data) {
-                    toast.error("request failed!");
+                if (x) {
+                    console.log(res);
+                    if (x.data && x.data.token) {
+                        localStorage.setItem("token", x.data.token)
+                        history.push("/admin-panel/products");
+                    } else {
+                        toast.error("request failed!");
+                    }
+                    dispatch(setLoading(false));
                 }
-                dispatch(setLoading(false));
             })
 
         }
@@ -98,7 +96,7 @@ export default function Login() {
                         <div className={classes.paper}>
                             <Typography variant="h5" className={classes.align_center}>
                                 ورود به پنل مدیریت فروشگاه
-                         </Typography>
+                            </Typography>
                             <form onSubmit={(e) => formSubmitted(e)} className={classes.form} noValidate>
                                 <CssTextField
                                     // variant="outlined"
@@ -127,7 +125,8 @@ export default function Login() {
                                 <Button
                                     type="submit"
                                     variant="contained"
-                                    className={classes.submit}
+                                    className={classes.margin_3}
+                                    style={{ background: COLORS.accentColor }}
                                     fullWidth
                                 >
                                     <Typography variant="h6" className={classes.align_center}>

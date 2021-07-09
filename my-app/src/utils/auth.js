@@ -17,3 +17,18 @@ export const logout = () => {
   localStorage.clear();
   window.location.reload();
 };
+
+export const uniqId = (data) => {
+  let arrayOfId = [];
+  if (data.length >= 0) {
+    console.log("data.length>0")
+    for (let i = 0; i < data.length; i++) {
+      arrayOfId.push(data.id);
+    }
+    return Math.max(...arrayOfId);
+  } else {
+    return 1;
+  }
+
+}
+
