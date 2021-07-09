@@ -5,7 +5,7 @@ import './assets/sass/main.scss';
 import { Provider } from 'react-redux';
 import { ConfigureStore } from './store/ConfigureStore';
 import LoginPage from './pages/admin/LoginPage';
-import ProductsPanel from './pages/admin/ProductsPanel';
+import ProductsPage from './pages/admin/ProductsPage';
 import { ProtectedRoute } from './ProtectedRoute';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
@@ -33,7 +33,7 @@ export default function App() {
               <Switch>
                 {/* <Route path="/" exact /> */}
                 <Route path="/admin-panel" exact component={LoginPage} />
-                <ProtectedRoute path="/admin-panel/products" exact component={ProductsPanel} />
+                <ProtectedRoute path="/admin-panel/products" exact component={ProductsPage} />
                 {/* <ProtectedRoute path="/admin-panel/stock-prices" exact />
                 <ProtectedRoute path="/admin-panel/orders" exact /> */}
               </Switch>

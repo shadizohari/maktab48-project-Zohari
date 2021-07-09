@@ -9,15 +9,12 @@ import Box from '@material-ui/core/Box';
 import DataTable from '../../component/DataTable';
 import { COLORS, MARGIN } from '../../styles/constants';
 // import Container from '@material-ui/core/Container';
-// import logo from '../../assets/img/logo3-orange.png';
 import DataTableHeader from '../../component/DataTableHeader';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import AddBookModal from '../../component/AddBookModal';
 import LoadingLayout from '../../component/LoadingLayout';
-// import { ImHome } from "react-icons/im";
-// import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import AdminHeader from '../../component/AdminHeader';
 
@@ -129,17 +126,6 @@ export default function TabsWrappedLabel() {
     return (
         <LoadingLayout>
             <div className={classes.root}>
-                {/* <Container maxWidth="lg" className={classes.header_managment_panel}>
-                    <div className={classes.header_logo_flex}>
-                        <img className={classes.logo} src={logo} />
-                        <Typography variant="h4" >
-                            پنل مدیریت فروشگاه
-                        </Typography>
-                    </div>
-                    <NavLink to="/" exact>
-                        <ImHome className={classes.icon_home_style} />
-                    </NavLink>
-                </Container> */}
                 <AdminHeader/>
 
                 <AppBar position="static" style={{ background: COLORS.primeryColor }} >
@@ -197,5 +183,3 @@ export default function TabsWrappedLabel() {
 
     );
 }
-
-
