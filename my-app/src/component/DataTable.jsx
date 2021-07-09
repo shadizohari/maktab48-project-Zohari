@@ -5,7 +5,6 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import Avatar from '@material-ui/core/Avatar';
 import { COLORS } from '../styles/constants'
 import axios from "axios";
 import { toast, ToastContainer } from 'react-toastify';
@@ -17,16 +16,9 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Container from '@material-ui/core/Container';
-import { setLoading } from '../store/actions/isLoading';
-import { RiDeleteBin2Fill } from 'react-icons/ri';
-import { AiTwotoneEdit } from 'react-icons/ai';
-
+import MapBookList from './MapBookList';
 
 const useStyles = makeStyles((theme) => ({
-    img_size: {
-        width: theme.spacing(7),
-        height: theme.spacing(7),
-    },
     btn_pagination: {
         marginTop: "30px",
         paddingBottom: "200px",
@@ -45,14 +37,6 @@ const useStyles = makeStyles((theme) => ({
         },
         '&:after': {
             borderColor: COLORS.accentColor,
-        }
-    },
-    icons: {
-        color: COLORS.primeryColor,
-        fontSize: "24px",
-        cursor: "pointer",
-        '&:hover':{
-            color: COLORS.accentColor,
         }
     }
 
@@ -103,39 +87,7 @@ export default function DataTable({ ...props }) {
             setStart(0);
             setEnd(5);
             setActivePageNumber(1)
-
         }
-    }
-
-    // map books for show data in table
-    function MapBookList(data) {
-        const dataTable = useSelector((store) => store.bookList);
-
-        function deleteBook(id) {
-            axios.delete('http://localhost:5000/books/' + id)
-                .then(response => console.log(response))
-                .catch(error => {
-                    console.error('There was an error!');
-                });
-            console.log(dataTable.bookList)
-            dispatch(setLoading(true));
-            setTimeout(() => {
-                dispatch(setLoading(false));
-            }, 1000);
-        }
-
-
-        return (data?.map((row, index) => (index < end && index >= start) ? (
-            <TableRow key={row.id}>
-                <TableCell>{index + 1}</TableCell>
-                <TableCell> <Avatar className={classes.img_size} src={row.img} /></TableCell>
-                <TableCell>{row.name}</TableCell>
-                <TableCell>{row.subject}</TableCell>
-                <TableCell><AiTwotoneEdit className={classes.icons} /></TableCell>
-                <TableCell onClick={() => deleteBook(row.id)}><RiDeleteBin2Fill className={classes.icons}/></TableCell>
-            </TableRow >
-        ) : false)
-        )
     }
 
 
@@ -193,7 +145,7 @@ export default function DataTable({ ...props }) {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {(!value ? MapBookList(data) : MapBookList(filterResult))}
+                    {(!value ?< MapBookList data={data} start={start} end={end}/> : < MapBookList data={filterResult} start={start} end={end}/>)}
                 </TableBody>
 
             </DataTableContainer>

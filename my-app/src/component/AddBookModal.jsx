@@ -79,7 +79,6 @@ export default function AddBookModal({ ...props }) {
                 subject: category,
                 img: fileData
             }
-            console.log(BooksApi(book, 'post', 'http://localhost:5000/books/'));
             setResponseNewBook(BooksApi(book, 'post', 'http://localhost:5000/books/'));
             dispatch(setLoading(true));
             setTimeout(() => {
