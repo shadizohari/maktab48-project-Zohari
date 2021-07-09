@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -7,7 +7,7 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import DataTable from '../../component/DataTable';
-import { COLORS } from '../../styles/constants';
+import { COLORS, MARGIN } from '../../styles/constants';
 import Container from '@material-ui/core/Container';
 import logo from '../../assets/img/logo3-orange.png';
 import DataTableHeader from '../../component/DataTableHeader';
@@ -16,6 +16,9 @@ import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import AddBookModal from '../../component/AddBookModal';
 import LoadingLayout from '../../component/LoadingLayout';
+import { ImHome } from "react-icons/im";
+import { NavLink } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
 
 // tab material..........
 function TabPanel(props) {
@@ -65,7 +68,12 @@ const useStyles = makeStyles((theme) => ({
     header_managment_panel: {
         display: "flex",
         alignItems: "center",
-        padding: "10px",
+        justifyContent: "space-between",
+        padding: "5px",
+    },
+    header_logo_flex: {
+        display: "flex",
+        alignItems: "center",
     },
     tab_label: {
         fontSize: "20px",
@@ -81,6 +89,10 @@ const useStyles = makeStyles((theme) => ({
         boxShadow: theme.shadows[5],
         padding: theme.spacing(2, 4, 3),
     },
+    icon_home_style: {
+        fontSize: "30px",
+        color: COLORS.primeryColor,
+    }
 }));
 
 
@@ -107,18 +119,25 @@ export default function TabsWrappedLabel() {
 
     const classes = useStyles();
 
-
+    const isLoading = useSelector((store) => store.isLoading);
+    useEffect(() => {
+        setOpen(false);
+    }, [isLoading]);
 
 
     return (
         <LoadingLayout>
             <div className={classes.root}>
                 <Container maxWidth="lg" className={classes.header_managment_panel}>
-                    <img className={classes.logo} src={logo} />
-
-                    <Typography variant="h4" >
-                        پنل مدیریت فروشگاه
-                    </Typography>
+                    <div className={classes.header_logo_flex}>
+                        <img className={classes.logo} src={logo} />
+                        <Typography variant="h4" >
+                            پنل مدیریت فروشگاه
+                        </Typography>
+                    </div>
+                    <NavLink to="/" exact>
+                        <ImHome className={classes.icon_home_style} />
+                    </NavLink>
                 </Container>
 
                 <AppBar position="static" style={{ background: COLORS.primeryColor }} >
@@ -159,7 +178,7 @@ export default function TabsWrappedLabel() {
                     >
                         <Fade in={open}>
                             <div className={classes.modal_paper}>
-                                <AddBookModal/>
+                                <AddBookModal />
 
                             </div>
                         </Fade>
@@ -167,23 +186,6 @@ export default function TabsWrappedLabel() {
                 </TabPanel>
                 <TabPanel value={value} index="two">
                     <DataTableHeader titre="موجودی و قیمت‌ها" textBtn="ذخیره" handelClick={handleOpen} />
-                    <Modal
-                        className={classes.modal}
-                        open={open}
-                        onClose={handleClose}
-                        closeAfterTransition
-                        BackdropComponent={Backdrop}
-                        BackdropProps={{
-                            timeout: 500,
-                        }}
-                    >
-                        <Fade in={open}>
-                            <div className={classes.modal_paper}>
-                                <h2>Transition modal 222222222222</h2>
-                                <p>react-transition-group animates me.</p>
-                            </div>
-                        </Fade>
-                    </Modal>
                 </TabPanel>
                 <TabPanel value={value} index="three">
                     Item Three

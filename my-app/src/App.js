@@ -14,7 +14,8 @@ import { create } from 'jss';
 import rtl from 'jss-rtl';
 import { StylesProvider, jssPreset } from '@material-ui/core/styles';
 const jss = create({ plugins: [...jssPreset().plugins, rtl()] });
-// .......
+
+
 const theme = createMuiTheme({
   direction: 'rtl',
   typography: {
@@ -42,7 +43,3 @@ export default function App() {
     </StylesProvider>
   );
 }
-
-// ProductsPanel
-
-// ManagementPanel

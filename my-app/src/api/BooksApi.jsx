@@ -11,22 +11,14 @@ export const BooksApi = async (book, method, url) => {
     return x;
 }
 
-// export const ApiDeleteBook = async (url)=>{
-//     axios.delete(url)
-//         .then(response => setStatus('Delete successful'))
-//         .catch(error => {
-//             setErrorMessage(error.message);
-//             console.error('There was an error!', error);
-//         });
-// }
-// useEffect(() => {
-//     axios.delete('https://reqres.in/invalid-url')
-//         .then(response => setStatus('Delete successful'))
-//         .catch(error => {
-//             setErrorMessage(error.message);
-//             console.error('There was an error!', error);
-//         });
-// }, []);q
+
+
+    // axios.delete('https://reqres.in/invalid-url')
+    //     .then(response => setStatus('Delete successful'))
+    //     .catch(error => {
+    //         setErrorMessage(error.message);
+    //         console.error('There was an error!', error);
+    //     });
 
 
 // const handleDelete = (taskId) => {

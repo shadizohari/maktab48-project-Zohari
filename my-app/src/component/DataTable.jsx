@@ -17,7 +17,9 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Container from '@material-ui/core/Container';
-// import { BooksApi } from '../api/BooksApi';
+import { setLoading } from '../store/actions/isLoading';
+import { RiDeleteBin2Fill } from 'react-icons/ri';
+import { AiTwotoneEdit } from 'react-icons/ai';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -45,13 +47,21 @@ const useStyles = makeStyles((theme) => ({
             borderColor: COLORS.accentColor,
         }
     },
+    icons: {
+        color: COLORS.primeryColor,
+        fontSize: "24px",
+        cursor: "pointer",
+        '&:hover':{
+            color: COLORS.accentColor,
+        }
+    }
 
 }));
 
 export default function DataTable({ ...props }) {
     const dispatch = useDispatch();
     const classes = useStyles();
-    const [data, setData] = useState([]);
+    // const [data, setData] = useState([]);
     const [filterResult, setFilterResult] = useState([]);
     const [value, setValue] = useState(false);
     const [start, setStart] = useState(0)
@@ -59,16 +69,25 @@ export default function DataTable({ ...props }) {
     const [array, setArray] = useState([]);
     const [length, setLength] = useState();
     const [activePageNumber, setActivePageNumber] = useState(1)
+
+
+    const data = useSelector((store) => store.bookList.bookList);
+
+    // get data when load page
     useEffect(() => {
         axios.get('http://localhost:5000/books')
             .then(response => {
                 if (response.data) {
-                    setData(response.data);
+                    // setData(response.data);
                     setLength(response.data.length)
                     dispatch(setBookList(response.data));
+
                 }
             }).catch((err) => toast.error("request failed!"));
     }, [])
+
+
+    // filter books category
     function filter(e) {
         setValue(true);
         console.log(e.target.value)
@@ -88,24 +107,39 @@ export default function DataTable({ ...props }) {
         }
     }
 
-    function mapBookList(data) {
-        // function delete(){
-           
-        // }
-        return (data.map((row, index) => (index < end && index >= start) ? (
+    // map books for show data in table
+    function MapBookList(data) {
+        const dataTable = useSelector((store) => store.bookList);
+
+        function deleteBook(id) {
+            axios.delete('http://localhost:5000/books/' + id)
+                .then(response => console.log(response))
+                .catch(error => {
+                    console.error('There was an error!');
+                });
+            console.log(dataTable.bookList)
+            dispatch(setLoading(true));
+            setTimeout(() => {
+                dispatch(setLoading(false));
+            }, 1000);
+        }
+
+
+        return (data?.map((row, index) => (index < end && index >= start) ? (
             <TableRow key={row.id}>
                 <TableCell>{index + 1}</TableCell>
                 <TableCell> <Avatar className={classes.img_size} src={row.img} /></TableCell>
                 <TableCell>{row.name}</TableCell>
                 <TableCell>{row.subject}</TableCell>
-                <TableCell>ویرایش</TableCell>
-                {/* <TableCell onClick={() => delete (row.id)}>حذف</TableCell> */}
+                <TableCell><AiTwotoneEdit className={classes.icons} /></TableCell>
+                <TableCell onClick={() => deleteBook(row.id)}><RiDeleteBin2Fill className={classes.icons}/></TableCell>
             </TableRow >
         ) : false)
         )
     }
 
 
+    // table pagenation
     useEffect(() => {
         let x = length % 5;
         let y;
@@ -159,7 +193,7 @@ export default function DataTable({ ...props }) {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {(!value ? mapBookList(data) : mapBookList(filterResult))}
+                    {(!value ? MapBookList(data) : MapBookList(filterResult))}
                 </TableBody>
 
             </DataTableContainer>

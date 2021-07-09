@@ -8,10 +8,11 @@ import Select from '@material-ui/core/Select';
 import { COLORS, MARGIN } from '../styles/constants';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import { BooksApi } from '../api/BooksApi';
 import { setLoading } from '../store/actions/isLoading';
-import { useDispatch ,useSelector} from 'react-redux';
+import { setBookList } from '../store/actions/bookList';
+import { useDispatch, useSelector } from 'react-redux';
 import { uniqId } from '../utils/auth';
 
 
@@ -58,7 +59,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function AddBookModal({...props }) {
+export default function AddBookModal({ ...props }) {
     const classes = useStyles();
     const [bookName, setBookName] = useState("");
     const [category, setCategory] = useState("رمان");
@@ -66,11 +67,11 @@ export default function AddBookModal({...props }) {
     const [responseNewBook, setResponseNewBook] = useState();
     const dispatch = useDispatch();
     const [selectedFile, setSelectedFile] = useState();
-    const bookList = useSelector((store) => store.bookList);
+    const bookList = useSelector((store) => store.bookList.bookList);
 
     function addbook(e) {
         e.preventDefault();
-        let maxId = uniqId(bookList.bookList)
+        let maxId = uniqId(bookList)
         if (bookName && category) {
             let book = {
                 id: maxId + 1,
@@ -78,25 +79,32 @@ export default function AddBookModal({...props }) {
                 subject: category,
                 img: fileData
             }
+            console.log(BooksApi(book, 'post', 'http://localhost:5000/books/'));
             setResponseNewBook(BooksApi(book, 'post', 'http://localhost:5000/books/'));
             dispatch(setLoading(true));
             setTimeout(() => {
                 dispatch(setLoading(false));
             }, 1000);
+
         }
     }
-    useEffect(() => {
-        if (responseNewBook) {
-            responseNewBook.then((x) => {
-                if (x.data && x.status === 201) {
-                    toast.success("ok");
-                } else {
-                    toast.success("no");
-                }
-            });
-        };
+    // useEffect(() => {
+    //     console.log("responseNewBook")
 
-    }, [responseNewBook])
+    //     if (responseNewBook) {
+    //         responseNewBook.then((x) => {
+    //             console.log("responseNewBook")
+
+    //             if (x.status === 201) {
+    //                 // console.log("responseNewBook")
+    //                 toast.success("ok");
+    //             } else {
+    //                 toast.success("no");
+    //             }
+    //         });
+    //     };
+
+    // }, [responseNewBook])
 
     const handleFileInput = (e) => {
         const file = e.target.files[0];
@@ -166,6 +174,7 @@ export default function AddBookModal({...props }) {
                     </Typography>
                 </Button>
             </form>
+
         </Container>
     )
 }
