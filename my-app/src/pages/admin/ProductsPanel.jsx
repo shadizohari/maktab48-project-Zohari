@@ -8,17 +8,18 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import DataTable from '../../component/DataTable';
 import { COLORS, MARGIN } from '../../styles/constants';
-import Container from '@material-ui/core/Container';
-import logo from '../../assets/img/logo3-orange.png';
+// import Container from '@material-ui/core/Container';
+// import logo from '../../assets/img/logo3-orange.png';
 import DataTableHeader from '../../component/DataTableHeader';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import AddBookModal from '../../component/AddBookModal';
 import LoadingLayout from '../../component/LoadingLayout';
-import { ImHome } from "react-icons/im";
-import { NavLink } from "react-router-dom";
+// import { ImHome } from "react-icons/im";
+// import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
+import AdminHeader from '../../component/AdminHeader';
 
 // tab material..........
 function TabPanel(props) {
@@ -128,7 +129,7 @@ export default function TabsWrappedLabel() {
     return (
         <LoadingLayout>
             <div className={classes.root}>
-                <Container maxWidth="lg" className={classes.header_managment_panel}>
+                {/* <Container maxWidth="lg" className={classes.header_managment_panel}>
                     <div className={classes.header_logo_flex}>
                         <img className={classes.logo} src={logo} />
                         <Typography variant="h4" >
@@ -138,7 +139,8 @@ export default function TabsWrappedLabel() {
                     <NavLink to="/" exact>
                         <ImHome className={classes.icon_home_style} />
                     </NavLink>
-                </Container>
+                </Container> */}
+                <AdminHeader/>
 
                 <AppBar position="static" style={{ background: COLORS.primeryColor }} >
                     <Tabs value={value}
