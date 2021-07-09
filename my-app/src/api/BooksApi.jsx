@@ -1,7 +1,7 @@
 import axios from "axios";
 import { toast } from 'react-toastify';
 
-export const ApiBooks = async (book, method, url) => {
+export const BooksApi = async (book, method, url) => {
     let x = await axios({
         method: method,
         url: url,
@@ -43,3 +43,5 @@ export const ApiBooks = async (book, method, url) => {
 //         toast.error("request failed!");
 //       });
 //   };
+// BooksApi
+// LoginApi

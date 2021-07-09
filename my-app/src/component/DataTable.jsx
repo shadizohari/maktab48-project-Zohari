@@ -6,7 +6,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Avatar from '@material-ui/core/Avatar';
-import { COLORS } from '../styles/constantVariables'
+import { COLORS } from '../styles/constants'
 import axios from "axios";
 import { toast, ToastContainer } from 'react-toastify';
 import DataTableContainer from './DataTableContainer';
@@ -17,7 +17,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Container from '@material-ui/core/Container';
-// import { ApiBooks } from '../api/ApiBooks';
+// import { BooksApi } from '../api/BooksApi';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -127,7 +127,7 @@ export default function DataTable({ ...props }) {
         setActivePageNumber(num);
     }
 
-    
+
     return (
         <div>
             <DataTableContainer>

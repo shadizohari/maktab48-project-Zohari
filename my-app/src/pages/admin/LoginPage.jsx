@@ -9,9 +9,9 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
-import { ApiLogin } from '../../api/ApiLogin'
-import LayoutLoading from '../../component/LayoutLoading';
-import { COLORS, MARGIN } from '../../styles/constantVariables';
+import { LoginApi } from '../../api/LoginApi'
+import LoadingLayout from '../../component/LoadingLayout';
+import { COLORS, MARGIN } from '../../styles/constants';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { setLoading } from '../../store/actions/isLoading';
@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function Login() {
+export default function LoginPage() {
     const classes = useStyles();
     const dispatch = useDispatch();
     const [user, setUser] = useState("");
@@ -64,7 +64,7 @@ export default function Login() {
         e.preventDefault();
         if (user && password) {
             localStorage.clear();
-            setRes(ApiLogin('post', 'https://fakestoreapi.com/auth/login', user, password))
+            setRes(LoginApi('post', 'https://fakestoreapi.com/auth/login', user, password))
             dispatch(setLoading(true));
         }
     }
@@ -89,7 +89,7 @@ export default function Login() {
     // {status: "Error", msg: "username or password is incorrect"}
     // {token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"}
     return (
-        <LayoutLoading>
+        <LoadingLayout>
             <div className={classes.root}>
                 <Grid container component="main" className={classes.center_flex}>
                     <Grid item xs={11} sm={8} md={5} component={Paper} elevation={6} square>
@@ -139,6 +139,6 @@ export default function Login() {
                 </Grid>
             </div>
             <ToastContainer />
-        </LayoutLoading>
+        </LoadingLayout>
     );
 }

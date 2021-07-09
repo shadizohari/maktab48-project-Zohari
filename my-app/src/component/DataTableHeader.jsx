@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
-import { COLORS } from '../styles/constantVariables'
+import { COLORS } from '../styles/constants'
 
 
 const useStyles = makeStyles((theme) => ({

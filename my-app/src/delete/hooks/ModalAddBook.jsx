@@ -6,7 +6,7 @@ import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 
-import { COLORS } from '../styles/constantVariables';
+import { COLORS } from '../styles/constants';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 
 
@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
     },
 
 }));
-export default function ModalAddBook() {
+export default function AddBookModal() {
     const classes = useStyles();
 
     return (

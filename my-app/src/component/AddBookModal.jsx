@@ -5,11 +5,11 @@ import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
-import { COLORS, MARGIN } from '../styles/constantVariables';
+import { COLORS, MARGIN } from '../styles/constants';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { toast } from 'react-toastify';
-import { ApiBooks } from '../api/ApiBooks';
+import { BooksApi } from '../api/BooksApi';
 import { setLoading } from '../store/actions/isLoading';
 import { useDispatch ,useSelector} from 'react-redux';
 import { uniqId } from '../utils/auth';
@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function ModalAddBook({...props }) {
+export default function AddBookModal({...props }) {
     const classes = useStyles();
     const [bookName, setBookName] = useState("");
     const [category, setCategory] = useState("رمان");
@@ -78,7 +78,7 @@ export default function ModalAddBook({...props }) {
                 subject: category,
                 img: fileData
             }
-            setResponseNewBook(ApiBooks(book, 'post', 'http://localhost:5000/books/'));
+            setResponseNewBook(BooksApi(book, 'post', 'http://localhost:5000/books/'));
             dispatch(setLoading(true));
             setTimeout(() => {
                 dispatch(setLoading(false));
@@ -169,3 +169,6 @@ export default function ModalAddBook({...props }) {
         </Container>
     )
 }
+
+
+// AddBookModal

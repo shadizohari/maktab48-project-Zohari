@@ -1,6 +1,6 @@
 import axios from "axios";
 import { toast } from 'react-toastify';
-export const ApiLogin = async (method, url, username, password) => {
+export const LoginApi = async (method, url, username, password) => {
 
     let res = await axios({
         method: method,

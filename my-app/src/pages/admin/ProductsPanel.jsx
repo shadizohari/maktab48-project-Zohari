@@ -7,15 +7,15 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import DataTable from '../../component/DataTable';
-import { COLORS } from '../../styles/constantVariables';
+import { COLORS } from '../../styles/constants';
 import Container from '@material-ui/core/Container';
-import logo from '../../img/logo3-orange.png';
+import logo from '../../assets/img/logo3-orange.png';
 import DataTableHeader from '../../component/DataTableHeader';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
-import ModalAddBook from '../../component/ModalAddBook';
-import LayoutLoading from '../../component/LayoutLoading';
+import AddBookModal from '../../component/AddBookModal';
+import LoadingLayout from '../../component/LoadingLayout';
 
 // tab material..........
 function TabPanel(props) {
@@ -111,7 +111,7 @@ export default function TabsWrappedLabel() {
 
 
     return (
-        <LayoutLoading>
+        <LoadingLayout>
             <div className={classes.root}>
                 <Container maxWidth="lg" className={classes.header_managment_panel}>
                     <img className={classes.logo} src={logo} />
@@ -159,7 +159,7 @@ export default function TabsWrappedLabel() {
                     >
                         <Fade in={open}>
                             <div className={classes.modal_paper}>
-                                <ModalAddBook/>
+                                <AddBookModal/>
 
                             </div>
                         </Fade>
@@ -189,7 +189,7 @@ export default function TabsWrappedLabel() {
                     Item Three
                 </TabPanel>
             </div>
-        </LayoutLoading>
+        </LoadingLayout>
 
     );
 }
