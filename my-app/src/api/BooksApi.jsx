@@ -13,27 +13,19 @@ export const BooksApi = async (book, method, url) => {
 
 
 
-    // axios.delete('https://reqres.in/invalid-url')
-    //     .then(response => setStatus('Delete successful'))
-    //     .catch(error => {
-    //         setErrorMessage(error.message);
-    //         console.error('There was an error!', error);
-    //     });
+export function deleteBookApi(url, id) {
+    axios.delete(url + id)
+        .then(response => toast.success("delete"))
+        .catch(error => {
+            toast.error("request failed!");
+        });
+}
 
 
-// const handleDelete = (taskId) => {
-//     fetch(`http://localhost:5000/tasks/${taskId}`, {
-//       method: "DELETE",
-//     })
-//       .then((res) => {
-//         if (res.status === 404) {
-//           toast.error("Not defined");
-//         }
-//         setTasks(tasks.filter((task) => task.id !== taskId));
-//       })
-//       .catch((err) => {
-//         toast.error("request failed!");
-//       });
-//   };
-// BooksApi
-// LoginApi
+export function putBookApi(url, editId, book) {
+    axios.put(url + editId, book)
+        .then(response => toast.success("put"))
+        .catch(error => {
+            toast.error("request failed!");
+        });
+}

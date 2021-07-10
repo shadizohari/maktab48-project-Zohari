@@ -16,6 +16,7 @@ import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 // import LoadingLayout from '../../component/LoadingLayout';
 import styleModal from '../styles/styleModal'
+import {deleteBookApi} from '../api/BooksApi'
 // map books for show data in table
 export default function MapBookList({ data, end, start, ...props }) {
 
@@ -63,15 +64,12 @@ export default function MapBookList({ data, end, start, ...props }) {
 
     // delete book
     function deleteBook(id) {
-        axios.delete('http://localhost:5000/books/' + id)
-            .then(response => console.log(response))
-            .catch(error => {
-                console.error('There was an error!');
-            });
-        dispatch(setLoading(true));
-        setTimeout(() => {
-            dispatch(setLoading(false));
-        }, 1000);
+            deleteBookApi('http://localhost:5000/books/',id);
+            dispatch(setLoading(true));
+            setTimeout(() => {
+                dispatch(setLoading(false));
+            }, 1000);
+
     }
 
 

@@ -15,6 +15,7 @@ import { setBookList } from '../store/actions/bookList';
 import { useDispatch, useSelector } from 'react-redux';
 import { uniqId } from '../utils/auth';
 import axios from "axios";
+import { putBookApi } from '../api/BooksApi'
 
 
 
@@ -113,34 +114,13 @@ export default function AddBookModal({ editNameBook, editCategory, buttonName, p
                 img: fileData,
                 description: description,
             }
-            axios.put('http://localhost:5000/books/' + editId, book)
-                .then(response => console.log(response))
-                .catch(error => {
-                    console.error('There was an error!');
-                });
+            putBookApi('http://localhost:5000/books/', editId, book)
             dispatch(setLoading(true));
             setTimeout(() => {
                 dispatch(setLoading(false));
             }, 1000);
         }
     }
-    // useEffect(() => {
-    //     console.log("responseNewBook")
-
-    //     if (responseNewBook) {
-    //         responseNewBook.then((x) => {
-    //             console.log("responseNewBook")
-
-    //             if (x.status === 201) {
-    //                 // console.log("responseNewBook")
-    //                 toast.success("ok");
-    //             } else {
-    //                 toast.success("no");
-    //             }
-    //         });
-    //     };
-
-    // }, [responseNewBook])
 
     const handleFileInput = (e) => {
         const file = e.target.files[0];
@@ -165,7 +145,7 @@ export default function AddBookModal({ editNameBook, editCategory, buttonName, p
             <Typography variant="h6" className={classes.margin_2}>
                 افزودن / ویرایش کالا
             </Typography>
-            <form noValidate onSubmit={(e) => addbook(e)}>
+            <form noValidate onSubmit={(e) => addbook(e, editId)}>
                 <Button
                     className={classes.margin_1}
                     variant="contained"
