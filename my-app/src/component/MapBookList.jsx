@@ -77,18 +77,17 @@ export default function MapBookList({ data, end, start, ...props }) {
 
     const [editNameBook, setEditNameBook] = useState("")
     const [editCategory, setEditCategory] = useState("")
+    const [editDescription,setEditDescription] = useState("")
     const [editId, setEdeitId] = useState()
-    const [editImg,setEditImg]=useState()
+    const [editImg, setEditImg] = useState()
     // edit book
-    function editBook(id, namebook, category,img) {
+    function editBook(id, namebook, category, img, description) {
         setOpen(true);
-        // if (namebook) {
-            setEditNameBook(namebook);
-            setEditCategory(category);
-            setEdeitId(id);
-            setEditImg(img);
-        // }
-
+        setEditNameBook(namebook);
+        setEditCategory(category);
+        setEdeitId(id);
+        setEditImg(img);
+        setEditDescription(description)
 
     }
 
@@ -100,7 +99,7 @@ export default function MapBookList({ data, end, start, ...props }) {
                     <TableCell> <Avatar className={classes.img_size} src={row.img} /></TableCell>
                     <TableCell>{row.name}</TableCell>
                     <TableCell>{row.subject}</TableCell>
-                    <TableCell onClick={() => editBook(row.id, row.name, row.subject, row.img)}><AiTwotoneEdit className={classes.icons} /></TableCell>
+                    <TableCell onClick={() => editBook(row.id, row.name, row.subject, row.img, row.description)}><AiTwotoneEdit className={classes.icons} /></TableCell>
                     <TableCell onClick={() => deleteBook(row.id)}><RiDeleteBin2Fill className={classes.icons} /></TableCell>
                 </TableRow >
             ) : false)}
@@ -117,7 +116,7 @@ export default function MapBookList({ data, end, start, ...props }) {
             >
                 <Fade in={open}>
                     <div className={styleClassModal.modal_paper}>
-                        <AddBookModal editImg={editImg} editNameBook={editNameBook} editCategory={editCategory} buttonName={"ثبت"} putorpost={"put"} editId={editId} />
+                        <AddBookModal editImg={editImg} editNameBook={editNameBook} editCategory={editCategory} editDescription={editDescription} buttonName={"ثبت"} putorpost={"put"} editId={editId} />
                     </div>
                 </Fade>
             </Modal>

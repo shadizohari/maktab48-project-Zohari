@@ -61,17 +61,32 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function AddBookModal({ editNameBook, editCategory, buttonName, putorpost, editId, editImg, ...props }) {
+export default function AddBookModal({ editNameBook, editCategory, buttonName, putorpost, editId, editImg, editDescription, ...props }) {
     const classes = useStyles();
     const [bookName, setBookName] = useState("");
     const [category, setCategory] = useState("رمان");
     const [fileData, setFileData] = useState();
+    const [description, setDescription] = useState("");
     const [responseNewBook, setResponseNewBook] = useState();
     const dispatch = useDispatch();
     const [selectedFile, setSelectedFile] = useState();
     const bookList = useSelector((store) => store.bookList.bookList);
 
-    function addbook(e, id) {
+    useEffect(() => {
+        if (editNameBook) {
+            setBookName(editNameBook)
+            setCategory(editCategory)
+            if (editImg) {
+                setFileData(editImg)
+            }
+            if (editDescription) {
+                setDescription(editDescription)
+                console.log(editDescription)
+            }
+        }
+    }, [])
+
+    function addbook(e, editId) {
         e.preventDefault();
         if (putorpost == "post") {
             let maxId = uniqId(bookList)
@@ -80,7 +95,8 @@ export default function AddBookModal({ editNameBook, editCategory, buttonName, p
                     id: maxId + 1,
                     name: bookName,
                     subject: category,
-                    img: fileData
+                    img: fileData,
+                    description: description,
                 }
                 setResponseNewBook(BooksApi(book, 'post', 'http://localhost:5000/books/'));
                 dispatch(setLoading(true));
@@ -94,7 +110,8 @@ export default function AddBookModal({ editNameBook, editCategory, buttonName, p
                 id: editId,
                 name: bookName,
                 subject: category,
-                img: fileData
+                img: fileData,
+                description: description,
             }
             axios.put('http://localhost:5000/books/' + editId, book)
                 .then(response => console.log(response))
@@ -141,15 +158,7 @@ export default function AddBookModal({ editNameBook, editCategory, buttonName, p
             fileReader.readAsDataURL(file);
         }
     };
-    useEffect(() => {
-        if (editNameBook) {
-            setBookName(editNameBook)
-            setCategory(editCategory)
-            if (editImg) {
-                setFileData(editImg)
-            }
-        }
-    }, [])
+
 
     return (
         <Container maxWidth="lg">
@@ -190,6 +199,15 @@ export default function AddBookModal({ editNameBook, editCategory, buttonName, p
                         <option value="غیره">غیره</option>
                     </Select>
                 </FormControl>
+                <CssTextField
+                    className={classes.margin_1}
+                    label="توضیحات"
+                    multiline
+                    rows={4}
+                    fullWidth
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                />
                 <Button
                     type="submit"
                     variant="contained"
