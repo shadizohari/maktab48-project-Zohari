@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme) => ({
     table: {
         minWidth: 350,
         background: "white",
-        boxShadow: "0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22)",
+        boxshadow: "0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22)",
 
     }, flex_center: {
         display: "flex",
@@ -25,7 +25,7 @@ export default function DataTableContainer({ children,...props }) {
         <Container maxWidth="lg" className={classes.flex_center}>
             <Grid item xs={12}>
                 <TableContainer>
-                    <Table className={classes.table} boxShadow={3}>
+                    <Table className={classes.table} boxshadow={3}>
                         {children}
                     </Table>
                 </TableContainer>

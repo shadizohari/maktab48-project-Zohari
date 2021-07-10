@@ -17,6 +17,8 @@ import AddBookModal from '../../component/AddBookModal';
 import LoadingLayout from '../../component/LoadingLayout';
 import { useDispatch, useSelector } from 'react-redux';
 import AdminHeader from '../../component/AdminHeader';
+import styleModal from '../../styles/styleModal';
+
 
 // tab material..........
 function TabPanel(props) {
@@ -76,17 +78,6 @@ const useStyles = makeStyles((theme) => ({
     tab_label: {
         fontSize: "20px",
     },
-    modal: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    modal_paper: {
-        backgroundColor: theme.palette.background.paper,
-        border: '2px solid #000',
-        boxShadow: theme.shadows[5],
-        padding: theme.spacing(2, 4, 3),
-    },
     icon_home_style: {
         fontSize: "30px",
         color: COLORS.primeryColor,
@@ -116,7 +107,7 @@ export default function TabsWrappedLabel() {
 
 
     const classes = useStyles();
-
+    const styleClassModal = styleModal();
     const isLoading = useSelector((store) => store.isLoading);
     useEffect(() => {
         setOpen(false);
@@ -126,7 +117,7 @@ export default function TabsWrappedLabel() {
     return (
         <LoadingLayout>
             <div className={classes.root}>
-                <AdminHeader/>
+                <AdminHeader />
 
                 <AppBar position="static" style={{ background: COLORS.primeryColor }} >
                     <Tabs value={value}
@@ -155,7 +146,7 @@ export default function TabsWrappedLabel() {
                     <DataTableHeader titre="مدیریت کالا" textBtn="اضافه کردن کالا" handelClick={handleOpen} />
                     <DataTable />
                     <Modal
-                        className={classes.modal}
+                        className={styleClassModal.modal}
                         open={open}
                         onClose={handleClose}
                         closeAfterTransition
@@ -165,9 +156,8 @@ export default function TabsWrappedLabel() {
                         }}
                     >
                         <Fade in={open}>
-                            <div className={classes.modal_paper}>
-                                <AddBookModal />
-
+                            <div className={styleClassModal.modal_paper}>
+                                <AddBookModal buttonName={"ذخیره"} putorpost={"post"} />
                             </div>
                         </Fade>
                     </Modal>

@@ -14,6 +14,8 @@ import { setLoading } from '../store/actions/isLoading';
 import { setBookList } from '../store/actions/bookList';
 import { useDispatch, useSelector } from 'react-redux';
 import { uniqId } from '../utils/auth';
+import axios from "axios";
+
 
 
 
@@ -59,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function AddBookModal({ ...props }) {
+export default function AddBookModal({ editNameBook, editCategory, buttonName, putorpost, editId, editImg, ...props }) {
     const classes = useStyles();
     const [bookName, setBookName] = useState("");
     const [category, setCategory] = useState("رمان");
@@ -69,22 +71,40 @@ export default function AddBookModal({ ...props }) {
     const [selectedFile, setSelectedFile] = useState();
     const bookList = useSelector((store) => store.bookList.bookList);
 
-    function addbook(e) {
+    function addbook(e, id) {
         e.preventDefault();
-        let maxId = uniqId(bookList)
-        if (bookName && category) {
+        if (putorpost == "post") {
+            let maxId = uniqId(bookList)
+            if (bookName && category) {
+                let book = {
+                    id: maxId + 1,
+                    name: bookName,
+                    subject: category,
+                    img: fileData
+                }
+                setResponseNewBook(BooksApi(book, 'post', 'http://localhost:5000/books/'));
+                dispatch(setLoading(true));
+                setTimeout(() => {
+                    dispatch(setLoading(false));
+                }, 1000);
+
+            }
+        } else if (putorpost = "put") {
             let book = {
-                id: maxId + 1,
+                id: editId,
                 name: bookName,
                 subject: category,
                 img: fileData
             }
-            setResponseNewBook(BooksApi(book, 'post', 'http://localhost:5000/books/'));
+            axios.put('http://localhost:5000/books/' + editId, book)
+                .then(response => console.log(response))
+                .catch(error => {
+                    console.error('There was an error!');
+                });
             dispatch(setLoading(true));
             setTimeout(() => {
                 dispatch(setLoading(false));
             }, 1000);
-
         }
     }
     // useEffect(() => {
@@ -121,6 +141,15 @@ export default function AddBookModal({ ...props }) {
             fileReader.readAsDataURL(file);
         }
     };
+    useEffect(() => {
+        if (editNameBook) {
+            setBookName(editNameBook)
+            setCategory(editCategory)
+            if (editImg) {
+                setFileData(editImg)
+            }
+        }
+    }, [])
 
     return (
         <Container maxWidth="lg">
@@ -169,7 +198,7 @@ export default function AddBookModal({ ...props }) {
                     fullWidth
                 >
                     <Typography variant="h6">
-                        ذخیره
+                        {buttonName}
                     </Typography>
                 </Button>
             </form>
