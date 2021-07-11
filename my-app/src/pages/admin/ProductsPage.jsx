@@ -6,7 +6,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import DataTable from '../../component/DataTable';
+import DataTableProducts from '../../component/DataTableProducts';
 import { COLORS, MARGIN } from '../../styles/constants';
 // import Container from '@material-ui/core/Container';
 import DataTableHeader from '../../component/DataTableHeader';
@@ -144,7 +144,7 @@ export default function TabsWrappedLabel() {
                 </AppBar>
                 <TabPanel value={value} index="one">
                     <DataTableHeader titre="مدیریت کالا" textBtn="اضافه کردن کالا" handelClick={handleOpen} />
-                    <DataTable />
+                    <DataTableProducts />
                     <Modal
                         className={styleClassModal.modal}
                         open={open}
@@ -162,9 +162,11 @@ export default function TabsWrappedLabel() {
                         </Fade>
                     </Modal>
                 </TabPanel>
+
                 <TabPanel value={value} index="two">
                     <DataTableHeader titre="موجودی و قیمت‌ها" textBtn="ذخیره" handelClick={handleOpen} />
                 </TabPanel>
+
                 <TabPanel value={value} index="three">
                     Item Three
                 </TabPanel>

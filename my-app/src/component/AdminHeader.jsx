@@ -32,8 +32,9 @@ const useStyles = makeStyles((theme) => ({
     },
     header_managment_panel: {
         display: "flex",
-        alignItems: "center",
+        // alignItems: "center",
         justifyContent: "space-between",
+
     },
     header_logo_flex: {
         display: "flex",
@@ -56,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
     logout: {
         display: "flex",
         cursor: "pointer",
-        alignItems: "center"
+        alignItems: "center",
 
     }
 }));
@@ -93,7 +94,6 @@ export default function AdminHeader() {
                 <div className={classes.logout} onClick={handleClickOpen}>
                     <p>خروج</p>
                     <RiAccountCircleFill className={classes.icon_home_style} />
-
                 </div>
                 <Dialog
                     open={open}
@@ -107,10 +107,10 @@ export default function AdminHeader() {
                     <DialogContent>
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={handleClose} color="primary">
+                        <Button onClick={handleClose}>
                             خیر
                         </Button>
-                        <Button onClick={logOut} color="primary">
+                        <Button onClick={logOut}>
                             بله
                         </Button>
                     </DialogActions>

@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function DataTable({ ...props }) {
+export default function DataTableProducts({ ...props }) {
     const dispatch = useDispatch();
     const classes = useStyles();
     // const [data, setData] = useState([]);

@@ -129,11 +129,9 @@ export default function AddBookModal({ editNameBook, editCategory, buttonName, p
             setSelectedFile(file);
             const fileReader = new FileReader();
             fileReader.onload = () => {
-                // console.log('successfully read file = ' + fileReader.result);
                 setFileData(fileReader.result);
             }
             fileReader.onerror = (error) => {
-                // console.log('failed to read file!', error);
                 toast.error('upload image failed!')
             }
             fileReader.readAsDataURL(file);
