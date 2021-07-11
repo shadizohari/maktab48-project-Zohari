@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { NavLink } from "react-router-dom";
 // import { setTokenAdmin } from '../../store/actions/tokenAdmin';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -48,6 +49,13 @@ const useStyles = makeStyles((theme) => ({
     align_center: {
         textAlign: 'center',
     },
+    link: {
+        color: COLORS.primeryColor,
+        textDecoration: "none",
+        '&:hover': {
+            color: COLORS.accentColor,
+        }
+    }
 }));
 
 export default function LoginPage() {
@@ -134,8 +142,14 @@ export default function LoginPage() {
                                     </Typography>
                                 </Button>
                             </form>
+                            <NavLink className={classes.link} to="/" exact>
+                                <p>بازگشت به سایت</p>
+                            </NavLink>
+
+
                         </div>
                     </Grid>
+
                 </Grid>
             </div>
             <ToastContainer />
