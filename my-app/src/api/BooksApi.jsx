@@ -15,17 +15,17 @@ export const BooksApi = async (book, method, url) => {
 
 export function deleteBookApi(url, id) {
     axios.delete(url + id)
-        .then(response => toast.success("delete"))
+        .then(response => toast.success("Delete Successfully"))
         .catch(error => {
-            toast.error("request failed!");
+            toast.error("Delete Failed!");
         });
 }
 
 
 export function putBookApi(url, editId, book) {
     axios.put(url + editId, book)
-        .then(response => toast.success("put"))
+        .then(response => toast.success("Edited Successfully"))
         .catch(error => {
-            toast.error("request failed!");
+            toast.error("Edited Failed!");
         });
 }
