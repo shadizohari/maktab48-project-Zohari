@@ -100,10 +100,10 @@ export default function AddBookModal({ editNameBook, editCategory, buttonName, p
                     description: description,
                 }
                 setResponseNewBook(BooksApi(book, 'post', 'http://localhost:5000/books/'));
-                dispatch(setLoading(true));
-                setTimeout(() => {
-                    dispatch(setLoading(false));
-                }, 1000);
+                // dispatch(setLoading(true));
+                // setTimeout(() => {
+                //     dispatch(setLoading(false));
+                // }, 1000);
 
             }
         } else if (putorpost = "put") {
@@ -115,11 +115,15 @@ export default function AddBookModal({ editNameBook, editCategory, buttonName, p
                 description: description,
             }
             putBookApi('http://localhost:5000/books/', editId, book)
-            dispatch(setLoading(true));
-            setTimeout(() => {
-                dispatch(setLoading(false));
-            }, 1000);
+            // dispatch(setLoading(true));
+            // setTimeout(() => {
+            //     dispatch(setLoading(false));
+            // }, 1000);
         }
+        dispatch(setLoading(true));
+        setTimeout(() => {
+            dispatch(setLoading(false));
+        }, 1000);
     }
 
     const handleFileInput = (e) => {

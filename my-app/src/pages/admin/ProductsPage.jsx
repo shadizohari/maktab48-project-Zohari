@@ -10,14 +10,12 @@ import DataTableProducts from '../../component/DataTableProducts';
 import { COLORS, MARGIN } from '../../styles/constants';
 // import Container from '@material-ui/core/Container';
 import DataTableHeader from '../../component/DataTableHeader';
-import Modal from '@material-ui/core/Modal';
-import Backdrop from '@material-ui/core/Backdrop';
-import Fade from '@material-ui/core/Fade';
-import AddBookModal from '../../component/AddBookModal';
 import LoadingLayout from '../../component/LoadingLayout';
 import { useDispatch, useSelector } from 'react-redux';
 import AdminHeader from '../../component/AdminHeader';
-import styleModal from '../../styles/styleModal';
+import { setLoading } from '../../store/actions/isLoading';
+import DataTableQuanitityandPrices from '../../component/DataTableQuantity&Price'
+
 
 
 // tab material..........
@@ -61,59 +59,28 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: COLORS.secondaryColor,
         height: "100vh",
     },
-    logo: {
-        width: "100px",
-        marginRight: "20px",
-    },
-    header_managment_panel: {
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        padding: "5px",
-    },
-    header_logo_flex: {
-        display: "flex",
-        alignItems: "center",
-    },
     tab_label: {
         fontSize: "20px",
     },
-    icon_home_style: {
-        fontSize: "30px",
-        color: COLORS.primeryColor,
-    }
 }));
-
 
 // function major 
 export default function TabsWrappedLabel() {
+    // const dispatch = useDispatch();
+    const classes = useStyles();
+
     // tab material.....
     const [value, setValue] = useState('one');
     // tab materila....
     const handleChange = (event, newValue) => {
         setValue(newValue);
+        // dispatch(setLoading(true));
+        // setTimeout(() => {
+        //     dispatch(setLoading(false));
+        // }, 500);
     };
 
-    // modal material.....
-    const [open, setOpen] = useState(false);
-    // modal material.....
-    const handleOpen = () => {
-        setOpen(true);
-    };
-    // modal material.....
-    const handleClose = () => {
-        setOpen(false);
-    };
-
-
-    const classes = useStyles();
-    const styleClassModal = styleModal();
-    const isLoading = useSelector((store) => store.isLoading);
-    useEffect(() => {
-        setOpen(false);
-    }, [isLoading]);
-
-
+   
     return (
         <LoadingLayout>
             <div className={classes.root}>
@@ -143,28 +110,11 @@ export default function TabsWrappedLabel() {
                     </Tabs>
                 </AppBar>
                 <TabPanel value={value} index="one">
-                    <DataTableHeader titre="مدیریت کالا" textBtn="اضافه کردن کالا" handelClick={handleOpen} />
                     <DataTableProducts />
-                    <Modal
-                        className={styleClassModal.modal}
-                        open={open}
-                        onClose={handleClose}
-                        closeAfterTransition
-                        BackdropComponent={Backdrop}
-                        BackdropProps={{
-                            timeout: 500,
-                        }}
-                    >
-                        <Fade in={open}>
-                            <div className={styleClassModal.modal_paper}>
-                                <AddBookModal buttonName={"ذخیره"} putorpost={"post"} />
-                            </div>
-                        </Fade>
-                    </Modal>
                 </TabPanel>
 
                 <TabPanel value={value} index="two">
-                    <DataTableHeader titre="موجودی و قیمت‌ها" textBtn="ذخیره" handelClick={handleOpen} />
+                    <DataTableQuanitityandPrices />
                 </TabPanel>
 
                 <TabPanel value={value} index="three">

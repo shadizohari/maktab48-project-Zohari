@@ -118,7 +118,6 @@ export default function MapBookList({ data, end, start, ...props }) {
                     <TableCell>{row.name}</TableCell>
                     <TableCell>{row.subject}</TableCell>
                     <TableCell onClick={() => editBook(row.id, row.name, row.subject, row.img, row.description)}><AiTwotoneEdit className={classes.icons} /></TableCell>
-                    {/* <TableCell onClick={() => deleteBook(row.id)}><RiDeleteBin2Fill className={classes.icons} /></TableCell> */}
                     <TableCell onClick={() => handleClickOpenDialog(row.id)}><RiDeleteBin2Fill className={classes.icons} /></TableCell>
 
                 </TableRow >

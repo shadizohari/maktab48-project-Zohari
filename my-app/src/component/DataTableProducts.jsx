@@ -17,6 +17,18 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Container from '@material-ui/core/Container';
 import MapBookList from './MapBookList';
+import { paginationCalculate } from '../utils/auth';
+import DataTableHeader from './DataTableHeader';
+
+import styleModal from '../styles/styleModal';
+import { setLoading } from '../store/actions/isLoading';
+import Modal from '@material-ui/core/Modal';
+import Backdrop from '@material-ui/core/Backdrop';
+import Fade from '@material-ui/core/Fade';
+import AddBookModal from './AddBookModal';
+
+
+
 
 const useStyles = makeStyles((theme) => ({
     btn_pagination: {
@@ -52,7 +64,8 @@ export default function DataTableProducts({ ...props }) {
     const [end, setEnd] = useState(5)
     const [array, setArray] = useState([]);
     const [length, setLength] = useState();
-    const [activePageNumber, setActivePageNumber] = useState(1)
+    const [activePageNumber, setActivePageNumber] = useState(1);
+
 
 
     const data = useSelector((store) => store.bookList.bookList);
@@ -93,29 +106,34 @@ export default function DataTableProducts({ ...props }) {
 
     // table pagenation
     useEffect(() => {
-        let x = length % 5;
-        let y;
-        if (x != 0) {
-            y = (length / 5) + 1;
-        } else {
-            y = length / 5;
-        }
-        let arr = [];
-        for (let i = 1; i <= y; i++) {
-            arr.push(i)
-        }
-        setArray([...arr])
+        setArray(paginationCalculate(length))
     }, [length])
-
     function changePage(num) {
         setStart((num - 1) * 5);
         setEnd(num * 5);
         setActivePageNumber(num);
     }
 
+    const styleClassModal = styleModal();
+    const isLoading = useSelector((store) => store.isLoading);
+    useEffect(() => {
+        setOpen(false);
+    }, [isLoading]);
 
+
+    // modal material.....
+    const [open, setOpen] = useState(false);
+    // modal material.....
+    const handleOpen = () => {
+        setOpen(true);
+    };
+    // modal material.....
+    const handleClose = () => {
+        setOpen(false);
+    };
     return (
         <div>
+            <DataTableHeader titre="مدیریت کالا" textBtn="اضافه کردن کالا" handelClick={handleOpen} />
             <DataTableContainer>
                 <TableHead>
                     <TableRow>
@@ -145,7 +163,7 @@ export default function DataTableProducts({ ...props }) {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {(!value ?< MapBookList data={data} start={start} end={end}/> : < MapBookList data={filterResult} start={start} end={end}/>)}
+                    {(!value ? < MapBookList data={data} start={start} end={end} /> : < MapBookList data={filterResult} start={start} end={end} />)}
                 </TableBody>
 
             </DataTableContainer>
@@ -155,6 +173,23 @@ export default function DataTableProducts({ ...props }) {
                     <Button style={{ margin: "5px" }} className={activePageNumber === index + 1 ? classes.accentColor : ""} key={num} variant="contained" onClick={() => { changePage(num) }}>{num}</Button>
                 ))}
             </Container>
+
+            <Modal
+                className={styleClassModal.modal}
+                open={open}
+                onClose={handleClose}
+                closeAfterTransition
+                BackdropComponent={Backdrop}
+                BackdropProps={{
+                    timeout: 500,
+                }}
+            >
+                <Fade in={open}>
+                    <div className={styleClassModal.modal_paper}>
+                        <AddBookModal buttonName={"ذخیره"} putorpost={"post"} />
+                    </div>
+                </Fade>
+            </Modal>
             <ToastContainer />
 
         </div>

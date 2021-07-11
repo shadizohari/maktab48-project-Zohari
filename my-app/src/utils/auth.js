@@ -32,3 +32,18 @@ export const uniqId = (data) => {
 
 }
 
+
+export const paginationCalculate = (length) => {
+  let x = length % 5;
+  let y;
+  if (x != 0) {
+    y = (length / 5) + 1;
+  } else {
+    y = length / 5;
+  }
+  let arr = [];
+  for (let i = 1; i <= y; i++) {
+    arr.push(i)
+  }
+  return([...arr])
+}
