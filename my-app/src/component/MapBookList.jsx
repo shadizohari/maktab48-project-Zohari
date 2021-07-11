@@ -19,12 +19,15 @@ import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
+
+// Dialog ... slide
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
-  });
+});
+
+// major function
 export default function MapBookList({ data, end, start, ...props }) {
 
     const useStyles = makeStyles((theme) => ({
@@ -150,10 +153,19 @@ export default function MapBookList({ data, end, start, ...props }) {
                 <DialogContent>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={() => deleteBook(idDelete)} color="primary">
+                    <Button onClick={() => deleteBook(idDelete)} onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                            deleteBook(idDelete)
+                        }
+                    }}>
                         حذف
                     </Button>
-                    <Button onClick={handleCloseDialog} color="primary" autoFocus>
+                    <Button 
+                    onClick={handleCloseDialog} onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                            handleCloseDialog()
+                        }
+                    }} autoFocus>
                         خیر
                     </Button>
                 </DialogActions>
