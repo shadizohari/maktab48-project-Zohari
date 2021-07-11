@@ -16,8 +16,16 @@ import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 // import LoadingLayout from '../../component/LoadingLayout';
 import styleModal from '../styles/styleModal'
-import {deleteBookApi} from '../api/BooksApi'
+import { deleteBookApi } from '../api/BooksApi'
 // map books for show data in table
+// Dialog
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+
 export default function MapBookList({ data, end, start, ...props }) {
 
     const useStyles = makeStyles((theme) => ({
@@ -64,18 +72,18 @@ export default function MapBookList({ data, end, start, ...props }) {
 
     // delete book
     function deleteBook(id) {
-            deleteBookApi('http://localhost:5000/books/',id);
-            dispatch(setLoading(true));
-            setTimeout(() => {
-                dispatch(setLoading(false));
-            }, 1000);
+        deleteBookApi('http://localhost:5000/books/', id);
+        setOpenDialog(false);
+        dispatch(setLoading(true));
+        setTimeout(() => {
+            dispatch(setLoading(false));
+        }, 1000);
 
     }
 
-
     const [editNameBook, setEditNameBook] = useState("")
     const [editCategory, setEditCategory] = useState("")
-    const [editDescription,setEditDescription] = useState("")
+    const [editDescription, setEditDescription] = useState("")
     const [editId, setEdeitId] = useState()
     const [editImg, setEditImg] = useState()
     // edit book
@@ -88,6 +96,19 @@ export default function MapBookList({ data, end, start, ...props }) {
         setEditDescription(description)
 
     }
+    // Dialog
+    const [openDialog, setOpenDialog] = useState(false);
+    const [idDelete, setIdDelete] = useState();
+    const handleClickOpenDialog = (id) => {
+        setOpenDialog(true);
+        setIdDelete(id);
+    };
+
+    const handleCloseDialog = () => {
+        setOpenDialog(false);
+    };
+
+
 
     return (
         <>
@@ -98,7 +119,9 @@ export default function MapBookList({ data, end, start, ...props }) {
                     <TableCell>{row.name}</TableCell>
                     <TableCell>{row.subject}</TableCell>
                     <TableCell onClick={() => editBook(row.id, row.name, row.subject, row.img, row.description)}><AiTwotoneEdit className={classes.icons} /></TableCell>
-                    <TableCell onClick={() => deleteBook(row.id)}><RiDeleteBin2Fill className={classes.icons} /></TableCell>
+                    {/* <TableCell onClick={() => deleteBook(row.id)}><RiDeleteBin2Fill className={classes.icons} /></TableCell> */}
+                    <TableCell onClick={() => handleClickOpenDialog(row.id)}><RiDeleteBin2Fill className={classes.icons} /></TableCell>
+
                 </TableRow >
             ) : false)}
 
@@ -118,6 +141,25 @@ export default function MapBookList({ data, end, start, ...props }) {
                     </div>
                 </Fade>
             </Modal>
+
+            <Dialog
+                open={openDialog}
+                onClose={handleCloseDialog}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">آیا از حذف این کتاب اظمینان دارید؟</DialogTitle>
+                <DialogContent>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={() => deleteBook(idDelete)} color="primary">
+                        حذف
+                    </Button>
+                    <Button onClick={handleCloseDialog} color="primary" autoFocus>
+                        خیر
+                    </Button>
+                </DialogActions>
+            </Dialog>
 
         </>
 
