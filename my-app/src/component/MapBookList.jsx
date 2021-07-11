@@ -4,20 +4,16 @@ import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import Avatar from '@material-ui/core/Avatar';
 import { COLORS } from '../styles/constants'
-import axios from "axios";
 import { useDispatch, useSelector } from 'react-redux';
 import { setLoading } from '../store/actions/isLoading';
 import { RiDeleteBin2Fill } from 'react-icons/ri';
 import { AiTwotoneEdit } from 'react-icons/ai';
 import AddBookModal from './AddBookModal';
-// import Container from '@material-ui/core/Container';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
-// import LoadingLayout from '../../component/LoadingLayout';
 import styleModal from '../styles/styleModal'
 import { deleteBookApi } from '../api/BooksApi'
-// map books for show data in table
 // Dialog
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -25,7 +21,10 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-
+import Slide from '@material-ui/core/Slide';
+const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+  });
 export default function MapBookList({ data, end, start, ...props }) {
 
     const useStyles = makeStyles((theme) => ({
@@ -57,6 +56,7 @@ export default function MapBookList({ data, end, start, ...props }) {
     const dispatch = useDispatch();
     const classes = useStyles();
     const styleClassModal = styleModal();
+
     // modal material.....
     const [open, setOpen] = useState(false);
     // modal material.....
@@ -69,6 +69,31 @@ export default function MapBookList({ data, end, start, ...props }) {
     };
 
 
+    // edit book
+    const [editNameBook, setEditNameBook] = useState("")
+    const [editCategory, setEditCategory] = useState("")
+    const [editDescription, setEditDescription] = useState("")
+    const [editId, setEdeitId] = useState()
+    const [editImg, setEditImg] = useState()
+    function editBook(id, namebook, category, img, description) {
+        setOpen(true);
+        setEditNameBook(namebook);
+        setEditCategory(category);
+        setEdeitId(id);
+        setEditImg(img);
+        setEditDescription(description)
+
+    }
+    // Dialog for delete
+    const [openDialog, setOpenDialog] = useState(false);
+    const [idDelete, setIdDelete] = useState();
+    const handleClickOpenDialog = (id) => {
+        setOpenDialog(true);
+        setIdDelete(id);
+    };
+    const handleCloseDialog = () => {
+        setOpenDialog(false);
+    };
 
     // delete book
     function deleteBook(id) {
@@ -80,35 +105,6 @@ export default function MapBookList({ data, end, start, ...props }) {
         }, 1000);
 
     }
-
-    const [editNameBook, setEditNameBook] = useState("")
-    const [editCategory, setEditCategory] = useState("")
-    const [editDescription, setEditDescription] = useState("")
-    const [editId, setEdeitId] = useState()
-    const [editImg, setEditImg] = useState()
-    // edit book
-    function editBook(id, namebook, category, img, description) {
-        setOpen(true);
-        setEditNameBook(namebook);
-        setEditCategory(category);
-        setEdeitId(id);
-        setEditImg(img);
-        setEditDescription(description)
-
-    }
-    // Dialog
-    const [openDialog, setOpenDialog] = useState(false);
-    const [idDelete, setIdDelete] = useState();
-    const handleClickOpenDialog = (id) => {
-        setOpenDialog(true);
-        setIdDelete(id);
-    };
-
-    const handleCloseDialog = () => {
-        setOpenDialog(false);
-    };
-
-
 
     return (
         <>
@@ -145,6 +141,8 @@ export default function MapBookList({ data, end, start, ...props }) {
             <Dialog
                 open={openDialog}
                 onClose={handleCloseDialog}
+                TransitionComponent={Transition}
+                keepMounted
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
