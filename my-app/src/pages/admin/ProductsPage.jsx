@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import AdminHeader from '../../component/AdminHeader';
 import { setLoading } from '../../store/actions/isLoading';
 import DataTableQuanitityandPrices from '../../component/DataTableQuantity&Price'
+import { useHistory } from "react-router-dom";
 
 
 
@@ -66,21 +67,45 @@ const useStyles = makeStyles((theme) => ({
 
 // function major 
 export default function TabsWrappedLabel() {
-    // const dispatch = useDispatch();
+    const dispatch = useDispatch();
     const classes = useStyles();
+    let history = useHistory();
+    // tab material
+    const [value, setValue] = useState();
+    // path page
+    const [pathUrl, setPathUrl] = useState(history.location.pathname);
 
-    // tab material.....
-    const [value, setValue] = useState('one');
-    // tab materila....
+
+    useEffect(() => {
+        if (pathUrl === "/admin-panel/products") {
+            setValue("one")
+        } else if (pathUrl === "/admin-panel/quantity_and_price") {
+            setValue("two")
+        } else if (pathUrl === "/admin-panel/orders") {
+            setValue("three")
+        }
+    }, [])
+
+
+
+
+    // change tab material
     const handleChange = (event, newValue) => {
         setValue(newValue);
+        if(newValue==="one"){
+            history.push("/admin-panel/products");
+        }else if (newValue === "two") {
+            history.push("/admin-panel/quantity_and_price");
+        } else if (newValue === "three") {
+            history.push("/admin-panel/orders");
+        }
         // dispatch(setLoading(true));
         // setTimeout(() => {
         //     dispatch(setLoading(false));
         // }, 500);
     };
 
-   
+
     return (
         <LoadingLayout>
             <div className={classes.root}>
@@ -125,3 +150,27 @@ export default function TabsWrappedLabel() {
 
     );
 }
+
+
+
+// const [rows, setRows] = setState([]);
+
+// useEffect(() => {
+//     data.map(item => setRows([...rows, {id: item.id, priceEditable: false, entityEditable: false}]))
+// }, [data])
+
+// [
+//     {
+//         id: 1, priceEditable: false, entityEditable: false
+//     },
+//     {
+//         id: 2, priceEditable: false, entityEditable: false
+//     },
+//     {
+//         id: 3, priceEditable: false, entityEditable: false
+//     }
+// ]
+
+// const changeEdit = (id) => {
+//     let newRows = [...rows];
+//     let index = rows.findIndex(r => r.id === id); 

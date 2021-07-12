@@ -20,7 +20,7 @@ import MapBookList from './MapBookList';
 import { paginationCalculate } from '../utils/auth';
 import DataTableHeader from './DataTableHeader';
 import { setLoading } from '../store/actions/isLoading';
-
+import InputBase from '@material-ui/core/InputBase';
 
 
 
@@ -116,8 +116,22 @@ export default function DataTableQuanitityandPrices({ ...props }) {
                         <TableRow key={row.id}>
                             <TableCell>{index + 1}</TableCell>
                             <TableCell>{row.name}</TableCell>
-                            <TableCell></TableCell>
-                            <TableCell></TableCell>
+                            <TableCell>
+                                <InputBase
+                                    className={classes.margin}
+                                    defaultValue="" 
+                                    style={{textDecoration:"underline red"}}
+                                />
+                            </TableCell>
+                            <TableCell>
+                                <InputBase
+                                    className={classes.margin}
+                                    defaultValue=""
+                                    type="number"
+                                    style={{textDecoration:"underline"}}
+
+                                />
+                            </TableCell>
                         </TableRow >
                     ) : false)}
                 </TableBody>

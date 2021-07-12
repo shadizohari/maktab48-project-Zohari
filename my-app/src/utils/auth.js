@@ -45,5 +45,25 @@ export const paginationCalculate = (length) => {
   for (let i = 1; i <= y; i++) {
     arr.push(i)
   }
-  return([...arr])
+  return ([...arr])
+}
+
+
+export const formatPrice = (num) => {
+  let numStr = String(num);
+  let result = "";
+  let digits = 0;
+  for (let i = numStr.length - 1; i >= 0; i--) {
+    digits++;
+    result = numStr[i] + result;
+    if (digits % 3 == 0) result = "," + result;
+  }
+  if (result[0] === ",") {
+    let num = "";
+    for (let i = 1; i < result.length; i++) {
+      num += result[i];
+    }
+    return num;
+  }
+  return result
 }
