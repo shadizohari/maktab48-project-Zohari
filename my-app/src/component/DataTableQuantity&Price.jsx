@@ -60,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
 export default function DataTableQuanitityandPrices({ ...props }) {
     const dispatch = useDispatch();
     const classes = useStyles();
-    const [data, setData] = useState([]);
+    const [booksData, setBookData] = useState([])   
     const [value, setValue] = useState(false);
     const [start, setStart] = useState(0)
     const [end, setEnd] = useState(5)
@@ -78,19 +78,12 @@ export default function DataTableQuanitityandPrices({ ...props }) {
                 if (response.data) {
                     setLength(response.data.length)
                     dispatch(setBookList(response.data));
-                    setData(response.data)
+                    setBookData(response.data);
 
                 }
             }).catch((err) => toast.error("request failed!"));
     }, [])
 
-    // const data = useSelector((store) => store.bookList.bookList);
-    const [booksData, setBookData] = useState([])
-    useEffect(() => {
-        if (data) {
-            setBookData([...data])
-        }
-    }, [data])
     function handelQuantity(e, id) {
         let i = booksData.findIndex((book, index) => book.id == id)
         booksData[i].quantity = e.target.value
@@ -113,6 +106,7 @@ export default function DataTableQuanitityandPrices({ ...props }) {
 
     // example...
     function openloading() {
+
         dispatch(setLoading(true));
         setTimeout(() => {
             dispatch(setLoading(false));
@@ -133,7 +127,7 @@ export default function DataTableQuanitityandPrices({ ...props }) {
                 </TableHead>
                 <TableBody>
                     {/*  < MapBookList data={data} start={start} end={end} /> } */}
-                    {data?.map((row, index) => (index < end && index >= start) ? (
+                    {booksData?.map((row, index) => (index < end && index >= start) ? (
                         <TableRow key={row.id} className={classes.customTable}>
                             <TableCell style={{ padding: "16px" }}>{index + 1}</TableCell>
                             <TableCell style={{ padding: "16px" }}>{row.name}</TableCell>
@@ -149,7 +143,7 @@ export default function DataTableQuanitityandPrices({ ...props }) {
                                 <InputBase
                                     className={classes.margin}
                                     // defaultValue={row.quantity==0?"ناموجود":row.quantity}
-                                    value={(data.length > 0) ? data.find(item => item.id == row.id).quantity : false}
+                                    value={(booksData.length > 0) ? booksData.find(item => item.id == row.id).quantity : false}
                                     type="number"
                                     onChange={(e, id) => handelQuantity(e, row.id)}
                                     style={{ textDecoration: "underline", padding: "16px" }}
@@ -172,6 +166,30 @@ export default function DataTableQuanitityandPrices({ ...props }) {
         </div>
     );
 }
+
+
+// function handelQuantity(e, id) {
+//     let i = booksData.findIndex((book, index) => book.id == id);
+//     booksData[i].quantity = e.target.value;
+//     setBookData([...booksData]);
+
+//     let index = modifiedData.findIndex((book, index) => book.id == id);
+//     if (index > -1) {
+//         modifiedData[index].quantity = e.target.value;
+//     } else {
+//         modifiedData.push(booksData[i])
+//     }
+//     setModifiedData([...modifiedData])
+// }
+
+
+
+
+
+
+
+
+
 
 
 // import * as React from 'react';
