@@ -12,22 +12,12 @@ import DataTableContainer from './DataTableContainer';
 import { useDispatch, useSelector } from 'react-redux';
 import { setBookList } from '../store/actions/bookList';
 import Button from '@material-ui/core/Button';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
 import Container from '@material-ui/core/Container';
-import MapBookList from './MapBookList';
-import { paginationCalculate } from '../utils/auth';
+import { paginationCalculate, formatPrice } from '../utils/auth';
 import DataTableHeader from './DataTableHeader';
 import { setLoading } from '../store/actions/isLoading';
 import InputBase from '@material-ui/core/InputBase';
-import TextField from '@material-ui/core/TextField';
 import { putBookApi } from '../api/BooksApi'
-
-
-
-
-
 
 const useStyles = makeStyles((theme) => ({
     btn_pagination: {
@@ -52,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
     },
     customTable: {
         "& .MuiTableCell-root": {
-            padding: "0px" // <-- arbitrary value
+            padding: "0px",
         }
     },
     styleInputChange: {
@@ -73,6 +63,18 @@ export default function DataTableQuanitityandPrices({ ...props }) {
     const [activePageNumber, setActivePageNumber] = useState(1);
     const [modifiedData, setModifiedData] = useState([]);
     const [styleInputChange, setStyleInputChange] = useState(classes.styleInputChange)
+    // const [typeInput, setTypeInput] = useState("text")
+    const [idChange, setIdChange] = useState([])
+
+    function valueInputPrice(idRow) {
+        if (booksData.length > 0) {
+            if (idChange.find(id => id == idRow)) {
+                return booksData.find(item => item.id == idRow).price
+            } else {
+                return formatPrice(booksData.find(item => item.id == idRow).price)
+            }
+        }
+    }
 
 
 
@@ -89,9 +91,11 @@ export default function DataTableQuanitityandPrices({ ...props }) {
             }).catch((err) => toast.error("request failed!"));
     }, [])
 
+    // function for handeling value input price and quantity
     function handelInput(e, id, input) {
+        setIdChange([...idChange, id])
+        e.target.type = "number"
         e.target.className = `${styleInputChange} MuiInputBase-input`;
-        console.log(e.target.className);
         let i = booksData.findIndex((book, index) => book.id == id);
         booksData[i][input] = e.target.value;
         setBookData([...booksData]);
@@ -118,14 +122,13 @@ export default function DataTableQuanitityandPrices({ ...props }) {
         setActivePageNumber(num);
     }
 
+
     function sleep(ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
-
-
-    // put data quantity...
+    // put new data...
     function putData() {
-        console.log(modifiedData)
+        setIdChange([])
         modifiedData.forEach(async (book, indx) => {
             putBookApi('http://localhost:5000/books/', book.id, book);
             await sleep(500);
@@ -149,7 +152,6 @@ export default function DataTableQuanitityandPrices({ ...props }) {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {/*  < MapBookList data={data} start={start} end={end} /> } */}
                     {booksData?.map((row, index) => (index < end && index >= start) ? (
                         <TableRow key={row.id} className={classes.customTable}>
                             <TableCell style={{ padding: "16px" }}>{index + 1}</TableCell>
@@ -157,12 +159,11 @@ export default function DataTableQuanitityandPrices({ ...props }) {
                             <TableCell>
                                 <InputBase
                                     className={classes.margin}
-                                    value={(booksData.length > 0) ? booksData.find(item => item.id == row.id).price : false}
-                                    type="number"
-                                    onChange={(e, id) => handelInput(e, row.id,"price")}
+                                    value={valueInputPrice(row.id)}
+                                    type={"text"}
+                                    onChange={(e, id) => handelInput(e, row.id, "price")}
                                     style={{ textDecoration: "underline", padding: "16px" }}
                                 />
-                                {/* <TextField variant="outlined" /> */}
                             </TableCell>
                             <TableCell>
                                 <InputBase
