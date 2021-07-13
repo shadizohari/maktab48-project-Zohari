@@ -98,6 +98,8 @@ export default function AddBookModal({ editNameBook, editCategory, buttonName, p
                     subject: category,
                     img: fileData,
                     description: description,
+                    quantity: 0,
+                    price:0,
                 }
                 setResponseNewBook(BooksApi(book, 'post', 'http://localhost:5000/books/'));
                 // dispatch(setLoading(true));
@@ -113,6 +115,8 @@ export default function AddBookModal({ editNameBook, editCategory, buttonName, p
                 subject: category,
                 img: fileData,
                 description: description,
+                quantity: 0,
+                price:0,
             }
             putBookApi('http://localhost:5000/books/', editId, book)
             // dispatch(setLoading(true));

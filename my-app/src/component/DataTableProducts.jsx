@@ -69,7 +69,7 @@ export default function DataTableProducts({ ...props }) {
 
 
     const data = useSelector((store) => store.bookList.bookList);
-
+   
     // get data when load page
     useEffect(() => {
         axios.get('http://localhost:5000/books')
@@ -78,6 +78,7 @@ export default function DataTableProducts({ ...props }) {
                     // setData(response.data);
                     setLength(response.data.length)
                     dispatch(setBookList(response.data));
+                    console.log(response.data)
 
                 }
             }).catch((err) => toast.error("request failed!"));
