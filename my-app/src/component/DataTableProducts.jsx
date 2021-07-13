@@ -19,7 +19,7 @@ import Container from '@material-ui/core/Container';
 import MapBookList from './MapBookList';
 import { paginationCalculate } from '../utils/auth';
 import DataTableHeader from './DataTableHeader';
-
+import { usePagination } from '../hook/usePagination';
 import styleModal from '../styles/styleModal';
 import { setLoading } from '../store/actions/isLoading';
 import Modal from '@material-ui/core/Modal';
@@ -57,19 +57,14 @@ const useStyles = makeStyles((theme) => ({
 export default function DataTableProducts({ ...props }) {
     const dispatch = useDispatch();
     const classes = useStyles();
-    // const [data, setData] = useState([]);
     const [filterResult, setFilterResult] = useState([]);
     const [value, setValue] = useState(false);
-    const [start, setStart] = useState(0)
-    const [end, setEnd] = useState(5)
     const [array, setArray] = useState([]);
     const [length, setLength] = useState();
-    const [activePageNumber, setActivePageNumber] = useState(1);
-
 
 
     const data = useSelector((store) => store.bookList.bookList);
-   
+
     // get data when load page
     useEffect(() => {
         axios.get('http://localhost:5000/books')
@@ -104,16 +99,15 @@ export default function DataTableProducts({ ...props }) {
         }
     }
 
-
-    // table pagenation
+   
+    // // table pagenation
     useEffect(() => {
-        setArray(paginationCalculate(length))
+        setArray(paginationCalculate(length,5))
     }, [length])
-    function changePage(num) {
-        setStart((num - 1) * 5);
-        setEnd(num * 5);
-        setActivePageNumber(num);
-    }
+    const { start, end, changePage, activePageNumber,setStart, setEnd, setActivePageNumber } = usePagination(5)
+
+
+
 
     const styleClassModal = styleModal();
     const isLoading = useSelector((store) => store.isLoading);
@@ -170,7 +164,7 @@ export default function DataTableProducts({ ...props }) {
             </DataTableContainer>
 
             <Container maxWidth="lg" className={classes.btn_pagination}>
-                {array.map((num, index) => (
+                {array?.map((num, index) => (
                     <Button style={{ margin: "5px" }} className={activePageNumber === index + 1 ? classes.accentColor : ""} key={num} variant="contained" onClick={() => { changePage(num) }}>{num}</Button>
                 ))}
             </Container>

@@ -33,13 +33,13 @@ export const uniqId = (data) => {
 }
 
 
-export const paginationCalculate = (length) => {
-  let x = length % 5;
+export const paginationCalculate = (length, pageNumber) => {
+  let x = length % pageNumber;
   let y;
   if (x != 0) {
-    y = (length / 5) + 1;
+    y = (length / pageNumber) + 1;
   } else {
-    y = length / 5;
+    y = length / pageNumber;
   }
   let arr = [];
   for (let i = 1; i <= y; i++) {

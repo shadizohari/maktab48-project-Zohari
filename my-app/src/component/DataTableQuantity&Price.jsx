@@ -18,6 +18,7 @@ import DataTableHeader from './DataTableHeader';
 import { setLoading } from '../store/actions/isLoading';
 import InputBase from '@material-ui/core/InputBase';
 import { putBookApi } from '../api/BooksApi'
+import {usePagination} from '../hook/usePagination';
 
 const useStyles = makeStyles((theme) => ({
     btn_pagination: {
@@ -55,15 +56,10 @@ export default function DataTableQuanitityandPrices({ ...props }) {
     const dispatch = useDispatch();
     const classes = useStyles();
     const [booksData, setBookData] = useState([])
-    const [value, setValue] = useState(false);
-    const [start, setStart] = useState(0)
-    const [end, setEnd] = useState(5)
     const [array, setArray] = useState([]);
-    const [length, setLength] = useState();
-    const [activePageNumber, setActivePageNumber] = useState(1);
+    const [length, setLength] = useState(0);
     const [modifiedData, setModifiedData] = useState([]);
     const [styleInputChange, setStyleInputChange] = useState(classes.styleInputChange)
-    // const [typeInput, setTypeInput] = useState("text")
     const [idChange, setIdChange] = useState([])
 
     function valueInputPrice(idRow) {
@@ -75,8 +71,6 @@ export default function DataTableQuanitityandPrices({ ...props }) {
             }
         }
     }
-
-
 
     // get data when load page
     useEffect(() => {
@@ -110,23 +104,20 @@ export default function DataTableQuanitityandPrices({ ...props }) {
     }
 
 
+    
 
-    // table pagenation
+    // // table pagenation
     useEffect(() => {
-        setArray(paginationCalculate(length))
+        setArray(paginationCalculate(length,10))
     }, [length])
-
-    function changePage(num) {
-        setStart((num - 1) * 5);
-        setEnd(num * 5);
-        setActivePageNumber(num);
-    }
+    const { start, end, changePage, activePageNumber} = usePagination(10)
 
 
+
+    // put new data...
     function sleep(ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
-    // put new data...
     function putData() {
         setIdChange([])
         modifiedData.forEach(async (book, indx) => {
@@ -182,7 +173,7 @@ export default function DataTableQuanitityandPrices({ ...props }) {
             </DataTableContainer>
 
             <Container maxWidth="lg" className={classes.btn_pagination}>
-                {array.map((num, index) => (
+                {array?.map((num, index) => (
                     <Button style={{ margin: "5px" }} className={activePageNumber === index + 1 ? classes.accentColor : ""} key={num} variant="contained" onClick={() => { changePage(num) }}>{num}</Button>
                 ))}
             </Container>
