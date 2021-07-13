@@ -22,7 +22,7 @@ import DataTableHeader from './DataTableHeader';
 import { setLoading } from '../store/actions/isLoading';
 import InputBase from '@material-ui/core/InputBase';
 import TextField from '@material-ui/core/TextField';
-
+import { putBookApi } from '../api/BooksApi'
 
 
 
@@ -55,19 +55,24 @@ const useStyles = makeStyles((theme) => ({
             padding: "0px" // <-- arbitrary value
         }
     },
+    styleInputChange: {
+        color: COLORS.accentColor,
+        textDecoration: `underline ${COLORS.accentColor}`,
+    }
 }));
 
 export default function DataTableQuanitityandPrices({ ...props }) {
     const dispatch = useDispatch();
     const classes = useStyles();
-    const [booksData, setBookData] = useState([])   
+    const [booksData, setBookData] = useState([])
     const [value, setValue] = useState(false);
     const [start, setStart] = useState(0)
     const [end, setEnd] = useState(5)
     const [array, setArray] = useState([]);
     const [length, setLength] = useState();
     const [activePageNumber, setActivePageNumber] = useState(1);
-
+    const [modifiedData, setModifiedData] = useState([]);
+    const [styleInputChange, setStyleInputChange] = useState(classes.styleInputChange)
 
 
 
@@ -84,10 +89,20 @@ export default function DataTableQuanitityandPrices({ ...props }) {
             }).catch((err) => toast.error("request failed!"));
     }, [])
 
-    function handelQuantity(e, id) {
-        let i = booksData.findIndex((book, index) => book.id == id)
-        booksData[i].quantity = e.target.value
-        setBookData([...booksData])
+    function handelInput(e, id, input) {
+        e.target.className = `${styleInputChange} MuiInputBase-input`;
+        console.log(e.target.className);
+        let i = booksData.findIndex((book, index) => book.id == id);
+        booksData[i][input] = e.target.value;
+        setBookData([...booksData]);
+
+        let index = modifiedData.findIndex((book, index) => book.id == id);
+        if (index > -1) {
+            modifiedData[index][input] = e.target.value;
+        } else {
+            modifiedData.push(booksData[i])
+        }
+        setModifiedData([...modifiedData])
     }
 
 
@@ -103,25 +118,33 @@ export default function DataTableQuanitityandPrices({ ...props }) {
         setActivePageNumber(num);
     }
 
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
 
-    // example...
-    function openloading() {
 
+    // put data quantity...
+    function putData() {
+        console.log(modifiedData)
+        modifiedData.forEach(async (book, indx) => {
+            putBookApi('http://localhost:5000/books/', book.id, book);
+            await sleep(500);
+        });
+        setStyleInputChange("");
         dispatch(setLoading(true));
         setTimeout(() => {
             dispatch(setLoading(false));
         }, 1000);
     }
-    // const [value, newvalue] = useState()
     return (
         <div>
-            <DataTableHeader titre="موجودی و قیمت‌ها" textBtn="ذخیره" handelClick={openloading} />
+            <DataTableHeader titre="موجودی و قیمت‌ها" textBtn="ذخیره" handelClick={putData} />
             <DataTableContainer>
                 <TableHead>
                     <TableRow>
                         <TableCell>#</TableCell>
                         <TableCell>نام کتاب</TableCell>
-                        <TableCell>قیمت‌</TableCell>
+                        <TableCell>قیمت‌ (تومان) </TableCell>
                         <TableCell>موجودی</TableCell>
                     </TableRow>
                 </TableHead>
@@ -132,20 +155,21 @@ export default function DataTableQuanitityandPrices({ ...props }) {
                             <TableCell style={{ padding: "16px" }}>{index + 1}</TableCell>
                             <TableCell style={{ padding: "16px" }}>{row.name}</TableCell>
                             <TableCell>
-                                {/* <InputBase
-                                        className={classes.margin}
-                                        defaultValue="" 
-                                        style={{textDecoration:"underline red"}}
-                                    /> */}
-                                <TextField variant="outlined" />
+                                <InputBase
+                                    className={classes.margin}
+                                    value={(booksData.length > 0) ? booksData.find(item => item.id == row.id).price : false}
+                                    type="number"
+                                    onChange={(e, id) => handelInput(e, row.id,"price")}
+                                    style={{ textDecoration: "underline", padding: "16px" }}
+                                />
+                                {/* <TextField variant="outlined" /> */}
                             </TableCell>
                             <TableCell>
                                 <InputBase
                                     className={classes.margin}
-                                    // defaultValue={row.quantity==0?"ناموجود":row.quantity}
                                     value={(booksData.length > 0) ? booksData.find(item => item.id == row.id).quantity : false}
                                     type="number"
-                                    onChange={(e, id) => handelQuantity(e, row.id)}
+                                    onChange={(e, id) => handelInput(e, row.id, "quantity")}
                                     style={{ textDecoration: "underline", padding: "16px" }}
 
                                 />
@@ -166,95 +190,5 @@ export default function DataTableQuanitityandPrices({ ...props }) {
         </div>
     );
 }
-
-
-// function handelQuantity(e, id) {
-//     let i = booksData.findIndex((book, index) => book.id == id);
-//     booksData[i].quantity = e.target.value;
-//     setBookData([...booksData]);
-
-//     let index = modifiedData.findIndex((book, index) => book.id == id);
-//     if (index > -1) {
-//         modifiedData[index].quantity = e.target.value;
-//     } else {
-//         modifiedData.push(booksData[i])
-//     }
-//     setModifiedData([...modifiedData])
-// }
-
-
-
-
-
-
-
-
-
-
-
-// import * as React from 'react';
-// import { DataGrid } from '@material-ui/data-grid';
-
-// const columns = [
-//   { field: 'id', headerName: 'ID', width: 90 },
-//   {
-//     field: 'firstName',
-//     headerName: 'First name',
-//     width: 150,
-//     editable: true,
-//   },
-//   {
-//     field: 'lastName',
-//     headerName: 'Last name',
-//     width: 150,
-//     editable: true,
-//   },
-//   {
-//     field: 'age',
-//     headerName: 'Age',
-//     type: 'number',
-//     width: 110,
-//     editable: true,
-//   },
-//   {
-//     field: 'fullName',
-//     headerName: 'Full name',
-//     description: 'This column has a value getter and is not sortable.',
-//     sortable: false,
-//     width: 160,
-//     valueGetter: (params) =>
-//       `${params.getValue(params.id, 'firstName') || ''} ${
-//         params.getValue(params.id, 'lastName') || ''
-//       }`,
-//   },
-// ];
-
-// const rows = [
-//   {  lastName: 'Snow', firstName: 'Jon', age: 35 ,id: 1},
-//   { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-//   { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-//   { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-//   { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-//   { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-//   { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-//   { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-//   { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-// ];
-
-// export default function DataGridDemo() {
-//   return (
-//     <div style={{ height: 400, width: '100%',direction:'ltr' }}>
-//       <DataGrid
-//       style={{direction:'rtl' }}
-//         rows={rows}
-//         columns={columns}
-//         pageSize={5}
-//         checkboxSelection
-//         disableSelectionOnClick
-//       />
-//     </div>
-//   );
-// }
-
 
 
