@@ -14,6 +14,8 @@ export const usePagination = (pageNumber) => {
         setEnd(num * pageNumber);
         setActivePageNumber(num);
     }
+
+
     const [start, setStart] = useState(0)
     const [end, setEnd] = useState(pageNumber)
     const [activePageNumber, setActivePageNumber] = useState(1);
@@ -22,7 +24,7 @@ export const usePagination = (pageNumber) => {
 
 
 
-    return ({ start, end, changePage, activePageNumber,setStart,setEnd,setActivePageNumber})
+    return ({ start, end, changePage, activePageNumber, setStart, setEnd, setActivePageNumber})
 }
 
 
