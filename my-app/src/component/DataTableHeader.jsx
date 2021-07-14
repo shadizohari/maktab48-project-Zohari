@@ -3,7 +3,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import { COLORS } from '../styles/constants'
-import DeleveredOrdersRadio from './DeleveredOrdersRadio'
+import DeliveredOrdersRadio from './DeliveredOrdersRadio'
 
 const useStyles = makeStyles((theme) => ({
     data_table_header: {
@@ -33,7 +33,7 @@ export default function DataTableHeader({ titre, textBtn, handelClick, button = 
             >
                 {textBtn}
             </Button> : false}
-            {radio ? <DeleveredOrdersRadio /> : false}
+            {radio ? <DeliveredOrdersRadio /> : false}
 
         </Container>
     )

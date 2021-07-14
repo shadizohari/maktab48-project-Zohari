@@ -19,6 +19,7 @@ import DataTableHeader from './DataTableHeader';
 import { usePagination } from '../hook/usePagination';
 import styleModal from '../styles/styleModal';
 import MapOrdersList from './MapOrdersList';
+// import LoadingLayout from './LoadingLayout';
 
 
 
@@ -44,18 +45,16 @@ export default function DataTableOrders({ ...props }) {
     const [value, setValue] = useState(false);
     const [array, setArray] = useState([]);
     const [length, setLength] = useState();
+    const [orders, setOrders] = useState([]);
 
-
-    const data = useSelector((store) => store.bookList.bookList);
 
     // get data when load page
     useEffect(() => {
         axios.get('http://localhost:5000/orders')
             .then(response => {
                 if (response.data) {
-                    // setData(response.data);
+                    setOrders(response.data);
                     setLength(response.data.length)
-                    dispatch(setBookList(response.data));
                     console.log(response.data)
 
                 }
@@ -92,32 +91,33 @@ export default function DataTableOrders({ ...props }) {
     };
     return (
         <div>
-            <DataTableHeader titre="مدیریت سفارش‌ها" button={false} radio={true} />
-            <DataTableContainer>
-                <TableHead>
-                    <TableRow>
-                        <TableCell>#</TableCell>
-                        <TableCell>نام کاربری</TableCell>
-                        <TableCell>مجموع مبلغ</TableCell>
-                        <TableCell>زمان ثبت سفارش‌</TableCell>
-                        <TableCell></TableCell>
+            {/* <LoadingLayout> */}
+                <DataTableHeader titre="مدیریت سفارش‌ها" button={false} radio={true} />
+                <DataTableContainer>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>#</TableCell>
+                            <TableCell>نام کاربری</TableCell>
+                            <TableCell>مجموع مبلغ</TableCell>
+                            <TableCell>زمان ثبت سفارش‌</TableCell>
+                            <TableCell></TableCell>
 
 
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    < MapOrdersList data={data} start={start} end={end} />
-                </TableBody>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        < MapOrdersList data={orders} start={start} end={end} />
+                    </TableBody>
 
-            </DataTableContainer>
+                </DataTableContainer>
 
-            <Container maxWidth="lg" className={classes.btn_pagination}>
-                {array?.map((num, index) => (
-                    <Button style={{ margin: "5px" }} className={activePageNumber === index + 1 ? classes.accentColor : ""} key={num} variant="contained" onClick={() => { changePage(num) }}>{num}</Button>
-                ))}
-            </Container>
+                <Container maxWidth="lg" className={classes.btn_pagination}>
+                    {array?.map((num, index) => (
+                        <Button style={{ margin: "5px" }} className={activePageNumber === index + 1 ? classes.accentColor : ""} key={num} variant="contained" onClick={() => { changePage(num) }}>{num}</Button>
+                    ))}
+                </Container>
 
-
+            {/* </LoadingLayout> */}
             <ToastContainer />
 
         </div>
