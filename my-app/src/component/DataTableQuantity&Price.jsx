@@ -62,8 +62,8 @@ export default function DataTableQuanitityandPrices({ ...props }) {
     const [styleInputChange, setStyleInputChange] = useState(classes.styleInputChange)
     const [idChange, setIdChange] = useState([])
 
-    function valueInputPrice(idRow) {
-        if (booksData.length > 0) {
+    function setPriceValue(idRow) {
+        if (booksData) {
             if (idChange.find(id => id == idRow)) {
                 return booksData.find(item => item.id == idRow).price
             } else {
@@ -119,7 +119,8 @@ export default function DataTableQuanitityandPrices({ ...props }) {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
     function putData() {
-        setIdChange([])
+        console.log(idChange)
+        // setIdChange([])
         modifiedData.forEach(async (book, indx) => {
             putBookApi('http://localhost:5000/books/', book.id, book);
             await sleep(500);
@@ -150,7 +151,7 @@ export default function DataTableQuanitityandPrices({ ...props }) {
                             <TableCell>
                                 <InputBase
                                     className={classes.margin}
-                                    value={valueInputPrice(row.id)}
+                                    value={setPriceValue(row.id)}
                                     type={"text"}
                                     onChange={(e, id) => handelInput(e, row.id, "price")}
                                     style={{ textDecoration: "underline", padding: "16px" }}

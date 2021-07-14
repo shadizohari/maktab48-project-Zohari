@@ -16,6 +16,7 @@ import AdminHeader from '../../component/AdminHeader';
 import { setLoading } from '../../store/actions/isLoading';
 import DataTableQuanitityandPrices from '../../component/DataTableQuantity&Price'
 import { useHistory } from "react-router-dom";
+import DataTableOrders from '../../component/DataTableOrders';
 
 
 
@@ -143,7 +144,7 @@ export default function TabsWrappedLabel() {
                 </TabPanel>
 
                 <TabPanel value={value} index="three">
-                    Item Three
+                    <DataTableOrders/>
                 </TabPanel>
             </div>
         </LoadingLayout>
