@@ -58,8 +58,9 @@ export default function MapBookList({ data, end, start, ...props }) {
 
     const dispatch = useDispatch();
     const classes = useStyles();
-    const styleClassModal = styleModal();
 
+    // modal style
+    const styleClassModal = styleModal();
     // modal material.....
     const [open, setOpen] = useState(false);
     // modal material.....
@@ -135,7 +136,7 @@ export default function MapBookList({ data, end, start, ...props }) {
             >
                 <Fade in={open}>
                     <div className={styleClassModal.modal_paper}>
-                        <AddBookModal editImg={editImg} editNameBook={editNameBook} editCategory={editCategory} editDescription={editDescription} buttonName={"ثبت"} putorpost={"put"} editId={editId} />
+                        <AddBookModal closeModal={handleClose} editImg={editImg} editNameBook={editNameBook} editCategory={editCategory} editDescription={editDescription} buttonName={"ثبت"} putorpost={"put"} editId={editId} />
                     </div>
                 </Fade>
             </Modal>
@@ -159,12 +160,12 @@ export default function MapBookList({ data, end, start, ...props }) {
                     }}>
                         حذف
                     </Button>
-                    <Button 
-                    onClick={handleCloseDialog} onKeyDown={(e) => {
-                        if (e.key === 'Enter') {
-                            handleCloseDialog()
-                        }
-                    }} autoFocus>
+                    <Button
+                        onClick={handleCloseDialog} onKeyDown={(e) => {
+                            if (e.key === 'Enter') {
+                                handleCloseDialog()
+                            }
+                        }} autoFocus>
                         خیر
                     </Button>
                 </DialogActions>

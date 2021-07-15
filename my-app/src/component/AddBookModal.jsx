@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { uniqId } from '../utils/auth';
 import axios from "axios";
 import { putBookApi } from '../api/BooksApi'
+import HeaderModal from './HeaderModal';
 
 
 
@@ -62,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function AddBookModal({ editNameBook, editCategory, buttonName, putorpost, editId, editImg, editDescription, ...props }) {
+export default function AddBookModal({ editNameBook, editCategory, buttonName, putorpost, editId, editImg, editDescription,closeModal, ...props }) {
     const classes = useStyles();
     const [bookName, setBookName] = useState("");
     const [category, setCategory] = useState("رمان");
@@ -72,6 +73,7 @@ export default function AddBookModal({ editNameBook, editCategory, buttonName, p
     const dispatch = useDispatch();
     const [selectedFile, setSelectedFile] = useState();
     const bookList = useSelector((store) => store.bookList.bookList);
+
 
     useEffect(() => {
         if (editNameBook) {
@@ -99,7 +101,7 @@ export default function AddBookModal({ editNameBook, editCategory, buttonName, p
                     img: fileData,
                     description: description,
                     quantity: 0,
-                    price:0,
+                    price: 0,
                 }
                 setResponseNewBook(BooksApi(book, 'post', 'http://localhost:5000/books/'));
                 // dispatch(setLoading(true));
@@ -116,7 +118,7 @@ export default function AddBookModal({ editNameBook, editCategory, buttonName, p
                 img: fileData,
                 description: description,
                 quantity: 0,
-                price:0,
+                price: 0,
             }
             putBookApi('http://localhost:5000/books/', editId, book)
             // dispatch(setLoading(true));
@@ -149,9 +151,12 @@ export default function AddBookModal({ editNameBook, editCategory, buttonName, p
 
     return (
         <Container maxWidth="lg">
-            <Typography variant="h6" className={classes.margin_2}>
+            {/* <Typography variant="h6" className={classes.margin_2}>
                 افزودن / ویرایش کالا
-            </Typography>
+            </Typography> */}
+            <HeaderModal titreModal={"افزودن / ویرایش کالا"} closeModal={closeModal} />
+
+
             <form noValidate onSubmit={(e) => addbook(e, editId)}>
                 <Button
                     className={classes.margin_1}

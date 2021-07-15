@@ -10,10 +10,20 @@ const useStyles = makeStyles((theme) => ({
         display: "flex",
         justifyContent: "space-between",
         marginBottom: "24px",
+        [theme.breakpoints.down('sm')]: {
+            flexDirection: 'column',
+            alignItems: "flex-start",
+        },
     },
     accentColor: {
         background: COLORS.accentColor,
     },
+    marginTop: {
+
+        [theme.breakpoints.down('sm')]: {
+            marginTop: "30px"
+        },
+    }
 
 }));
 
@@ -25,15 +35,17 @@ export default function DataTableHeader({ titre, textBtn, handelClick, button = 
 
                 {titre}
             </Typography>
-            {button ? <Button
-                variant="contained"
-                color={COLORS.accentColor}
-                className={classes.accentColor}
-                onClick={handelClick}
-            >
-                {textBtn}
-            </Button> : false}
-            {radio ? <DeliveredOrdersRadio /> : false}
+            <div className={classes.marginTop}>
+                {button ? <Button
+                    variant="contained"
+                    color={COLORS.accentColor}
+                    className={classes.accentColor}
+                    onClick={handelClick}
+                >
+                    {textBtn}
+                </Button> : false}
+                {radio ? <DeliveredOrdersRadio /> : false}
+            </div>
 
         </Container>
     )

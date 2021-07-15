@@ -181,7 +181,7 @@ export default function DataTableProducts({ ...props }) {
             >
                 <Fade in={open}>
                     <div className={styleClassModal.modal_paper}>
-                        <AddBookModal buttonName={"ذخیره"} putorpost={"post"} />
+                        <AddBookModal buttonName={"ذخیره"} putorpost={"post"} closeModal={handleClose} />
                     </div>
                 </Fade>
             </Modal>
