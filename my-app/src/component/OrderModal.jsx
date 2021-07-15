@@ -1,19 +1,13 @@
 import react, { useState, useEffect } from 'react';
-import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import Select from '@material-ui/core/Select';
 import { COLORS, MARGIN } from '../styles/constants';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { toast, ToastContainer } from 'react-toastify';
 import { BooksApi } from '../api/BooksApi';
 import { setLoading } from '../store/actions/isLoading';
 import { setBookList } from '../store/actions/bookList';
 import { useDispatch, useSelector } from 'react-redux';
-import { uniqId } from '../utils/auth';
 import axios from "axios";
 import { putBookApi } from '../api/BooksApi'
 import InfoList from './InfoList'
@@ -21,15 +15,17 @@ import InfoList from './InfoList'
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
 import HeaderModal from './HeaderModal';
+import {styleButton} from '../styles/styleButton';
 
 const useStyles = makeStyles((theme) => ({
     table: {
+        background:COLORS.secondaryColor,
         width: "800px",
+        marginTop:"20px",
+        marginBottom:"20px",
         [theme.breakpoints.down('sm')]: {
             width: "100%",
 
@@ -37,7 +33,6 @@ const useStyles = makeStyles((theme) => ({
     },
     accentColor: {
         background: COLORS.accentColor,
-        color: "white"
     },
     formControl: {
         margin: theme.spacing(1),
@@ -73,7 +68,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function OrderModal({ closeModal, userName, mobile, address, orderList, status, orderTIme, deliveryTime, ...props }) {
     const classes = useStyles();
-
+    const btn = styleButton()
 
 
 
@@ -107,7 +102,7 @@ export default function OrderModal({ closeModal, userName, mobile, address, orde
                 </TableBody>
             </Table>
             <div className={classes.flexCenter}>
-                {(!deliveryTime) ? <Button className={`${classes.margin_2}  ${classes.accentColor}`}>تحویل شد</Button> : false}
+                {(!deliveryTime) ? <Button className={`${classes.margin_2}  ${btn.btn}`}>تحویل شد</Button> : false}
             </div>
         </Container>
     )
