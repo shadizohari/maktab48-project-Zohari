@@ -18,14 +18,14 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import HeaderModal from './HeaderModal';
-import {styleButton} from '../styles/styleButton';
+import { styleButton } from '../styles/styleButton';
 
 const useStyles = makeStyles((theme) => ({
     table: {
-        background:COLORS.secondaryColor,
+        background: COLORS.secondaryColor,
         width: "800px",
-        marginTop:"20px",
-        marginBottom:"20px",
+        marginTop: "20px",
+        marginBottom: "20px",
         [theme.breakpoints.down('sm')]: {
             width: "100%",
 
@@ -66,22 +66,32 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function OrderModal({ closeModal, userName, mobile, address, orderList, status, orderTIme, deliveryTime, ...props }) {
+export default function OrderModal({ order, closeModal,...props }) {
     const classes = useStyles();
     const btn = styleButton()
+    const dispatch = useDispatch();
 
+    function delivered() {
+        closeModal()
+        order.delivered = true
+        putBookApi('http://localhost:5000/orders/', order.id, order,"deliverd order")
+        dispatch(setLoading(true));
+        setTimeout(() => {
+            dispatch(setLoading(false));
+        }, 1000);
 
+    }
 
 
 
     return (
         <Container maxWidth="lg">
             <HeaderModal titreModal={"نمایش سفارش"} closeModal={closeModal} />
-            <InfoList subject="نام مشتری" info={userName} />
-            <InfoList subject="آدرس" info={address} />
-            <InfoList subject="تلفن" info={mobile} />
-            <InfoList subject="زمان سفارش" info={orderTIme} />
-            <InfoList subject="زمان تحویل" info={deliveryTime} />
+            <InfoList subject="نام مشتری" info={order.userName} />
+            <InfoList subject="آدرس" info={order.address} />
+            <InfoList subject="تلفن" info={order.mobile} />
+            <InfoList subject="زمان سفارش" info={order.orderTIme} />
+            <InfoList subject="زمان تحویل" info={order.deliveryTime} />
             <Table className={classes.table} aria-label="simple table">
                 <TableHead>
                     <TableRow>
@@ -92,7 +102,7 @@ export default function OrderModal({ closeModal, userName, mobile, address, orde
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {orderList.map((row, index) =>
+                    {order.orderList.map((row, index) =>
                         <TableRow key={row.index}>
                             <TableCell>{index + 1}</TableCell>
                             <TableCell>{row.bookName}</TableCell>
@@ -102,8 +112,9 @@ export default function OrderModal({ closeModal, userName, mobile, address, orde
                 </TableBody>
             </Table>
             <div className={classes.flexCenter}>
-                {(!deliveryTime) ? <Button className={`${classes.margin_2}  ${btn.btn}`}>تحویل شد</Button> : false}
+                {(!order.status) ? <Button className={`${classes.margin_2}  ${btn.btn}`} onClick={delivered}>تحویل شد</Button> : false}
             </div>
+            <ToastContainer />
         </Container>
     )
 }

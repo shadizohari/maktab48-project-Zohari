@@ -63,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function AddBookModal({ editNameBook, editCategory, buttonName, putorpost, editId, editImg, editDescription,closeModal, ...props }) {
+export default function AddBookModal({ editNameBook, editCategory, buttonName, putorpost, editId, editImg, editDescription, closeModal, ...props }) {
     const classes = useStyles();
     const [bookName, setBookName] = useState("");
     const [category, setCategory] = useState("رمان");
@@ -104,11 +104,6 @@ export default function AddBookModal({ editNameBook, editCategory, buttonName, p
                     price: 0,
                 }
                 setResponseNewBook(BooksApi(book, 'post', 'http://localhost:5000/books/'));
-                // dispatch(setLoading(true));
-                // setTimeout(() => {
-                //     dispatch(setLoading(false));
-                // }, 1000);
-
             }
         } else if (putorpost = "put") {
             let book = {
@@ -121,10 +116,6 @@ export default function AddBookModal({ editNameBook, editCategory, buttonName, p
                 price: 0,
             }
             putBookApi('http://localhost:5000/books/', editId, book)
-            // dispatch(setLoading(true));
-            // setTimeout(() => {
-            //     dispatch(setLoading(false));
-            // }, 1000);
         }
         dispatch(setLoading(true));
         setTimeout(() => {

@@ -22,9 +22,9 @@ export function deleteBookApi(url, id) {
 }
 
 
-export function putBookApi(url, editId, book) {
+export function putBookApi(url, editId, book, text ="Edited Successfully" ) {
     axios.put(url + editId, book)
-        .then(response => toast.success("Edited Successfully"))
+        .then(response => toast.success(text))
         .catch(error => {
             // toast.error("Edited Failed!");
         });

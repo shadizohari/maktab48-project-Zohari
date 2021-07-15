@@ -38,26 +38,16 @@ export default function MapBookList({ data, end, start, ...props }) {
     };
     const link = styleLinkOrderList()
 
-    // 
-    const [address, setAddress] = useState("")
-    const [userName, setUserName] = useState("")
-    const [mobile, setMobile] = useState("")
-    const [orderList, setOrderList] = useState([])
-    const [status, setStatus] = useState("")
-    const [orderTIme, setOrderTIme] = useState("")
-    const [deliveryTime, setDeliveryTime] = useState("")
+
+    const [order, setOrder] = useState("")
+
 
 
     // click and open modal
-    function orderCheck(userName, mobile, address, orderList, status, orderTIme, deliveryTime) {
-        setUserName(userName)
-        setMobile(mobile)
-        setAddress(address)
-        setOrderList(orderList)
-        setStatus(status)
-        setOrderTIme(orderTIme)
-        setDeliveryTime(deliveryTime)
+    function orderCheck(order) {
+
         handleOpen()
+        setOrder(order)
     }
 
 
@@ -72,7 +62,7 @@ export default function MapBookList({ data, end, start, ...props }) {
                         <TableCell>{row.userName}</TableCell>
                         <TableCell>{sum(row.orderList.map((item, i) => ({ price: item.price, number: item.number })))}</TableCell>
                         <TableCell>{row.orderTIme}</TableCell>
-                        <TableCell className={link.link} onClick={() => orderCheck(row.userName, row.mobile, row.address, row.orderList, row.status, row.orderTIme, row.DeliveryTime)}> بررسی سفارش‌</TableCell>
+                        <TableCell className={link.link} onClick={() => orderCheck(row)}> بررسی سفارش‌</TableCell>
 
 
                     </TableRow >
@@ -92,7 +82,7 @@ export default function MapBookList({ data, end, start, ...props }) {
             >
                 <Fade in={open}>
                     <div className={styleClassModal.modal_paper}>
-                        <OrderModal closeModal={handleClose} userName={userName} mobile={mobile} address={address} orderList={orderList} status={status} orderTIme={orderTIme} deliveryTime={deliveryTime} />
+                        <OrderModal closeModal={handleClose} order={order}/>
                     </div>
                 </Fade>
             </Modal>
