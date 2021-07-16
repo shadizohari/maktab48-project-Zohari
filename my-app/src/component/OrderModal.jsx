@@ -19,7 +19,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import HeaderModal from './HeaderModal';
 import { styleButton } from '../styles/styleButton';
-
+import * as moment from 'jalali-moment';
 const useStyles = makeStyles((theme) => ({
     table: {
         background: COLORS.secondaryColor,
@@ -63,22 +63,35 @@ const useStyles = makeStyles((theme) => ({
         alignItems: "center",
         justifyContent: "center",
     },
+    actualDeliveryTime:{
+        background: COLORS.accentColor,
+        color: "white",
+        padding: "10px"
+    }
 
 }));
 
-export default function OrderModal({ order, closeModal,...props }) {
+export default function OrderModal({ order, closeModal, ...props }) {
     const classes = useStyles();
     const btn = styleButton()
     const dispatch = useDispatch();
+    const [todayJalali, setTodayJalali] = useState()
 
     function delivered() {
         closeModal()
-        order.delivered = true
-        putBookApi('http://localhost:5000/orders/', order.id, order,"deliverd order")
+        order.status = "delivered"
+        // 
+        let todayJalali = moment().locale('fa').format('YYYY/M/D');
+        setTodayJalali(todayJalali)
+        console.log(todayJalali)
+        // 
+        order.actualDeliveryTime = todayJalali
+        putBookApi('http://localhost:5000/orders/', order.id, order, "Order deliverd")
         dispatch(setLoading(true));
         setTimeout(() => {
             dispatch(setLoading(false));
         }, 1000);
+
 
     }
 
@@ -90,8 +103,8 @@ export default function OrderModal({ order, closeModal,...props }) {
             <InfoList subject="نام مشتری" info={order.userName} />
             <InfoList subject="آدرس" info={order.address} />
             <InfoList subject="تلفن" info={order.mobile} />
-            <InfoList subject="زمان سفارش" info={order.orderTIme} />
-            <InfoList subject="زمان تحویل" info={order.deliveryTime} />
+            <InfoList subject="زمان سفارش" info={order.orderTime} />
+            <InfoList subject="زمان تحویل" info={order.selectedDeliveryTime} />
             <Table className={classes.table} aria-label="simple table">
                 <TableHead>
                     <TableRow>
@@ -112,7 +125,7 @@ export default function OrderModal({ order, closeModal,...props }) {
                 </TableBody>
             </Table>
             <div className={classes.flexCenter}>
-                {(!order.status) ? <Button className={`${classes.margin_2}  ${btn.btn}`} onClick={delivered}>تحویل شد</Button> : false}
+                {(order.status == "enroute") ? <Button className={`${classes.margin_2}  ${btn.btn}`} onClick={delivered}>تحویل شد</Button> : <p className={classes.actualDeliveryTime}>{`تاریخ تحویل:  ${order.actualDeliveryTime}`}</p>}
             </div>
             <ToastContainer />
         </Container>

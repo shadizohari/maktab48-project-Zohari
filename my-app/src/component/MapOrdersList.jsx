@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import TableCell from '@material-ui/core/TableCell';
 import { useSelector } from 'react-redux';
 import TableRow from '@material-ui/core/TableRow';
@@ -16,6 +15,7 @@ import OrderModal from './OrderModal'
 // major function
 export default function MapBookList({ data, end, start, ...props }) {
     const deliveredStatus = useSelector((store) => store.DeliveredStatus);
+    console.log(deliveredStatus)
     function sum(array) {
         let sum = 0;
         for (let i = 0; i < array.length; i++) {
@@ -45,11 +45,9 @@ export default function MapBookList({ data, end, start, ...props }) {
 
     // click and open modal
     function orderCheck(order) {
-
         handleOpen()
         setOrder(order)
     }
-
 
 
     return (
@@ -61,10 +59,8 @@ export default function MapBookList({ data, end, start, ...props }) {
                         <TableCell>{index + 1}</TableCell>
                         <TableCell>{row.userName}</TableCell>
                         <TableCell>{sum(row.orderList.map((item, i) => ({ price: item.price, number: item.number })))}</TableCell>
-                        <TableCell>{row.orderTIme}</TableCell>
+                        <TableCell>{row.orderTime}</TableCell>
                         <TableCell className={link.link} onClick={() => orderCheck(row)}> بررسی سفارش‌</TableCell>
-
-
                     </TableRow >
                 ) : false
 
@@ -82,7 +78,7 @@ export default function MapBookList({ data, end, start, ...props }) {
             >
                 <Fade in={open}>
                     <div className={styleClassModal.modal_paper}>
-                        <OrderModal closeModal={handleClose} order={order}/>
+                        <OrderModal closeModal={handleClose} order={order} />
                     </div>
                 </Fade>
             </Modal>

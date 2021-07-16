@@ -28,8 +28,8 @@ export default function DeliveredOrdersRadio() {
     const classes = styleRadio();
     const dispatch = useDispatch();
     const handleChange = (event) => {
-        console.log(event.target.value);
         dispatch(setDeliveredStatus(event.target.value))
+    
     };
     return (
         <FormControl component="fieldset">

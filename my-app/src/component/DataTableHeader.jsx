@@ -5,6 +5,7 @@ import Container from '@material-ui/core/Container';
 import { COLORS } from '../styles/constants'
 import DeliveredOrdersRadio from './DeliveredOrdersRadio';
 import { styleButton } from '../styles/styleButton';
+import SearchInput from './SearchInput'
 
 const useStyles = makeStyles((theme) => ({
     data_table_header: {
@@ -28,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function DataTableHeader({ titre, textBtn, handelClick, button = true, radio = false, ...props }) {
+export default function DataTableHeader({searchInput, titre, textBtn, handelClick, button = true, radio = false, ...props }) {
     const classes = useStyles();
     const btn = styleButton();
 
@@ -38,7 +39,11 @@ export default function DataTableHeader({ titre, textBtn, handelClick, button = 
 
                 {titre}
             </Typography>
-            <div className={classes.marginTop}>
+
+            <div className={classes.marginTop} style={{ display: "flex" }}>
+                <div style={{ marginLeft: "25px" }}>
+                    <SearchInput searchInput={searchInput}/>
+                </div>
                 {button ? <Button
                     variant="contained"
                     className={btn.btn}
@@ -47,8 +52,9 @@ export default function DataTableHeader({ titre, textBtn, handelClick, button = 
                     {textBtn}
                 </Button> : false}
                 {radio ? <DeliveredOrdersRadio /> : false}
+
             </div>
 
-        </Container>
+        </Container >
     )
 }

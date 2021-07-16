@@ -16,7 +16,6 @@ import rtl from 'jss-rtl';
 import { StylesProvider, jssPreset } from '@material-ui/core/styles';
 const jss = create({ plugins: [...jssPreset().plugins, rtl()] });
 
-
 const theme = createMuiTheme({
   direction: 'rtl',
   typography: {

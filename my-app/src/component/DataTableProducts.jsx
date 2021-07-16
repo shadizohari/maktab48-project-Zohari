@@ -29,7 +29,6 @@ import AddBookModal from './AddBookModal';
 
 
 
-
 const useStyles = makeStyles((theme) => ({
     btn_pagination: {
         marginTop: "30px",
@@ -126,9 +125,15 @@ export default function DataTableProducts({ ...props }) {
     const handleClose = () => {
         setOpen(false);
     };
+
+
+    // 
+    function searchInput(e){
+        console.log(e.target.value)
+    }
     return (
         <div>
-            <DataTableHeader titre="مدیریت کالا" textBtn="اضافه کردن کالا" handelClick={handleOpen} />
+            <DataTableHeader titre="مدیریت کالا" textBtn="اضافه کردن کالا" handelClick={handleOpen} searchInput={(a)=>searchInput(a)}/>
             <DataTableContainer>
                 <TableHead>
                     <TableRow>

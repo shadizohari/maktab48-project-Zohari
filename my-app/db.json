@@ -94,105 +94,109 @@
       "id": 1,
       "userName": "اکبر زمانی",
       "mobile": "09121111111",
-      "address":"تهران - خ. جمهوری - تقاطع خیابان ولی عصر",
+      "address": "تهران - خ. جمهوری - تقاطع خیابان ولی عصر",
       "orderList": [
         {
           "bookName": "بابا لنگ دراز",
           "price": 90000,
           "subject": "رمان",
-          "number":1
+          "number": 1
         },
         {
           "bookName": "شازده کوچولو",
           "price": 45000,
           "subject": "کودک",
-          "number":1
-
+          "number": 1
         }
       ],
       "status": "delivered",
-      "orderTIme": "99/1/5",
-      "DeliveryTime":"99/1/10"
+      "orderTime": "1400/04/05",
+      "selectedDeliveryTime": "1400/04/12",
+      "actualDeliveryTime": "1400/4/25"
     },
     {
       "id": 2,
       "userName": "رامین رحیمی",
       "mobile": "09122222222",
-      "address":"تهران، میدان نیاوران (باهنر)، خیابان پاسداران، مقابل پارک نیاوران",
+      "address": "تهران، میدان نیاوران (باهنر)، خیابان پاسداران، مقابل پارک نیاوران",
       "orderList": [
         {
           "bookName": "بر باد رفته",
           "price": 95000,
           "subject": "رمان",
-          "number":1
+          "number": 1
         },
         {
           "bookName": "چهار اثر فلورانس",
           "price": 80000,
           "subject": "روانشناسی",
-          "number":1
+          "number": 1
         }
       ],
       "status": "delivered",
-      "orderTIme": "99/4/25",
-      "DeliveryTime":"99/4/30"
+      "orderTime": "1400/04/13",
+      "selectedDeliveryTime": "1400/04/20",
+      "actualDeliveryTime": "1400/4/25"
     },
     {
       "id": 3,
       "userName": "نیکی کریمی",
       "mobile": "09123333333",
-      "address":"تهران ،لاله زار جنوبی ،جنب مسجد بزرگ لاله زار ، پلاک 195",
+      "address": "تهران ،لاله زار جنوبی ،جنب مسجد بزرگ لاله زار ، پلاک 195",
       "orderList": [
         {
           "bookName": "مازندران قدیم",
           "price": 20000,
           "subject": "رمان",
-          "number":2
+          "number": 2
         }
       ],
       "status": "delivered",
-      "orderTIme": "99/7/5",
-      "DeliveryTime":"99/7/15"
+      "orderTime": "1400/04/05",
+      "selectedDeliveryTime": "1400/04/15",
+      "actualDeliveryTime": "1400/4/25"
     },
     {
       "id": 4,
       "userName": "ملیکا زارعی",
       "mobile": "09124444444",
-      "address":" تهران، خیابان دکتر شریعتی، بالاتر از سیدخندان",
+      "address": " تهران، خیابان دکتر شریعتی، بالاتر از سیدخندان",
       "orderList": [
         {
           "bookName": "کتاب چشمهایش اثر بزرگ علوی",
           "price": 85000,
           "subject": "رمان",
-          "number":2
+          "number": 2
         },
         {
           "bookName": "کتاب نیمه تاریک وجود",
           "price": 30000,
           "subject": "روانشناسی",
-          "number":2
+          "number": 2
         }
       ],
-      "status": "delivered",
-      "orderTIme": "99/5/5",
-      "DeliveryTime":"99/5/15"
+      "status": "enroute",
+      "orderTime": "1400/04/08",
+      "selectedDeliveryTime": "1400/04/19",
+      "actualDeliveryTime": ""
     },
     {
       "id": 5,
       "userName": "امیرعلی غفاریان",
       "mobile": "09125555555",
-      "address":"شریعتی، بالاتر از دوراهی قلهک، مجتمع سپهر",
+      "address": "شریعتی، بالاتر از دوراهی قلهک، مجتمع سپهر",
       "orderList": [
         {
           "bookName": "ملت عشق",
           "price": 79000,
           "subject": "رمان",
-          "number":1
+          "number": 1
         }
       ],
       "status": "enroute",
-      "orderTIme": "99/9/25",
-      "DeliveryTime":""
+      "orderTime": "1400/04/17",
+      "selectedDeliveryTime": "1400/04/24",
+      "actualDeliveryTime": ""
     }
   ]
 }

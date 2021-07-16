@@ -22,6 +22,9 @@ import MapOrdersList from './MapOrdersList';
 // import LoadingLayout from './LoadingLayout';
 
 
+// import { DeliveredStatusContext, DeliveredStatus } from '../context/DeliveredStatusContext';
+
+
 
 
 
@@ -92,6 +95,7 @@ export default function DataTableOrders({ ...props }) {
     return (
         <div>
             {/* <LoadingLayout> */}
+            {/* <DeliveredStatusContext.Provider value={}> */}
                 <DataTableHeader titre="مدیریت سفارش‌ها" button={false} radio={true} />
                 <DataTableContainer>
                     <TableHead>
@@ -116,7 +120,7 @@ export default function DataTableOrders({ ...props }) {
                         <Button style={{ margin: "5px" }} className={activePageNumber === index + 1 ? classes.accentColor : ""} key={num} variant="contained" onClick={() => { changePage(num) }}>{num}</Button>
                     ))}
                 </Container>
-
+            {/* </DeliveredStatusContext.Provider> */}
             {/* </LoadingLayout> */}
             <ToastContainer />
 
