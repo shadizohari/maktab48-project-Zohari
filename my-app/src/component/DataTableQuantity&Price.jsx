@@ -18,7 +18,7 @@ import DataTableHeader from './DataTableHeader';
 import { setLoading } from '../store/actions/isLoading';
 import InputBase from '@material-ui/core/InputBase';
 import { putBookApi } from '../api/BooksApi'
-import {usePagination} from '../hook/usePagination';
+import { usePagination } from '../hook/usePagination';
 
 const useStyles = makeStyles((theme) => ({
     btn_pagination: {
@@ -104,13 +104,13 @@ export default function DataTableQuanitityandPrices({ ...props }) {
     }
 
 
-    
+
 
     // // table pagenation
     useEffect(() => {
-        setArray(paginationCalculate(length,10))
+        setArray(paginationCalculate(length, 10))
     }, [length])
-    const { start, end, changePage, activePageNumber} = usePagination(10)
+    const { start, end, changePage, activePageNumber } = usePagination(10)
 
 
 
@@ -131,20 +131,13 @@ export default function DataTableQuanitityandPrices({ ...props }) {
             dispatch(setLoading(false));
         }, 1000);
     }
-    return (
-        <div>
-            <DataTableHeader titre="موجودی و قیمت‌ها" textBtn="ذخیره" handelClick={putData} />
-            <DataTableContainer>
-                <TableHead>
-                    <TableRow>
-                        <TableCell>#</TableCell>
-                        <TableCell>نام کتاب</TableCell>
-                        <TableCell>قیمت‌ (تومان) </TableCell>
-                        <TableCell>موجودی</TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {booksData?.map((row, index) => (index < end && index >= start) ? (
+
+    // map for data
+    function mapDataQuantityPrice(booksData) {
+        return (
+            <>
+                {
+                    booksData?.map((row, index) => (index < end && index >= start) ? (
                         <TableRow key={row.id} className={classes.customTable}>
                             <TableCell style={{ padding: "16px" }}>{index + 1}</TableCell>
                             <TableCell style={{ padding: "16px" }}>{row.name}</TableCell>
@@ -168,7 +161,38 @@ export default function DataTableQuanitityandPrices({ ...props }) {
                                 />
                             </TableCell>
                         </TableRow >
-                    ) : false)}
+                    ) : false)
+                }
+            </>
+        )
+
+    }
+
+
+    //    // search 
+    const [searchValue, setSearchValue] = useState("")
+    function searchInput(e) {
+        setSearchValue(e.target.value)
+    }
+    const searchFunc = function (array) {
+        return array.filter((book) => { return (book.name.includes(searchValue)) });
+    }
+
+    
+    return (
+        <div>
+            <DataTableHeader titre="موجودی و قیمت‌ها" textBtn="ذخیره" handelClick={putData} searchInput={(e) => searchInput(e)} />
+            <DataTableContainer>
+                <TableHead>
+                    <TableRow>
+                        <TableCell>#</TableCell>
+                        <TableCell>نام کتاب</TableCell>
+                        <TableCell>قیمت‌ (تومان) </TableCell>
+                        <TableCell>موجودی</TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {(!searchValue ? mapDataQuantityPrice(booksData) : mapDataQuantityPrice(searchFunc(booksData)))}
                 </TableBody>
 
             </DataTableContainer>
