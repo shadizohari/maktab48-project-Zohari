@@ -1,7 +1,7 @@
-import { paginationCalculate, formatPrice } from '../utils/auth';
+
 import React from 'react';
-import { useEffect, useState } from "react";
-import Button from '@material-ui/core/Button';
+import { useState } from "react";
+
 
 
 
@@ -24,7 +24,7 @@ export const usePagination = (pageNumber) => {
 
 
 
-    return ({ start, end, changePage, activePageNumber, setStart, setEnd, setActivePageNumber})
+    return ({ start, end, changePage, activePageNumber, setStart, setEnd, setActivePageNumber })
 }
 
 

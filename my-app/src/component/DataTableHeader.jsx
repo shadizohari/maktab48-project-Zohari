@@ -25,11 +25,16 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.down('sm')]: {
             marginTop: "30px"
         },
+    },
+    parent_search: {
+        [theme.breakpoints.down('sm')]: {
+            display: "none"
+        },
     }
 
 }));
 
-export default function DataTableHeader({searchInput, titre, textBtn, handelClick, button = true, radio = false, ...props }) {
+export default function DataTableHeader({ searchInput, titre, textBtn, handelClick, button = true, radio = false, ...props }) {
     const classes = useStyles();
     const btn = styleButton();
 
@@ -41,8 +46,8 @@ export default function DataTableHeader({searchInput, titre, textBtn, handelClic
             </Typography>
 
             <div className={classes.marginTop} style={{ display: "flex" }}>
-                <div style={{ marginLeft: "25px" }}>
-                    <SearchInput searchInput={searchInput}/>
+                <div style={{ marginLeft: "25px" }} className={classes.parent_search}>
+                    <SearchInput searchInput={searchInput} />
                 </div>
                 {button ? <Button
                     variant="contained"

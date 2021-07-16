@@ -108,9 +108,9 @@ export default function DataTableQuanitityandPrices({ ...props }) {
 
     // // table pagenation
     useEffect(() => {
-        setArray(paginationCalculate(length, 10))
+        setArray(paginationCalculate(length, 7))
     }, [length])
-    const { start, end, changePage, activePageNumber } = usePagination(10)
+    const { start, end, changePage, activePageNumber } = usePagination(7)
 
 
 
@@ -169,7 +169,7 @@ export default function DataTableQuanitityandPrices({ ...props }) {
     }
 
 
-    //    // search 
+    // search 
     const [searchValue, setSearchValue] = useState("")
     function searchInput(e) {
         setSearchValue(e.target.value)
@@ -178,7 +178,7 @@ export default function DataTableQuanitityandPrices({ ...props }) {
         return array.filter((book) => { return (book.name.includes(searchValue)) });
     }
 
-    
+
     return (
         <div>
             <DataTableHeader titre="موجودی و قیمت‌ها" textBtn="ذخیره" handelClick={putData} searchInput={(e) => searchInput(e)} />

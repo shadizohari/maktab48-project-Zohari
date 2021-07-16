@@ -92,11 +92,23 @@ export default function DataTableOrders({ ...props }) {
     const handleClose = () => {
         setOpen(false);
     };
+
+
+    // search 
+    const [searchValue, setSearchValue] = useState("")
+    function searchInput(e) {
+        setSearchValue(e.target.value)
+    }
+    const searchFunc = function (array) {
+        return array.filter((book) => { return (book.userName.includes(searchValue)) });
+    }
+
+
     return (
         <div>
             {/* <LoadingLayout> */}
             {/* <DeliveredStatusContext.Provider value={}> */}
-                <DataTableHeader titre="مدیریت سفارش‌ها" button={false} radio={true} />
+                <DataTableHeader titre="مدیریت سفارش‌ها" button={false} radio={true} searchInput={(e) => searchInput(e)}/>
                 <DataTableContainer>
                     <TableHead>
                         <TableRow>
@@ -110,7 +122,9 @@ export default function DataTableOrders({ ...props }) {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        < MapOrdersList data={orders} start={start} end={end} />
+
+                       {!searchValue?< MapOrdersList data={orders} start={start} end={end} />:< MapOrdersList data={searchFunc(orders)} start={start} end={end} />} 
+
                     </TableBody>
 
                 </DataTableContainer>
