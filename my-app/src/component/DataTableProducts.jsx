@@ -98,12 +98,12 @@ export default function DataTableProducts({ ...props }) {
         }
     }
 
-   
+
     // // table pagenation
     useEffect(() => {
-        setArray(paginationCalculate(length,5))
+        setArray(paginationCalculate(length, 5))
     }, [length])
-    const { start, end, changePage, activePageNumber,setStart, setEnd, setActivePageNumber } = usePagination(5)
+    const { start, end, changePage, activePageNumber, setStart, setEnd, setActivePageNumber } = usePagination(5)
 
 
 
@@ -127,13 +127,19 @@ export default function DataTableProducts({ ...props }) {
     };
 
 
-    // 
-    function searchInput(e){
-        console.log(e.target.value)
+    // search 
+    const [searchValue, setSearchValue] = useState("")
+    function searchInput(e) {
+        setSearchValue(e.target.value)
     }
+    const searchFunc = function (array) {
+        return array.filter((book) => { return (book.name.includes(searchValue)) });
+    }
+
+    
     return (
         <div>
-            <DataTableHeader titre="مدیریت کالا" textBtn="اضافه کردن کالا" handelClick={handleOpen} searchInput={(a)=>searchInput(a)}/>
+            <DataTableHeader titre="مدیریت کالا" textBtn="اضافه کردن کالا" handelClick={handleOpen} searchInput={(e) => searchInput(e)} />
             <DataTableContainer>
                 <TableHead>
                     <TableRow>
@@ -163,7 +169,9 @@ export default function DataTableProducts({ ...props }) {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {(!value ? < MapBookList data={data} start={start} end={end} /> : < MapBookList data={filterResult} start={start} end={end} />)}
+                    {(!value ?
+                         (!searchValue ? < MapBookList data={data} start={start} end={end} /> : < MapBookList data={searchFunc(data)} start={start} end={end} />) : 
+                         (!searchValue ? < MapBookList data={filterResult} start={start} end={end} /> : < MapBookList data={searchFunc(filterResult)} start={start} end={end} />))}
                 </TableBody>
 
             </DataTableContainer>
