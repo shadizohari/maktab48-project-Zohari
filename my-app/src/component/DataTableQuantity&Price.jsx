@@ -19,6 +19,9 @@ import { setLoading } from '../store/actions/isLoading';
 import InputBase from '@material-ui/core/InputBase';
 import { putBookApi } from '../api/BooksApi'
 import { usePagination } from '../hook/usePagination';
+import { FaLongArrowAltUp } from "react-icons/fa";
+import { FaLongArrowAltDown } from "react-icons/fa";
+
 
 const useStyles = makeStyles((theme) => ({
     btn_pagination: {
@@ -49,6 +52,24 @@ const useStyles = makeStyles((theme) => ({
     styleInputChange: {
         color: COLORS.accentColor,
         textDecoration: `underline ${COLORS.accentColor}`,
+    },
+    btn_sort_left: {
+        color: COLORS.primeryColor,
+        marginLeft: "10px",
+        cursor: "pointer",
+        fontSize: "15px",
+        '&:hover': {
+            color: COLORS.accentColor
+        }
+    },
+    btn_sort_right: {
+        color: COLORS.primeryColor,
+        marginRight: "10px",
+        cursor: "pointer",
+        fontSize: "15px",
+        '&:hover': {
+            color: COLORS.accentColor
+        }
     }
 }));
 
@@ -177,8 +198,17 @@ export default function DataTableQuanitityandPrices({ ...props }) {
     const searchFunc = function (array) {
         return array.filter((book) => { return (book.name.includes(searchValue)) });
     }
-
-
+    // sort
+    const [sort, setSort] = useState("uptodownPrice")
+    const sortPrice = function (a, b) {
+        if (sort == "uptodownPrice") { return b.price - a.price } else if (sort == "downtoupPrice") {
+            return a.price - b.price
+        } else if (sort == "downtoupQuantity") {
+            return a.quantity - b.quantity
+        } else if (sort == "uptodownQuantity") {
+            return b.quantity - a.quantity
+        }
+    }
     return (
         <div>
             <DataTableHeader titre="موجودی و قیمت‌ها" textBtn="ذخیره" handelClick={putData} searchInput={(e) => searchInput(e)} />
@@ -187,12 +217,22 @@ export default function DataTableQuanitityandPrices({ ...props }) {
                     <TableRow>
                         <TableCell>#</TableCell>
                         <TableCell>نام کتاب</TableCell>
-                        <TableCell>قیمت‌ (تومان) </TableCell>
-                        <TableCell>موجودی</TableCell>
+                        <TableCell>
+                            <FaLongArrowAltUp className={classes.btn_sort_right} onClick={() => setSort("uptodownPrice")} />
+                            قیمت‌ (تومان)
+                            <FaLongArrowAltDown className={classes.btn_sort_left} onClick={() => setSort("downtoupPrice")} />
+                        </TableCell>
+
+                        <TableCell>
+                            <FaLongArrowAltUp className={classes.btn_sort_right} onClick={() => setSort("uptodownQuantity")} />
+                            موجودی
+                            <FaLongArrowAltDown className={classes.btn_sort_left} onClick={() => setSort("downtoupQuantity")} />
+                        </TableCell>
+
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {(!searchValue ? mapDataQuantityPrice(booksData) : mapDataQuantityPrice(searchFunc(booksData)))}
+                    {(!searchValue ? mapDataQuantityPrice(booksData.sort(sortPrice)) : mapDataQuantityPrice(searchFunc(booksData)))}
                 </TableBody>
 
             </DataTableContainer>
