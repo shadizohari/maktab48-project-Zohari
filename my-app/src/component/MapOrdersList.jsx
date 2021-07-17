@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import TableCell from '@material-ui/core/TableCell';
 import { useSelector } from 'react-redux';
 import TableRow from '@material-ui/core/TableRow';
@@ -15,7 +15,40 @@ import OrderModal from './OrderModal'
 // major function
 export default function MapBookList({ data, end, start, ...props }) {
     const deliveredStatus = useSelector((store) => store.DeliveredStatus);
+    const [enroute, setEnroute] = useState([]);
+    const [delivered, setDelivered] = useState([]);
+    useEffect(() => {
+        let enrouteArray = [];
+        let deliveredArray = [];
+        data.forEach(order => {
+            (order.status == "enroute") ? enrouteArray.push(order) : deliveredArray.push(order)
+        });
+        setEnroute([...enrouteArray])
+        setDelivered([...deliveredArray])
+    }, [data])
 
+    // table row
+    function tableRow(data) {
+        console.log(data)
+        return (
+            <>
+                {
+                    data?.map((row, index) => (index < end && index >= start) ? (
+                        <TableRow key={row.id}>
+                            <TableCell>{index + 1}</TableCell>
+                            <TableCell>{row.userName}</TableCell>
+                            <TableCell>{sum(row.orderList.map((item, i) => ({ price: item.price, number: item.number })))}</TableCell>
+                            <TableCell>{row.orderTime}</TableCell>
+                            <TableCell className={link.link} onClick={() => orderCheck(row)}> بررسی سفارش‌</TableCell>
+                        </TableRow >
+                    ) : false)
+                }
+            </>
+        )
+    }
+
+
+    // sum order list
     function sum(array) {
         let sum = 0;
         for (let i = 0; i < array.length; i++) {
@@ -38,7 +71,6 @@ export default function MapBookList({ data, end, start, ...props }) {
     };
     const link = styleLinkOrderList()
 
-
     const [order, setOrder] = useState("")
 
 
@@ -52,20 +84,7 @@ export default function MapBookList({ data, end, start, ...props }) {
 
     return (
         <>
-
-            {data?.map((row, index) => (index < end && index >= start) ? (
-                (row.status == deliveredStatus) ? (
-                    <TableRow key={row.id}>
-                        <TableCell>{index + 1}</TableCell>
-                        <TableCell>{row.userName}</TableCell>
-                        <TableCell>{sum(row.orderList.map((item, i) => ({ price: item.price, number: item.number })))}</TableCell>
-                        <TableCell>{row.orderTime}</TableCell>
-                        <TableCell className={link.link} onClick={() => orderCheck(row)}> بررسی سفارش‌</TableCell>
-                    </TableRow >
-                ) : false
-
-            ) : false)
-            }
+            {(deliveredStatus == "enroute") ? tableRow(enroute) : tableRow(delivered)}
             <Modal
                 className={styleClassModal.modal}
                 open={open}

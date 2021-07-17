@@ -20,6 +20,7 @@ import TableRow from '@material-ui/core/TableRow';
 import HeaderModal from './HeaderModal';
 import { styleButton } from '../styles/styleButton';
 import * as moment from 'jalali-moment';
+import {Link} from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
     table: {
         background: COLORS.secondaryColor,
@@ -63,10 +64,17 @@ const useStyles = makeStyles((theme) => ({
         alignItems: "center",
         justifyContent: "center",
     },
-    actualDeliveryTime:{
+    actualDeliveryTime: {
         background: COLORS.accentColor,
         color: "white",
         padding: "10px"
+    },
+    link:{
+        color:COLORS.primeryColor,
+        '&:hover':{
+            color:COLORS.accentColor,
+            textDecoration:"none"
+        }
     }
 
 }));
@@ -83,7 +91,7 @@ export default function OrderModal({ order, closeModal, ...props }) {
         // 
         let todayJalali = moment().locale('fa').format('YYYY/M/D');
         setTodayJalali(todayJalali)
-        console.log(todayJalali)
+
         // 
         order.actualDeliveryTime = todayJalali
         putBookApi('http://localhost:5000/orders/', order.id, order, "Order deliverd")
@@ -118,7 +126,7 @@ export default function OrderModal({ order, closeModal, ...props }) {
                     {order.orderList.map((row, index) =>
                         <TableRow key={row.index}>
                             <TableCell>{index + 1}</TableCell>
-                            <TableCell>{row.bookName}</TableCell>
+                            <TableCell><Link className={classes.link}>{row.bookName}</Link></TableCell>
                             <TableCell>{row.price}</TableCell>
                             <TableCell>{row.number}</TableCell>
                         </TableRow >)}

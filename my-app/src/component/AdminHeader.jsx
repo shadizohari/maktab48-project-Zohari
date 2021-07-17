@@ -62,7 +62,19 @@ const useStyles = makeStyles((theme) => ({
         display: "flex",
         cursor: "pointer",
         alignItems: "center",
+        "&:hover": {
+            "& $icon_home_style": {
+                color: COLORS.accentColor
+            }
+        }
 
+    },
+    btn_exite: {
+        width: "50%",
+        background: COLORS.secondaryColor,
+        "&:hover":{
+            background:COLORS.accentColor
+        }
     }
 }));
 
@@ -104,17 +116,18 @@ export default function AdminHeader() {
                     TransitionComponent={Transition}
                     keepMounted
                     onClose={handleClose}
-                    aria-labelledby="alert-dialog-slide-title"
-                    aria-describedby="alert-dialog-slide-description"
                 >
+                    <div>
+                        <FaPowerOff style={{ margin: "10px", color: COLORS.accentColor }} className={classes.icon_home_style} />
+                    </div>
                     <DialogTitle id="alert-dialog-slide-title">از سامانه خارج می‌شوید؟</DialogTitle>
                     <DialogContent>
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={handleClose}>
+                        <Button className={classes.btn_exite} onClick={handleClose}>
                             خیر
                         </Button>
-                        <Button onClick={logOut}>
+                        <Button className={classes.btn_exite} onClick={logOut}>
                             بله
                         </Button>
                     </DialogActions>

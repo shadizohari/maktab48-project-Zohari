@@ -64,6 +64,12 @@ const useStyles = makeStyles((theme) => ({
     tab_label: {
         fontSize: "20px",
     },
+    tab:{
+        "& .MuiTab-root":{
+            paddingTop:"12px",
+            paddingBottom:"12px"
+        }
+    }
 }));
 
 // function major 
@@ -114,6 +120,7 @@ export default function TabsWrappedLabel() {
 
                 <AppBar position="static" style={{ background: COLORS.primeryColor }} >
                     <Tabs value={value}
+                    className={classes.tab}
                         onChange={handleChange}
                         TabIndicatorProps={{ style: { background: COLORS.accentColor } }}
                         centered
