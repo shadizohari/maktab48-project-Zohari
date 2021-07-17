@@ -108,7 +108,7 @@ export default function DataTableQuanitityandPrices({ ...props }) {
                     setBookData(response.data);
 
                 }
-            }).catch((err) => toast.error("request failed!"));
+            }).catch((err) => toast.error(".درخواست با خطا مواجه شد!"));
     }, [])
 
     // function for handeling value input price and quantity

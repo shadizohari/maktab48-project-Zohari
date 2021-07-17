@@ -103,7 +103,7 @@ export default function AddBookModal({ editNameBook, editCategory, buttonName, p
                     quantity: 0,
                     price: 0,
                 }
-                setResponseNewBook(BooksApi(book, 'post', 'http://localhost:5000/books/'));
+                setResponseNewBook(BooksApi(book, 'post', 'http://localhost:5000/books/',".کالا جدید با موفقیت اصافه شد"));
             }
         } else if (putorpost = "put") {
             let book = {
@@ -133,7 +133,7 @@ export default function AddBookModal({ editNameBook, editCategory, buttonName, p
                 setFileData(fileReader.result);
             }
             fileReader.onerror = (error) => {
-                toast.error('upload image failed!')
+                toast.error('.آپلود عکس ناموفق! دوباره تلاش کنید')
             }
             fileReader.readAsDataURL(file);
         }
@@ -142,9 +142,7 @@ export default function AddBookModal({ editNameBook, editCategory, buttonName, p
 
     return (
         <Container maxWidth="lg">
-            {/* <Typography variant="h6" className={classes.margin_2}>
-                افزودن / ویرایش کالا
-            </Typography> */}
+
             <HeaderModal titreModal={"افزودن / ویرایش کالا"} closeModal={closeModal} />
 
 

@@ -58,10 +58,8 @@ export default function DataTableOrders({ ...props }) {
                 if (response.data) {
                     setOrders(response.data);
                     setLength(response.data.length)
-                    console.log(response.data)
-
                 }
-            }).catch((err) => toast.error("request failed!"));
+            }).catch((err) => toast.error(".درخواست با خطا مواجه شد!"));
     }, [])
 
 

@@ -75,7 +75,7 @@ export default function DataTableProducts({ ...props }) {
                     console.log(response.data)
 
                 }
-            }).catch((err) => toast.error("request failed!"));
+            }).catch((err) => toast.error(".درخواست با خطا مواجه شد!"));
     }, [])
 
 
