@@ -10,7 +10,7 @@ export const LoginApi = async (method, url, username, password) => {
             username,
             password,
         }),
-    }).catch((err) => toast.error("request failed!"))
+    }).catch((err) => toast.error("درخواست با خطا مواجه شد"))
     console.log(res)
     return res;
 };

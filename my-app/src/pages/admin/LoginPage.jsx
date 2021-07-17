@@ -85,7 +85,7 @@ export default function LoginPage() {
                         localStorage.setItem("token", x.data.token)
                         history.push("/admin-panel/products");
                     } else {
-                        toast.error("request failed!");
+                        toast.error("ورود ناموفق! دوباره تلاش کنید");
                     }
                     dispatch(setLoading(false));
                 }

@@ -4,7 +4,7 @@ import logo from '../assets/img/logo3-orange.png';
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import { RiAccountCircleFill } from "react-icons/ri";
+import { FaPowerOff } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 // 
 import Button from '@material-ui/core/Button';
@@ -46,12 +46,16 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     icon_home_style: {
-        fontSize: "30px",
+        fontSize: "20px",
         color: COLORS.primeryColor,
+        '&:hover': {
+            color: COLORS.accentColor
+        },
     },
     margin_titre: {
+        fontWeight: "500",
         [theme.breakpoints.down('sm')]: {
-            marginBottom: MARGIN.margin_1,
+            marginBottom: MARGIN.margin_2,
         }
     },
     logout: {
@@ -92,8 +96,8 @@ export default function AdminHeader() {
                     </Typography>
                 </div>
                 <div className={classes.logout} onClick={handleClickOpen}>
-                    <p>خروج</p>
-                    <RiAccountCircleFill className={classes.icon_home_style} />
+                    <p>خروج &nbsp;</p>
+                    <FaPowerOff className={classes.icon_home_style} />
                 </div>
                 <Dialog
                     open={open}

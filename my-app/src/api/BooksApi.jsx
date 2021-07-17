@@ -7,7 +7,7 @@ export const BooksApi = async (book, method, url) => {
         url: url,
         headers: { "content-type": "application/json" },
         data: JSON.stringify(book),
-    }).catch((e) => toast.error("request failed!"))
+    }).catch((e) => toast.error("درخواست با خطا مواجه شد"))
     return x;
 }
 

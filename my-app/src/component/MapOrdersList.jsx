@@ -15,7 +15,7 @@ import OrderModal from './OrderModal'
 // major function
 export default function MapBookList({ data, end, start, ...props }) {
     const deliveredStatus = useSelector((store) => store.DeliveredStatus);
-    console.log(deliveredStatus)
+
     function sum(array) {
         let sum = 0;
         for (let i = 0; i < array.length; i++) {

@@ -40,7 +40,7 @@ export default function DataTableHeader({ searchInput, titre, textBtn, handelCli
 
     return (
         <Container maxWidth="lg" className={classes.data_table_header}>
-            <Typography variant="h4" >
+            <Typography variant="h5" >
 
                 {titre}
             </Typography>

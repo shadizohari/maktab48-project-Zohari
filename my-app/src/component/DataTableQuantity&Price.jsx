@@ -70,6 +70,11 @@ const useStyles = makeStyles((theme) => ({
         '&:hover': {
             color: COLORS.accentColor
         }
+    },
+    displayNone: {
+        [theme.breakpoints.down('sm')]: {
+            display: "none",
+        },
     }
 }));
 
@@ -129,9 +134,9 @@ export default function DataTableQuanitityandPrices({ ...props }) {
 
     // // table pagenation
     useEffect(() => {
-        setArray(paginationCalculate(length, 7))
+        setArray(paginationCalculate(length, 5))
     }, [length])
-    const { start, end, changePage, activePageNumber } = usePagination(7)
+    const { start, end, changePage, activePageNumber } = usePagination(5)
 
 
 
@@ -218,15 +223,15 @@ export default function DataTableQuanitityandPrices({ ...props }) {
                         <TableCell>#</TableCell>
                         <TableCell>نام کتاب</TableCell>
                         <TableCell>
-                            <FaLongArrowAltUp className={classes.btn_sort_right} onClick={() => setSort("uptodownPrice")} />
-                            قیمت‌ (تومان)
-                            <FaLongArrowAltDown className={classes.btn_sort_left} onClick={() => setSort("downtoupPrice")} />
+                            <FaLongArrowAltUp className={classes.btn_sort_right,classes.displayNone} onClick={() => setSort("uptodownPrice")} />
+                            قیمت‌ &nbsp;<span className={classes.displayNone}>(تومان)</span>
+                            <FaLongArrowAltDown className={classes.btn_sort_left,classes.displayNone} onClick={() => setSort("downtoupPrice")} />
                         </TableCell>
 
                         <TableCell>
-                            <FaLongArrowAltUp className={classes.btn_sort_right} onClick={() => setSort("uptodownQuantity")} />
+                            <FaLongArrowAltUp className={classes.btn_sort_right ,classes.displayNone} onClick={() => setSort("uptodownQuantity")} />
                             موجودی
-                            <FaLongArrowAltDown className={classes.btn_sort_left} onClick={() => setSort("downtoupQuantity")} />
+                            <FaLongArrowAltDown className={classes.btn_sort_left,classes.displayNone} onClick={() => setSort("downtoupQuantity")} />
                         </TableCell>
 
                     </TableRow>
