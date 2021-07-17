@@ -21,7 +21,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
-
+import { CgDanger } from 'react-icons/cg';
 // Dialog ... slide
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -50,6 +50,18 @@ export default function MapBookList({ data, end, start, ...props }) {
             '&:hover': {
                 color: COLORS.accentColor,
             },
+        },
+        btn_dialog: {
+            width: "50%",
+            background: COLORS.secondaryColor,
+            '&:hover': {
+                background: COLORS.accentColor
+            }
+        },
+        icon_danger: {
+            margin: "10px",
+            color: COLORS.accentColor,
+            fontSize: "30px"
         }
 
     }));
@@ -149,18 +161,19 @@ export default function MapBookList({ data, end, start, ...props }) {
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
-                <DialogTitle id="alert-dialog-title">آیا از حذف این کتاب اظمینان دارید؟</DialogTitle>
+                <CgDanger className={classes.icon_danger} />
+                <DialogTitle id="alert-dialog-title">آیا از حذف این کتاب اطمینان دارید؟</DialogTitle>
                 <DialogContent>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={() => deleteBook(idDelete)} onKeyDown={(e) => {
+                    <Button className={classes.btn_dialog} onClick={() => deleteBook(idDelete)} onKeyDown={(e) => {
                         if (e.key === 'Enter') {
                             deleteBook(idDelete)
                         }
                     }}>
                         حذف
                     </Button>
-                    <Button
+                    <Button className={classes.btn_dialog}
                         onClick={handleCloseDialog} onKeyDown={(e) => {
                             if (e.key === 'Enter') {
                                 handleCloseDialog()

@@ -29,7 +29,6 @@ export default function MapBookList({ data, end, start, ...props }) {
 
     // table row
     function tableRow(data) {
-        console.log(data)
         return (
             <>
                 {
@@ -80,7 +79,6 @@ export default function MapBookList({ data, end, start, ...props }) {
         handleOpen()
         setOrder(order)
     }
-
 
     return (
         <>

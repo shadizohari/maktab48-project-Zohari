@@ -17,7 +17,7 @@ import { setLoading } from '../../store/actions/isLoading';
 import DataTableQuanitityandPrices from '../../component/DataTableQuantity&Price'
 import { useHistory } from "react-router-dom";
 import DataTableOrders from '../../component/DataTableOrders';
-
+import LayoutAdminPanel from '../../component/LayoutAdminPanel'
 
 
 // tab material..........
@@ -64,10 +64,10 @@ const useStyles = makeStyles((theme) => ({
     tab_label: {
         fontSize: "20px",
     },
-    tab:{
-        "& .MuiTab-root":{
-            paddingTop:"12px",
-            paddingBottom:"12px"
+    tab: {
+        "& .MuiTab-root": {
+            paddingTop: "12px",
+            paddingBottom: "12px"
         }
     }
 }));
@@ -99,9 +99,9 @@ export default function TabsWrappedLabel() {
     // change tab material
     const handleChange = (event, newValue) => {
         setValue(newValue);
-        if(newValue==="one"){
+        if (newValue === "one") {
             history.push("/admin-panel/products");
-        }else if (newValue === "two") {
+        } else if (newValue === "two") {
             history.push("/admin-panel/quantity_and_price");
         } else if (newValue === "three") {
             history.push("/admin-panel/orders");
@@ -116,43 +116,43 @@ export default function TabsWrappedLabel() {
     return (
         <LoadingLayout>
             <div className={classes.root}>
-                <AdminHeader />
+                <LayoutAdminPanel>
+                    <AppBar position="static" style={{ background: COLORS.primeryColor }} >
+                        <Tabs value={value}
+                            className={classes.tab}
+                            onChange={handleChange}
+                            TabIndicatorProps={{ style: { background: COLORS.accentColor } }}
+                            centered
+                        >
+                            <Tab
+                                value="one"
+                                label="کالاها"
+                                wrapped
+                                className={classes.tab_label}
+                                {...a11yProps('one')}
+                            />
+                            <Tab value="two"
+                                label="موجودی و قیمت‌ها"
+                                className={classes.tab_label}
+                                {...a11yProps('two')} />
+                            <Tab value="three"
+                                label="سفارش‌ها"
+                                className={classes.tab_label}
+                                {...a11yProps('three')} />
+                        </Tabs>
+                    </AppBar>
+                    <TabPanel value={value} index="one">
+                        <DataTableProducts />
+                    </TabPanel>
 
-                <AppBar position="static" style={{ background: COLORS.primeryColor }} >
-                    <Tabs value={value}
-                    className={classes.tab}
-                        onChange={handleChange}
-                        TabIndicatorProps={{ style: { background: COLORS.accentColor } }}
-                        centered
-                    >
-                        <Tab
-                            value="one"
-                            label="کالاها"
-                            wrapped
-                            className={classes.tab_label}
-                            {...a11yProps('one')}
-                        />
-                        <Tab value="two"
-                            label="موجودی و قیمت‌ها"
-                            className={classes.tab_label}
-                            {...a11yProps('two')} />
-                        <Tab value="three"
-                            label="سفارش‌ها"
-                            className={classes.tab_label}
-                            {...a11yProps('three')} />
-                    </Tabs>
-                </AppBar>
-                <TabPanel value={value} index="one">
-                    <DataTableProducts />
-                </TabPanel>
+                    <TabPanel value={value} index="two">
+                        <DataTableQuanitityandPrices />
+                    </TabPanel>
 
-                <TabPanel value={value} index="two">
-                    <DataTableQuanitityandPrices />
-                </TabPanel>
-
-                <TabPanel value={value} index="three">
-                    <DataTableOrders/>
-                </TabPanel>
+                    <TabPanel value={value} index="three">
+                        <DataTableOrders />
+                    </TabPanel>
+                </LayoutAdminPanel>
             </div>
         </LoadingLayout>
 
