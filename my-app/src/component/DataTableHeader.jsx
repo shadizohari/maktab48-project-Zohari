@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function DataTableHeader({ searchInput, titre, textBtn, handelClick, button = true, radio = false, ...props }) {
+export default function DataTableHeader({ searchInput, titre, textBtn, handelClick, button = true, radio = false, disabled, ...props }) {
     const classes = useStyles();
     const btn = styleButton();
 
@@ -53,6 +53,7 @@ export default function DataTableHeader({ searchInput, titre, textBtn, handelCli
                     variant="contained"
                     className={btn.btn}
                     onClick={handelClick}
+                    disabled={disabled}
                 >
                     {textBtn}
                 </Button> : false}

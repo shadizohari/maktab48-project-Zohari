@@ -92,6 +92,18 @@ export default function DataTableQuanitityandPrices({ ...props }) {
     const [modifiedData, setModifiedData] = useState([]);
     const [styleInputChange, setStyleInputChange] = useState(classes.styleInputChange)
     const [idChange, setIdChange] = useState([])
+    const [isEdinting, setEditing] = useState(false)
+    const [disabled, setDisabled] = useState("disabled")
+
+    useEffect(() => {
+        if (isEdinting) {
+            setDisabled("")
+        }else{  
+            setDisabled("disabled")
+        }
+    }, [isEdinting])
+
+
 
     function setPriceValue(idRow) {
         if (booksData) {
@@ -118,6 +130,7 @@ export default function DataTableQuanitityandPrices({ ...props }) {
 
     // function for handeling value input price and quantity
     function handelInput(e, id, input) {
+        setEditing(true)
         setIdChange([...idChange, id])
         e.target.type = "number"
         e.target.className = `${styleInputChange} MuiInputBase-input`;
@@ -150,17 +163,20 @@ export default function DataTableQuanitityandPrices({ ...props }) {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
     function putData() {
-        console.log(idChange)
+
         // setIdChange([])
-        modifiedData.forEach(async (book, indx) => {
-            putBookApi('http://localhost:5000/books/', book.id, book);
-            await sleep(500);
-        });
-        setStyleInputChange("");
-        dispatch(setLoading(true));
-        setTimeout(() => {
-            dispatch(setLoading(false));
-        }, 1000);
+        if (modifiedData.length > 0) {
+            setEditing(false)
+            modifiedData.forEach(async (book, indx) => {
+                putBookApi('http://localhost:5000/books/', book.id, book);
+                await sleep(500);
+            });
+            setStyleInputChange("");
+            dispatch(setLoading(true));
+            setTimeout(() => {
+                dispatch(setLoading(false));
+            }, 1000);
+        }
     }
 
     // map for data
@@ -221,7 +237,7 @@ export default function DataTableQuanitityandPrices({ ...props }) {
     }
     return (
         <div>
-            <DataTableHeader titre="موجودی و قیمت‌ها" textBtn="ذخیره" handelClick={putData} searchInput={(e) => searchInput(e)} />
+            <DataTableHeader titre="موجودی و قیمت‌ها" textBtn="ذخیره" disabled={disabled} handelClick={putData} searchInput={(e) => searchInput(e)} />
             <DataTableContainer>
                 <TableHead>
                     <TableRow>
@@ -242,7 +258,7 @@ export default function DataTableQuanitityandPrices({ ...props }) {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {(!searchValue ? mapDataQuantityPrice(booksData.sort(sortPrice)) : mapDataQuantityPrice(searchFunc(booksData)))}
+                    {(isEdinting) ? (mapDataQuantityPrice(booksData)) : ((searchValue ? mapDataQuantityPrice(searchFunc(booksData)) : mapDataQuantityPrice(booksData.sort(sortPrice))))}
                 </TableBody>
 
             </DataTableContainer>
