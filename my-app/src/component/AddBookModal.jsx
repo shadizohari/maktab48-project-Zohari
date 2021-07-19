@@ -108,7 +108,7 @@ export default function AddBookModal({ editNameBook, editCategory, editSubCatego
                 let book = {
                     id: maxId + 1,
                     name: bookName,
-                    subject: category,
+                    category: category,
                     subCategory: valueSubCategory,
                     img: fileData,
                     description: description,
@@ -121,7 +121,7 @@ export default function AddBookModal({ editNameBook, editCategory, editSubCatego
             let book = {
                 id: editId,
                 name: bookName,
-                subject: category,
+                category: category,
                 subCategory: valueSubCategory,
                 img: fileData,
                 description: description,
@@ -178,7 +178,7 @@ export default function AddBookModal({ editNameBook, editCategory, editSubCatego
                     value={bookName}
                     onChange={(e) => setBookName(e.target.value)}
                 />
-                {/* <div className={classes.parentCategory}> */}
+
                     <FormControl style={{ width: "45%" }} className={classes.margin_1}>
                         <InputLabel required style={{ color: COLORS.accentColor }}>دسته‌بندی</InputLabel>
                         <Select
@@ -206,7 +206,7 @@ export default function AddBookModal({ editNameBook, editCategory, editSubCatego
 
                         </Select>
                     </FormControl>
-                {/* </div> */}
+
                 <CssTextField
                     className={classes.margin_1}
                     label="توضیحات"

@@ -86,7 +86,7 @@ export default function DataTableProducts({ ...props }) {
                 setFilterResult(data);
                 setLength(data.length);
             } else {
-                let result = data.filter(book => book.subject == e.target.value);
+                let result = data.filter(book => book.category == e.target.value);
                 setFilterResult(result)
                 setLength(result.length);
             }

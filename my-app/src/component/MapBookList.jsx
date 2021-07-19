@@ -131,8 +131,8 @@ export default function MapBookList({ data, end, start, ...props }) {
                     <TableCell>{index + 1}</TableCell>
                     <TableCell> <Avatar className={classes.img_size} src={row.img} /></TableCell>
                     <TableCell>{row.name}</TableCell>
-                    <TableCell>{row.subject}</TableCell>
-                    <TableCell onClick={() => editBook(row.id, row.name, row.subject, row.img, row.description,row.subCategory)}><AiTwotoneEdit className={classes.icons} /></TableCell>
+                    <TableCell>{row.category}</TableCell>
+                    <TableCell onClick={() => editBook(row.id, row.name, row.category, row.img, row.description,row.subCategory)}><AiTwotoneEdit className={classes.icons} /></TableCell>
                     <TableCell onClick={() => handleClickOpenDialog(row.id)}><RiDeleteBin2Fill className={classes.icons} /></TableCell>
 
                 </TableRow >
