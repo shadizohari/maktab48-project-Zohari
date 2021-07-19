@@ -47,11 +47,13 @@ const useStyles = makeStyles((theme) => ({
     customTable: {
         "& .MuiTableCell-root": {
             padding: "0px",
+
         }
     },
     styleInputChange: {
         color: COLORS.accentColor,
         textDecoration: `underline ${COLORS.accentColor}`,
+        border: "1px solid"
     },
     btn_sort_left: {
         color: COLORS.primeryColor,
@@ -95,10 +97,11 @@ export default function DataTableQuanitityandPrices({ ...props }) {
     const [isEdinting, setEditing] = useState(false)
     const [disabled, setDisabled] = useState("disabled")
 
+    // for disabled or notdisabled button "ذخیره"
     useEffect(() => {
         if (isEdinting) {
             setDisabled("")
-        }else{  
+        } else {
             setDisabled("disabled")
         }
     }, [isEdinting])
@@ -133,7 +136,7 @@ export default function DataTableQuanitityandPrices({ ...props }) {
         setEditing(true)
         setIdChange([...idChange, id])
         e.target.type = "number"
-        e.target.className = `${styleInputChange} MuiInputBase-input`;
+        e.target.className = `MuiInputBase-input ${styleInputChange} `;
         let i = booksData.findIndex((book, index) => book.id == id);
         booksData[i][input] = e.target.value;
         setBookData([...booksData]);
@@ -145,7 +148,25 @@ export default function DataTableQuanitityandPrices({ ...props }) {
             modifiedData.push(booksData[i])
         }
         setModifiedData([...modifiedData])
+
+
     }
+
+    const handelESC = async (e, id, input) => {
+        if (e.key === 'Escape') {
+            try {
+                const response = await fetch(`http://localhost:5000/books/${id}`);
+                const data = await response.json();
+                let i = booksData.findIndex((book, index) => book.id == id);
+                e.target.value = data[input];
+                booksData[i][input] = data[input];
+                setBookData([...booksData]);
+                e.target.className = `MuiInputBase-input`;
+            } catch (err) {
+                console.log(err)
+            }
+        }
+    };
 
 
 
@@ -157,21 +178,13 @@ export default function DataTableQuanitityandPrices({ ...props }) {
     const { start, end, changePage, activePageNumber } = usePagination(5)
 
 
-
-    // put new data...
-    function sleep(ms) {
-        return new Promise(resolve => setTimeout(resolve, ms));
-    }
+    // why this function load page no render?????
     function putData() {
-
-        // setIdChange([])
         if (modifiedData.length > 0) {
             setEditing(false)
             modifiedData.forEach(async (book, indx) => {
                 putBookApi('http://localhost:5000/books/', book.id, book);
-                await sleep(500);
             });
-            setStyleInputChange("");
             dispatch(setLoading(true));
             setTimeout(() => {
                 dispatch(setLoading(false));
@@ -193,7 +206,8 @@ export default function DataTableQuanitityandPrices({ ...props }) {
                                     className={classes.margin}
                                     value={setPriceValue(row.id)}
                                     type={"text"}
-                                    onChange={(e, id) => handelInput(e, row.id, "price")}
+                                    onChange={(e) => handelInput(e, row.id, "price")}
+                                    onKeyUp={(e) => handelESC(e, row.id, "price")}
                                     style={{ textDecoration: "underline", padding: "16px" }}
                                 />
                             </TableCell>
@@ -202,7 +216,8 @@ export default function DataTableQuanitityandPrices({ ...props }) {
                                     className={classes.margin}
                                     value={(booksData.length > 0) ? booksData.find(item => item.id == row.id).quantity : false}
                                     type="number"
-                                    onChange={(e, id) => handelInput(e, row.id, "quantity")}
+                                    onChange={(e) => handelInput(e, row.id, "quantity")}
+                                    onKeyUp={(e) => handelESC(e, row.id, "quantity")}
                                     style={{ textDecoration: "underline", padding: "16px" }}
 
                                 />
@@ -225,7 +240,7 @@ export default function DataTableQuanitityandPrices({ ...props }) {
         return array.filter((book) => { return (book.name.includes(searchValue)) });
     }
     // sort
-    const [sort, setSort] = useState("uptodownPrice")
+    const [sort, setSort] = useState("idBook")
     const sortPrice = function (a, b) {
         if (sort == "uptodownPrice") { return b.price - a.price } else if (sort == "downtoupPrice") {
             return a.price - b.price
@@ -233,6 +248,8 @@ export default function DataTableQuanitityandPrices({ ...props }) {
             return a.quantity - b.quantity
         } else if (sort == "uptodownQuantity") {
             return b.quantity - a.quantity
+        } else if (sort == "idBook") {
+            return a.id - b.id
         }
     }
     return (
@@ -242,7 +259,10 @@ export default function DataTableQuanitityandPrices({ ...props }) {
                 <TableHead>
                     <TableRow>
                         <TableCell>#</TableCell>
-                        <TableCell>نام کتاب</TableCell>
+                        <TableCell>
+                            نام کتاب
+                            <FaLongArrowAltDown className={classes.btn_sort_left} onClick={() => setSort("idBook")} />
+                        </TableCell>
                         <TableCell>
                             <FaLongArrowAltUp className={classes.btn_sort_right} onClick={() => setSort("uptodownPrice")} />
                             قیمت‌ &nbsp;<span className={classes.displayNone}>(تومان)</span>
