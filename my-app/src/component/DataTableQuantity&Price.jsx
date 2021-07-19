@@ -85,7 +85,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function DataTableQuanitityandPrices({ ...props }) {
+export default function DataTableQuanitityandPrices() {
     const dispatch = useDispatch();
     const classes = useStyles();
     const [booksData, setBookData] = useState([])
@@ -181,7 +181,7 @@ export default function DataTableQuanitityandPrices({ ...props }) {
     // why this function load page no render?????
     function putData() {
         if (modifiedData.length > 0) {
-            setEditing(false)
+            // setEditing(false)
             modifiedData.forEach(async (book, indx) => {
                 putBookApi('http://localhost:5000/books/', book.id, book);
             });

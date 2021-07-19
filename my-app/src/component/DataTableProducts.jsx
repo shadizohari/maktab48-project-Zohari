@@ -72,8 +72,6 @@ export default function DataTableProducts({ ...props }) {
                     // setData(response.data);
                     setLength(response.data.length)
                     dispatch(setBookList(response.data));
-                    console.log(response.data)
-
                 }
             }).catch((err) => toast.error(".درخواست با خطا مواجه شد!"));
     }, [])
@@ -110,9 +108,9 @@ export default function DataTableProducts({ ...props }) {
 
     const styleClassModal = styleModal();
     const isLoading = useSelector((store) => store.isLoading);
-    useEffect(() => {
-        setOpen(false);
-    }, [isLoading]);
+    // useEffect(() => {
+    //     // setOpen(false);
+    // }, [isLoading]);
 
 
     // modal material.....

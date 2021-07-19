@@ -17,7 +17,8 @@ import { uniqId } from '../utils/auth';
 import axios from "axios";
 import { putBookApi } from '../api/BooksApi'
 import HeaderModal from './HeaderModal';
-
+// 
+import subCategory from '../utils/subCategory'
 
 
 
@@ -60,10 +61,13 @@ const useStyles = makeStyles((theme) => ({
         marginBottom: MARGIN.margin_3,
         marginTop: MARGIN.margin_3,
     },
+    parentCategory:{
+
+    },
 
 }));
 
-export default function AddBookModal({ editNameBook, editCategory, buttonName, putorpost, editId, editImg, editDescription, closeModal, ...props }) {
+export default function AddBookModal({ editNameBook, editCategory, editSubCategory, buttonName, putorpost, editId, editImg, editDescription, closeModal, ...props }) {
     const classes = useStyles();
     const [bookName, setBookName] = useState("");
     const [category, setCategory] = useState("رمان");
@@ -73,18 +77,25 @@ export default function AddBookModal({ editNameBook, editCategory, buttonName, p
     const dispatch = useDispatch();
     const [selectedFile, setSelectedFile] = useState();
     const bookList = useSelector((store) => store.bookList.bookList);
+    // subCategory
+    const [listSubCategory, setListSubCategory] = useState({})
+    const [valueSubCategory, setValueSubCategory] = useState("ایرانی")
+    useEffect(() => {
+        let x = subCategory.find((item) => category == item.category)
+        setListSubCategory({ ...x })
+    }, [category])
 
 
     useEffect(() => {
         if (editNameBook) {
             setBookName(editNameBook)
             setCategory(editCategory)
+            setValueSubCategory(editSubCategory)
             if (editImg) {
                 setFileData(editImg)
             }
             if (editDescription) {
                 setDescription(editDescription)
-                console.log(editDescription)
             }
         }
     }, [])
@@ -98,18 +109,20 @@ export default function AddBookModal({ editNameBook, editCategory, buttonName, p
                     id: maxId + 1,
                     name: bookName,
                     subject: category,
+                    subCategory: valueSubCategory,
                     img: fileData,
                     description: description,
                     quantity: 0,
                     price: 0,
                 }
-                setResponseNewBook(BooksApi(book, 'post', 'http://localhost:5000/books/',".کالا جدید با موفقیت اصافه شد"));
+                setResponseNewBook(BooksApi(book, 'post', 'http://localhost:5000/books/', ".کالا جدید با موفقیت اصافه شد"));
             }
         } else if (putorpost = "put") {
             let book = {
                 id: editId,
                 name: bookName,
                 subject: category,
+                subCategory: valueSubCategory,
                 img: fileData,
                 description: description,
                 quantity: 0,
@@ -165,21 +178,35 @@ export default function AddBookModal({ editNameBook, editCategory, buttonName, p
                     value={bookName}
                     onChange={(e) => setBookName(e.target.value)}
                 />
-                <FormControl style={{ width: "100%" }} className={classes.margin_1}>
-                    <InputLabel required style={{ color: COLORS.accentColor }}>دسته‌بندی</InputLabel>
-                    <Select
-                        native
-                        className={classes.select}
-                        value={category}
-                        onChange={(e) => setCategory(e.target.value)}
-                    >
-                        <option value="رمان">رمان</option>
-                        <option value="کودک">کودک</option>
-                        <option value="تاریخی">تاریخی</option>
-                        <option value="روانشناسی">روانشناسی</option>
-                        <option value="غیره">غیره</option>
-                    </Select>
-                </FormControl>
+                {/* <div className={classes.parentCategory}> */}
+                    <FormControl style={{ width: "45%" }} className={classes.margin_1}>
+                        <InputLabel required style={{ color: COLORS.accentColor }}>دسته‌بندی</InputLabel>
+                        <Select
+                            native
+                            className={classes.select}
+                            value={category}
+                            onChange={(e) => setCategory(e.target.value)}
+                        >
+                            <option value="رمان">رمان</option>
+                            <option value="کودک">کودک</option>
+                            <option value="تاریخی">تاریخی</option>
+                            <option value="روانشناسی">روانشناسی</option>
+                            <option value="غیره">غیره</option>
+                        </Select>
+                    </FormControl>
+                    <FormControl style={{ width: "45%",marginRight:"10%" }} className={classes.margin_1}>
+                        <InputLabel required style={{ color: COLORS.accentColor }}>دسته‌بندی</InputLabel>
+                        <Select
+                            native
+                            className={classes.select}
+                            value={valueSubCategory}
+                            onChange={(e) => setValueSubCategory(e.target.value)}
+                        >
+                            {(listSubCategory.subCategory) ? listSubCategory.subCategory.map((item) => <option value={item}>{item}</option>) : false}
+
+                        </Select>
+                    </FormControl>
+                {/* </div> */}
                 <CssTextField
                     className={classes.margin_1}
                     label="توضیحات"
