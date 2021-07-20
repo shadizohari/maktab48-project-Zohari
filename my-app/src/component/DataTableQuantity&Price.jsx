@@ -104,6 +104,7 @@ export default function DataTableQuanitityandPrices() {
         } else {
             setDisabled("disabled")
         }
+        console.log(modifiedData)
     }, [isEdinting])
 
 
@@ -148,9 +149,15 @@ export default function DataTableQuanitityandPrices() {
             modifiedData.push(booksData[i])
         }
         setModifiedData([...modifiedData])
-
-
     }
+
+    useEffect(() => {
+        console.log("no")
+        if (modifiedData.length < 1) {
+            console.log("ok")
+            setEditing(false)
+        }
+    }, [modifiedData])
 
     const handelESC = async (e, id, input) => {
         if (e.key === 'Escape') {
@@ -158,13 +165,24 @@ export default function DataTableQuanitityandPrices() {
                 const response = await fetch(`http://localhost:5000/books/${id}`);
                 const data = await response.json();
                 let i = booksData.findIndex((book, index) => book.id == id);
-                e.target.value = data[input];
+                e.target.type = "text"
+                // e.target.value = formatPrice(data[input]);
                 booksData[i][input] = data[input];
                 setBookData([...booksData]);
                 e.target.className = `MuiInputBase-input`;
             } catch (err) {
                 console.log(err)
             }
+            let index = (modifiedData.findIndex((item) => item.id == id))
+            if (index > -1) {
+                modifiedData.splice(index, 1)
+                setModifiedData([...modifiedData])
+            }
+            // let i = (idChange.findIndex((i) => i == id))
+            // if (i > -1) {
+            //     idChange.splice(i, 1)
+            //     setIdChange([...idChange])
+            // }
         }
     };
 
