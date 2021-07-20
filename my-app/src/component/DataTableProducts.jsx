@@ -80,7 +80,6 @@ export default function DataTableProducts({ ...props }) {
     // filter books category
     function filter(e) {
         setValue(true);
-        console.log(e.target.value)
         if (data) {
             if (e.target.value === "همه") {
                 setFilterResult(data);

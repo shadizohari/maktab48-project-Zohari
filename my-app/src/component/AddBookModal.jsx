@@ -17,8 +17,6 @@ import { uniqId } from '../utils/auth';
 import axios from "axios";
 import { putBookApi } from '../api/BooksApi'
 import HeaderModal from './HeaderModal';
-// 
-import subCategory from '../utils/subCategory'
 
 
 
@@ -61,7 +59,7 @@ const useStyles = makeStyles((theme) => ({
         marginBottom: MARGIN.margin_3,
         marginTop: MARGIN.margin_3,
     },
-    parentCategory:{
+    parentCategory: {
 
     },
 
@@ -80,9 +78,15 @@ export default function AddBookModal({ editNameBook, editCategory, editSubCatego
     // subCategory
     const [listSubCategory, setListSubCategory] = useState({})
     const [valueSubCategory, setValueSubCategory] = useState("ایرانی")
+
     useEffect(() => {
-        let x = subCategory.find((item) => category == item.category)
-        setListSubCategory({ ...x })
+        axios.get('http://localhost:5000/subCategories')
+            .then(response => {
+                if (response.data) {
+                    let x = response.data.find((item) => category == item.category)
+                    setListSubCategory({ ...x })
+                }
+            })
     }, [category])
 
 
@@ -179,33 +183,33 @@ export default function AddBookModal({ editNameBook, editCategory, editSubCatego
                     onChange={(e) => setBookName(e.target.value)}
                 />
 
-                    <FormControl style={{ width: "45%" }} className={classes.margin_1}>
-                        <InputLabel required style={{ color: COLORS.accentColor }}>دسته‌بندی</InputLabel>
-                        <Select
-                            native
-                            className={classes.select}
-                            value={category}
-                            onChange={(e) => setCategory(e.target.value)}
-                        >
-                            <option value="رمان">رمان</option>
-                            <option value="کودک">کودک</option>
-                            <option value="تاریخی">تاریخی</option>
-                            <option value="روانشناسی">روانشناسی</option>
-                            <option value="غیره">غیره</option>
-                        </Select>
-                    </FormControl>
-                    <FormControl style={{ width: "45%",marginRight:"10%" }} className={classes.margin_1}>
-                        <InputLabel required style={{ color: COLORS.accentColor }}>دسته‌بندی</InputLabel>
-                        <Select
-                            native
-                            className={classes.select}
-                            value={valueSubCategory}
-                            onChange={(e) => setValueSubCategory(e.target.value)}
-                        >
-                            {(listSubCategory.subCategory) ? listSubCategory.subCategory.map((item) => <option value={item}>{item}</option>) : false}
+                <FormControl style={{ width: "45%" }} className={classes.margin_1}>
+                    <InputLabel required style={{ color: COLORS.accentColor }}>دسته‌بندی</InputLabel>
+                    <Select
+                        native
+                        className={classes.select}
+                        value={category}
+                        onChange={(e) => setCategory(e.target.value)}
+                    >
+                        <option value="رمان">رمان</option>
+                        <option value="کودک">کودک</option>
+                        <option value="تاریخی">تاریخی</option>
+                        <option value="روانشناسی">روانشناسی</option>
+                        <option value="غیره">غیره</option>
+                    </Select>
+                </FormControl>
+                <FormControl style={{ width: "45%", marginRight: "10%" }} className={classes.margin_1}>
+                    <InputLabel required style={{ color: COLORS.accentColor }}>دسته‌بندی</InputLabel>
+                    <Select
+                        native
+                        className={classes.select}
+                        value={valueSubCategory}
+                        onChange={(e) => setValueSubCategory(e.target.value)}
+                    >
+                        {(listSubCategory.subCategory) ? listSubCategory.subCategory.map((item) => <option value={item}>{item}</option>) : false}
 
-                        </Select>
-                    </FormControl>
+                    </Select>
+                </FormControl>
 
                 <CssTextField
                     className={classes.margin_1}
