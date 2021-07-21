@@ -65,7 +65,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function AddBookModal({ editNameBook, editCategory, editSubCategory, buttonName, putorpost, editId, editImg, editDescription, closeModal, ...props }) {
+export default function AddBookModal({ editNameBook, editCategory, editSubCategory, buttonName, putorpost, editId, editImg, editDescription, closeModal, price, quantity, ...props }) {
     const classes = useStyles();
     const [bookName, setBookName] = useState("");
     const [category, setCategory] = useState("رمان");
@@ -129,8 +129,8 @@ export default function AddBookModal({ editNameBook, editCategory, editSubCatego
                 subCategory: valueSubCategory,
                 img: fileData,
                 description: description,
-                quantity: 0,
-                price: 0,
+                quantity: quantity,
+                price: price
             }
             putBookApi('http://localhost:5000/books/', editId, book)
         }

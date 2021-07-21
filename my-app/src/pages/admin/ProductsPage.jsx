@@ -8,12 +8,8 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import DataTableProducts from '../../component/DataTableProducts';
 import { COLORS, MARGIN } from '../../styles/constants';
-// import Container from '@material-ui/core/Container';
-import DataTableHeader from '../../component/DataTableHeader';
 import LoadingLayout from '../../component/LoadingLayout';
 import { useDispatch, useSelector } from 'react-redux';
-import AdminHeader from '../../component/AdminHeader';
-import { setLoading } from '../../store/actions/isLoading';
 import DataTableQuanitityandPrices from '../../component/DataTableQuantity&Price'
 import { useHistory } from "react-router-dom";
 import DataTableOrders from '../../component/DataTableOrders';

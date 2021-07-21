@@ -92,15 +92,18 @@ export default function MapBookList({ data, end, start, ...props }) {
     const [editId, setEdeitId] = useState()
     const [editImg, setEditImg] = useState()
     const [editSubCategory, setEditSubCategory] = useState()
-    function editBook(id, namebook, category, img, description, subCategory) {
+    const [quantity, setQuantity] = useState()
+    const [price, setPrice] = useState()
+    function editBook(id, namebook, category, img, description, subCategory, price, quantity) {
         setOpen(true);
         setEditNameBook(namebook);
         setEditCategory(category);
         setEdeitId(id);
         setEditImg(img);
         setEditDescription(description);
-        setEditSubCategory(subCategory)
-
+        setEditSubCategory(subCategory);
+        setPrice(price)
+        setQuantity(quantity)
     }
     // Dialog for delete
     const [openDialog, setOpenDialog] = useState(false);
@@ -132,7 +135,7 @@ export default function MapBookList({ data, end, start, ...props }) {
                     <TableCell> <Avatar className={classes.img_size} src={row.img} /></TableCell>
                     <TableCell>{row.name}</TableCell>
                     <TableCell>{row.category}</TableCell>
-                    <TableCell onClick={() => editBook(row.id, row.name, row.category, row.img, row.description,row.subCategory)}><AiTwotoneEdit className={classes.icons} /></TableCell>
+                    <TableCell onClick={() => editBook(row.id, row.name, row.category, row.img, row.description, row.subCategory, row.price, row.quantity)}><AiTwotoneEdit className={classes.icons} /></TableCell>
                     <TableCell onClick={() => handleClickOpenDialog(row.id)}><RiDeleteBin2Fill className={classes.icons} /></TableCell>
 
                 </TableRow >
@@ -150,7 +153,7 @@ export default function MapBookList({ data, end, start, ...props }) {
             >
                 <Fade in={open}>
                     <div className={styleClassModal.modal_paper}>
-                        <AddBookModal closeModal={handleClose} editImg={editImg} editNameBook={editNameBook} editCategory={editCategory} editDescription={editDescription} buttonName={"ثبت"} putorpost={"put"} editId={editId} editSubCategory={editSubCategory} />
+                        <AddBookModal closeModal={handleClose} editImg={editImg} editNameBook={editNameBook} editCategory={editCategory} editDescription={editDescription} buttonName={"ثبت"} putorpost={"put"} editId={editId} editSubCategory={editSubCategory} price={price} quantity={quantity} />
                     </div>
                 </Fade>
             </Modal>

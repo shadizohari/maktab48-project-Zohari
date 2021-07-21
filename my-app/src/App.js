@@ -10,6 +10,7 @@ import TabsWrappedLabel from './pages/admin/ProductsPage'
 import { ProtectedRoute } from './ProtectedRoute';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
+import Home from './pages/store/Home'
 // rtl
 import { create } from 'jss';
 import rtl from 'jss-rtl';
@@ -31,7 +32,7 @@ export default function App() {
         <Provider store={store}>
             <Router>
               <Switch>
-                {/* <Route path="/" exact /> */}
+                <Route path="/" component={Home}exact />
                 <Route path="/admin-panel" exact component={LoginPage} />
                 <ProtectedRoute path="/admin-panel/products" exact component={ProductsPage}/>
                 <ProtectedRoute path="/admin-panel/quantity_and_price" exact component={ProductsPage}/>
