@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function MediaControlCard({img,title,price,...prpos}) {
+export default function CardHorizantal({img,title,price,sebCategory,...prpos}) {
     const classes = useStyles();
     const theme = useTheme();
 
@@ -40,8 +40,11 @@ export default function MediaControlCard({img,title,price,...prpos}) {
                 <Avatar className={classes.imgCard} src ={img}/>
             
                     <CardContent className={classes.content}>
-                        <Typography component="h5" variant="h6">
+                        <Typography variant="h6">
                            {title}
+                        </Typography>
+                        <Typography variant="subtitle1">
+                           {sebCategory}
                         </Typography>
                         <Typography variant="subtitle1" color="textSecondary">
                             {`قیمت:`} {formatPrice(price)}

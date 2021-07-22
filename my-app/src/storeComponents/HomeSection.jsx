@@ -6,7 +6,7 @@ import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import { Link } from "react-router-dom";
 import { COLORS } from '../styles/constants';
-import axios from "axios";
+
 
 
 
@@ -48,24 +48,19 @@ export default function Home({ title, idList, data, ...props }) {
 
 
 
-
-
-
-
     return (
 
         <Container maxWidth="lg" className={classes.root}>
-            <Link> <Typography variant="h5" className={classes.title} >
+            <Link to={`category/${title}`}> <Typography variant="h5" className={classes.title} >
                 {`دسته ${title}`}
             </Typography>
             </Link>
 
             <Grid container spacing={3}>
                 {featuredBooks.map((item) => {
-                    console.log(item)
                     return (
                         <Grid item xs={12} sm={6} md={4}>
-                            <Link><CardHorizantal title={item.name} img={item.img} price={item.price}/></Link>
+                            <Link to ={`product/${item.id}`}><CardHorizantal title={item.name} img={item.img} price={item.price} /></Link>
                         </Grid>
                     )
                 })}

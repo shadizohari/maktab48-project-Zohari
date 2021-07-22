@@ -10,7 +10,10 @@ import TabsWrappedLabel from './pages/admin/ProductsPage'
 import { ProtectedRoute } from './ProtectedRoute';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
-import Home from './pages/store/Home'
+import HomePage from './pages/store/HomePage';
+import CategoryPage from './pages/store/CategoryPage';
+import  ProductPage from './pages/store/ProductPage';
+// import MenuSide from './storeComponents/MenuSIde'
 // rtl
 import { create } from 'jss';
 import rtl from 'jss-rtl';
@@ -30,18 +33,22 @@ export default function App() {
     <StylesProvider jss={jss}>
       <ThemeProvider theme={theme}>
         <Provider store={store}>
-            <Router>
-              <Switch>
-                <Route path="/" component={Home}exact />
-                <Route path="/admin-panel" exact component={LoginPage} />
-                <ProtectedRoute path="/admin-panel/products" exact component={ProductsPage}/>
-                <ProtectedRoute path="/admin-panel/quantity_and_price" exact component={ProductsPage}/>
-                <ProtectedRoute path="/admin-panel/orders" exact component={ProductsPage}/>
+          <Router>
+            <Switch>
+              <Route path="/" component={HomePage} exact />
+              <Route path="/category/:title" component={CategoryPage} exact />
+              <Route path="/product/:id" component={ProductPage} exact />
 
-                {/* <ProtectedRoute path="/admin-panel/stock-prices" exact />
+              <Route path="/admin-panel" exact component={LoginPage} />
+              <ProtectedRoute path="/admin-panel/products" exact component={ProductsPage} />
+              <ProtectedRoute path="/admin-panel/quantity_and_price" exact component={ProductsPage} />
+              <ProtectedRoute path="/admin-panel/orders" exact component={ProductsPage} />
+
+
+              {/* <ProtectedRoute path="/admin-panel/stock-prices" exact />
                 <ProtectedRoute path="/admin-panel/orders" exact /> */}
-              </Switch>
-            </Router>
+            </Switch>
+          </Router>
         </Provider>
       </ThemeProvider>
     </StylesProvider>

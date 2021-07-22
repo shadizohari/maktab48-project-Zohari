@@ -11,7 +11,6 @@ export default function Home() {
 
     const [featured, setFeatured] = useState([])
     const [books, setBooks] = useState([])
-    // const [favouriteFirst, setFavouriteFirst] = useState()
 
     useEffect(() => {
         axios.get('http://localhost:5000/featured')
