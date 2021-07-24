@@ -101,7 +101,8 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { FiMenu } from 'react-icons/fi';
 import { COLORS } from "../../styles/constants";
-import { FaBookOpen } from 'react-icons/fa'
+import { FaBookOpen } from 'react-icons/fa';
+import LayoutPage from '../../storeComponents/LayoutPage'
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -134,11 +135,11 @@ const useStyles = makeStyles((theme) => ({
     content: {
         flexDirection: "column",
         flexGrow: 1,
-        padding: theme.spacing(3),
+        // padding: theme.spacing(3),
     },
     title: {
-        // marginBottom: "0px",
-        marginTop: "30px"
+        marginBottom: "20px",
+        marginTop: "20px"
     },
     hr: {
         border: "0",
@@ -159,10 +160,10 @@ const useStyles = makeStyles((theme) => ({
         fontSize: "20px",
     },
     paddingSub: {
-        paddingLeft: "40px"
+        paddingLeft: "50px"
     },
     paddingCat: {
-        paddingLeft: "5px"
+        paddingLeft: "10px"
     },
 }));
 
@@ -174,20 +175,24 @@ function ResponsiveDrawer(props) {
     const [category, setCategory] = useState([])
 
     useEffect(() => {
+        setCategory([])
+        setData([])
         axios.get('http://localhost:5000/books')
             .then(response => {
                 if (response.data) {
+                    console.log(data)
                     setData([...response.data])
                 } else {
                     console.log("error")
                 }
             })
-
-    }, [])
+    }, [title])
 
     useEffect(() => {
         data.forEach((book) => {
             if (book.category == title) {
+                console.log(title)
+                console.log(category)
                 category.push(book)
             }
         })
@@ -209,7 +214,7 @@ function ResponsiveDrawer(props) {
     const drawer = (
         <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
             {/* <div className={classes.toolbar} /> */}
-            <List>
+            <List style={{marginTop:"-120PX"}}>
                 <Link className={classes.link} to='/category/رمان'><ListItem button>
                     <FaBookOpen className={classes.icon} />
                     <ListItemText primary="رمان" className={classes.paddingCat} />
@@ -241,7 +246,7 @@ function ResponsiveDrawer(props) {
             </List>
             <List>
                 <Link className={classes.link} to='/category/تاریخ'><ListItem button>
-                <FaBookOpen className={classes.icon} />
+                    <FaBookOpen className={classes.icon} />
                     <ListItemText primary="تاریخ" className={classes.paddingCat} />
                 </ListItem></Link>
                 <Link className={classes.link} to='/category/ایران/تاریخ'> <ListItem button>
@@ -254,7 +259,7 @@ function ResponsiveDrawer(props) {
             </List>
             <List>
                 <Link className={classes.link} to='/category/روانشناسی'><ListItem button>
-                <FaBookOpen className={classes.icon} />
+                    <FaBookOpen className={classes.icon} />
                     <ListItemText primary="روانشناسی" className={classes.paddingCat} />
                 </ListItem></Link>
                 <Link className={classes.link} to='/category/اسلامی/روانشناسی'> <ListItem button>
@@ -271,76 +276,84 @@ function ResponsiveDrawer(props) {
     const container = window !== undefined ? () => window().document.body : undefined;
 
     return (
-        <div className={classes.root}>
-            <CssBaseline />
-            <AppBar position="fixed" className={classes.appBar} style={{ color: COLORS.primeryColor, background: "white" }}>
-                <IconButton
-                    color="inherit"
-                    aria-label="open drawer"
-                    edge="start"
-                    onClick={handleDrawerToggle}
-                    className={classes.menuButton}
-                >
-                    <FiMenu />
-                </IconButton>
-            </AppBar>
-            <nav className={classes.drawer} aria-label="mailbox folders">
-                {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
-                <Hidden smUp implementation="css">
-                    <Drawer
-                        container={container}
-                        variant="temporary"
-                        anchor={theme.direction === 'rtl' ? 'right' : 'left'}
-                        open={mobileOpen}
-                        onClose={handleDrawerToggle}
-                        classes={{
-                            paper: classes.drawerPaper,
-                        }}
-                        ModalProps={{
-                            keepMounted: true, // Better open performance on mobile.
-                        }}
+        <>
+                    {/* <Header /> */}
+          
+
+            <div className={classes.root}>
+                <CssBaseline />
+                <AppBar position="fixed" className={classes.appBar} style={{ color: COLORS.primeryColor, background: "white" }}>
+                    <IconButton
+                        color="inherit"
+                        aria-label="open drawer"
+                        edge="start"
+                        onClick={handleDrawerToggle}
+                        className={classes.menuButton}
                     >
-                        {drawer}
-                    </Drawer>
-                </Hidden>
-                <Hidden xsDown implementation="css">
-                    <Drawer
-                        classes={{
-                            paper: classes.drawerPaper,
-                        }}
-                        variant="permanent"
-                        open
-                    >
-                        {drawer}
-                    </Drawer>
-                </Hidden>
-            </nav>
-            <main className={classes.content}>
-                <div className={classes.toolbar} />
-                <Container maxWidth="lg" className={classes.root}>
-                    <Typography variant="h4" className={classes.title} >
-                        {`دسته ${title}`}
-                    </Typography>
+                        <FiMenu />
+                    </IconButton>
+                </AppBar>
+                <nav className={classes.drawer} aria-label="mailbox folders">
+                    {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
+                    <Hidden smUp implementation="css">
+                        <Drawer
+                            container={container}
+                            variant="temporary"
+                            anchor={theme.direction === 'rtl' ? 'right' : 'left'}
+                            open={mobileOpen}
+                            onClose={handleDrawerToggle}
+                            classes={{
+                                paper: classes.drawerPaper,
+                            }}
+                            ModalProps={{
+                                keepMounted: true, // Better open performance on mobile.
+                            }}
+                        >
+                            {drawer}
+                        </Drawer>
+                    </Hidden>
+                    <Hidden xsDown implementation="css">
+                        <Drawer
+                            classes={{
+                                paper: classes.drawerPaper,
+                            }}
+                            variant="permanent"
+                            open
+                        >
+                            {drawer}
+                        </Drawer>
+                    </Hidden>
+                </nav>
+                
+                <main className={classes.content}>
+                    {/* <div className={classes.toolbar} /> */}
+                    <LayoutPage style={{width:"10%"}}>
+                    <Container maxWidth="lg" className={classes.root}>
+                        <Typography variant="h4" className={classes.title} >
+                            {`دسته ${title}`}
+                        </Typography>
 
-                </Container>
-                <Container>
-                    <hr className={classes.hr} />
+                    </Container>
+                    {/* <Container>
+                        <hr className={classes.hr} />
 
-                </Container>
+                    </Container> */}
 
-                <Container maxWidth="lg" className={classes.root}>
-                    <Grid container spacing={3}>
-                        {(category.length > 0) ? category.map((item) => {
-                            return (
-                                <Grid item xs={12} md={6} lg={4}>
-                                    <CardHorizantal sebCategory={item.subCategory} title={item.name} img={item.img} price={item.price} />
-                                </Grid>
-                            )
-                        }) : false}
-                    </Grid>
-                </Container>
-            </main>
-        </div>
+                    <Container maxWidth="lg" className={classes.root}>
+                        <Grid container spacing={3}>
+                            {(category.length > 0) ? category.map((item) => {
+                                return (
+                                    <Grid item xs={12} md={6} lg={4}>
+                                        <CardHorizantal sebCategory={item.subCategory} title={item.name} img={item.img} price={item.price} />
+                                    </Grid>
+                                )
+                            }) : false}
+                        </Grid>
+                    </Container>
+                    </LayoutPage >
+                </main>
+            </div>
+        </>
     );
 }
 

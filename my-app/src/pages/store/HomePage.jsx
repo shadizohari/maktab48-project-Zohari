@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import HomeSection from '../../storeComponents/HomeSection'
 import axios from "axios";
+import LayoutPage from '../../storeComponents/LayoutPage'
 
 const useStyles = makeStyles((theme) => ({
 }));
@@ -33,7 +34,9 @@ export default function Home() {
 
     return (
         <>
-            {(featured.length > 0 && books.length>0) ? featured.map((item) => { return <HomeSection title={item.category} idList={item.products} data={books} /> }) : false}
+            <LayoutPage>
+                {(featured.length > 0 && books.length > 0) ? featured.map((item) => { return <HomeSection title={item.category} idList={item.products} data={books} /> }) : false}
+            </LayoutPage>
         </>
     );
 }
