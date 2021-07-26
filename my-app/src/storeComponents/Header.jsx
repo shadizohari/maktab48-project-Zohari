@@ -8,14 +8,9 @@ import { TiShoppingCart } from "react-icons/ti";
 import { RiAdminLine } from "react-icons/ri";
 import { NavLink } from "react-router-dom";
 // 
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
+
 import Slide from '@material-ui/core/Slide';
-import { useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -26,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     logo: {
         width: "100px",
         marginRight: "20px",
-        marginTop: MARGIN.margin_1,
+        marginTop: MARGIN.margin_2,
         marginBottom: MARGIN.margin_1,
 
 
@@ -44,6 +39,7 @@ const useStyles = makeStyles((theme) => ({
             flexDirection: 'column',
             alignItems: "flex-start",
             paddingRight: 0,
+            // marginTop:"50px",
         },
     },
     icon_home_style: {
@@ -67,6 +63,7 @@ const useStyles = makeStyles((theme) => ({
     },
     shopIcon: {
         marginRight: "15px",
+        color: COLORS.primeryColor,
         '&:hover': {
             color: COLORS.accentColor,
         }
@@ -91,42 +88,29 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AdminHeader() {
     const classes = useStyles();
-    // 
-    const history = useHistory();
-    const [open, setOpen] = React.useState(false);
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-    const handleClose = () => {
-        setOpen(false);
-    };
-    const logOut = () => {
-        setOpen(false);
-        localStorage.clear();
-        history.push("/");
-    }
-
 
     return (
-        <Container maxWidth="lg" >
-            <Container maxWidth="lg" className={classes.header_managment_panel}>
-                <div className={classes.header_logo_flex}>
-                    <NavLink to="/" exact>
-                        <img className={classes.logo} src={logo} />
-                    </NavLink>
-                    <Typography variant="h5" className={classes.margin_titre}>
-                        پنل مدیریت فروشگاه
-                    </Typography>
-                </div>
-                <div className={classes.icon} onClick={handleClickOpen}>
-                    <RiAdminLine className={classes.shopIcon}/>
-                    <TiShoppingCart className={classes.shopIcon} />
-                </div>
+        // <div style={{ background: "white" }}>
+            <Container maxWidth="lg" >
+                <Container maxWidth="lg" className={classes.header_managment_panel}>
+                    <div className={classes.header_logo_flex}>
+                        <NavLink to="/" exact>
+                            <img className={classes.logo} src={logo} />
+                        </NavLink>
+                        <Typography variant="h5" className={classes.margin_titre}>
+                            فروشگاه کتاب
+                        </Typography>
+                    </div>
+                    <div className={classes.icon}>
+                        <Link to="/admin-panel"><RiAdminLine className={classes.shopIcon} /></Link>
+                        <Link><TiShoppingCart className={classes.shopIcon} /></Link>
+                    </div>
 
 
+                </Container>
+                {/* <hr className={classes.hr} /> */}
             </Container>
-            <hr className={classes.hr} />
-        </Container>
+        // </div>
     )
 }
 

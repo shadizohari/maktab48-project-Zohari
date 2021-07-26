@@ -91,7 +91,7 @@ export default function AdminHeader() {
     };
     const logOut = () => {
         setOpen(false);
-        localStorage.clear();
+        localStorage.removeItem("token");
         history.push("/");
     }
 

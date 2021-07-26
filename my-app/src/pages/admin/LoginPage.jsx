@@ -71,7 +71,7 @@ export default function LoginPage() {
     function formSubmitted(e) {
         e.preventDefault();
         if (user && password) {
-            localStorage.clear();
+            localStorage.removeItem("token");
             setRes(LoginApi('post', 'https://fakestoreapi.com/auth/login', user, password))
             dispatch(setLoading(true));
         }

@@ -6,7 +6,7 @@ import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import { Link } from "react-router-dom";
 import { COLORS } from '../styles/constants';
-
+import { styleTitle } from '../styles/styleTitle';
 
 
 
@@ -31,7 +31,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Home({ title, idList, data, ...props }) {
     const classes = useStyles();
-    const [featuredBooks, setFeaturedBooks] = useState([])
+    const [featuredBooks, setFeaturedBooks] = useState([]);
+    const classesTitle = styleTitle();
 
     useEffect(() => {
         for (let i = 0; i < idList.length; i++) {
@@ -51,7 +52,7 @@ export default function Home({ title, idList, data, ...props }) {
     return (
 
         <Container maxWidth="lg" className={classes.root}>
-            <Link to={`category/${title}`}> <Typography variant="h5" className={classes.title} >
+            <Link to={`category/${title}`}> <Typography variant="h5" className={classesTitle.title} >
                 {`دسته ${title}`}
             </Typography>
             </Link>
@@ -60,12 +61,12 @@ export default function Home({ title, idList, data, ...props }) {
                 {featuredBooks.map((item) => {
                     return (
                         <Grid item xs={12} sm={6} md={4}>
-                            <Link to ={`product/${item.id}`}><CardHorizantal title={item.name} img={item.img} price={item.price} /></Link>
+                            <Link to={`product/${item.id}`}><CardHorizantal title={item.name} img={item.img} price={item.price} /></Link>
                         </Grid>
                     )
                 })}
             </Grid>
-            <hr className={classes.hr} />
+            {/* <hr className={classes.hr} /> */}
         </Container>
     );
 }
