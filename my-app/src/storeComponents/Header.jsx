@@ -6,7 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { TiShoppingCart } from "react-icons/ti";
 import { RiAdminLine } from "react-icons/ri";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 // 
 
 import Slide from '@material-ui/core/Slide';
@@ -88,6 +88,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AdminHeader() {
     const classes = useStyles();
+    // const history = useHistory();
+
 
     return (
         // <div style={{ background: "white" }}>
@@ -103,7 +105,7 @@ export default function AdminHeader() {
                     </div>
                     <div className={classes.icon}>
                         <Link to="/admin-panel"><RiAdminLine className={classes.shopIcon} /></Link>
-                        <Link><TiShoppingCart className={classes.shopIcon} /></Link>
+                        <Link to="/cart"><TiShoppingCart className={classes.shopIcon} /></Link>
                     </div>
 
 
