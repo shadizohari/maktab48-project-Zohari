@@ -177,7 +177,6 @@ const useStyles = makeStyles((theme) => ({
 function ResponsiveDrawer(props) {
 
     const { title } = useParams();
-    console.log(title)
     const [data, setData] = useState([])
     const [category, setCategory] = useState([])
 
@@ -198,8 +197,6 @@ function ResponsiveDrawer(props) {
     useEffect(() => {
         data.forEach((book) => {
             if (book.category == title) {
-                console.log(title)
-                console.log(category)
                 category.push(book)
             }
         })

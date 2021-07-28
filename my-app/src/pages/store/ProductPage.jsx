@@ -6,27 +6,42 @@ import axios from "axios";
 import { Container, Button, Typography } from '@material-ui/core';
 import { formatPrice } from '../../utils/auth'
 import { COLORS } from '../../styles/constants'
-// import TextField from '@material-ui/core/TextField';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { setLoading } from '../../store/actions/isLoading';
+import { FaLongArrowAltLeft } from "react-icons/fa"
+import { styleTitle } from '../../styles/styleTitle';
 
 const useStyles = makeStyles((theme) => ({
     parent_row: {
         display: "flex",
         marginTop: "20px",
+        [theme.breakpoints.down('sm')]: {
+            flexDirection: "column",
+            justifyContent: "flex-start"
+        }
     },
-    title: {
-        borderBottom: `3px solid ${COLORS.accentColor}`,
-        display: "inline-block",
-        paddingBottom: "10px"
-
+    parent_price:{
+        width:"100%",
+        display: "flex",
+        marginTop: "20px",
+        justifyContent:"space-between",
+        [theme.breakpoints.down('sm')]: {
+            flexDirection: "column",
+            justifyContent: "flex-start"
+        }
     },
     parent_column: {
         marginLeft: "50px",
-        marginTop: "20px"
+        marginTop: "20px",
+        flexGrow:"1",
 
     },
     imgClass: {
-        width: "30%"
+        width: "30%",
+        [theme.breakpoints.down('sm')]: {
+            width: "60%",
+            margin: "auto"
+        }
     },
     marginTop: {
         marginTop: "20px"
@@ -41,13 +56,28 @@ const useStyles = makeStyles((theme) => ({
             background: COLORS.primeryColor,
             // color:COLORS.primeryColor
         }
+    },
+    parent_category: {
+        display: "flex",
+        alignItems: "center",
+        borderBottom: `3px solid ${COLORS.accentColor}`,
+        paddingBottom: "10px"
+
+    },
+    arrow_icon: {
+        color: COLORS.accentColor,
+        paddingRight: "5px",
+        paddingLeft: "5px",
+        fontSize: "25px"
     }
 
 
 }));
 
 
-function ProductPage() {
+function ProductPage({...props}) {
+    const dispatch = useDispatch();
+
     const [book, setBook] = useState()
     // const[price,setPrice]=useState()
     const history = useHistory()
@@ -71,12 +101,16 @@ function ProductPage() {
     //         console.log(value)
     // }
     function addToCart() {
-        if (localStorage.cart) {
+        if (localStorage.cart && localStorage.cart.length > 0) {
             appendToStorage()
         } else {
             localStorage.setItem("cart", JSON.stringify([{ ...book, number: 1 }]))
         }
         history.push("/cart")
+        dispatch(setLoading(true));
+        setTimeout(() => {
+            dispatch(setLoading(false));
+        }, 1000);
     }
     function appendToStorage() {
         let flag = false;
@@ -93,32 +127,42 @@ function ProductPage() {
             localStorage.setItem("cart", JSON.stringify(arrayCart))
         }
     }
+    const classesTitle = styleTitle();
 
     const classes = useStyles()
     return (
         <>
             <LayoutAdminPanel >
+
+                <Container>
+                    <Typography variant="h4" className={classesTitle.title} >
+                        {book?.name}
+                    </Typography>
+                </Container>
                 <Container className={classes.parent_row}>
+
                     <img className={classes.imgClass} src={book?.img} />
                     <div className={classes.parent_column}>
-                        <Typography variant="h4" className={classes.title}>
-                            {book?.name}
-                        </Typography>
+                        <div style={{ display: "inline-block" }}>
+                            <div className={classes.parent_category}>
+                                <Typography variant="h5" className={classes.category}>
+                                    {book?.category}
+                                </Typography >
+                                <FaLongArrowAltLeft className={classes.arrow_icon} />
+                                <Typography variant="h5" className={classes.subCategory}>
+                                    {book?.subCategory}
+                                </Typography>
+                            </div>
+                        </div>
                         <p className={classes.marginTop}>
                             {book?.description}
                         </p>
-                        <Typography variant="h5" className={classes.marginTop}>
-                            قیمت: {formatPrice(book?.price)} تومان
-                        </Typography>
-                        <Button onClick={addToCart} className={classes.btn}>افزودن به سبدخرید</Button>
-
-                        {/* <TextField
-                        label="تعداد"
-                        defaultValue="1"
-                        type="number"
-                        InputProps={{ inputProps: { min: 1, max: book?.quantity } }}
-                        onChange={(e) => bookNumber(e.target.value)}
-                    /> */}
+                        <div className={classes.parent_price}>
+                            <Typography variant="h5" className={classes.marginTop}>
+                                قیمت: {formatPrice(book?.price)} تومان
+                            </Typography>
+                            <Button onClick={addToCart} className={classes.btn}>افزودن به سبدخرید</Button>
+                        </div>
                     </div>
                 </Container>
             </LayoutAdminPanel >

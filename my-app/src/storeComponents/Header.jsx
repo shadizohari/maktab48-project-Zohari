@@ -1,7 +1,7 @@
 import { COLORS, MARGIN } from '../styles/constants';
 import Container from '@material-ui/core/Container';
 import logo from '../assets/img/logo3-orange.png';
-import React from 'react';
+import React,{useEffect,useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { TiShoppingCart } from "react-icons/ti";
@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
         }
     },
     icon: {
-        fontSize: "30px",
+        fontSize: "35px",
         display: "flex",
         cursor: "pointer",
         alignItems: "center",
@@ -84,34 +84,64 @@ const useStyles = makeStyles((theme) => ({
 
 
     },
+    parent_cartQuantity: {
+        position: "absolute",
+        bottom: "85%",
+        right: "50%",
+        background: COLORS.accentColor,
+        padding: "2px",
+        borderRadius: "50%",
+        width: "24px",
+        height: "24px",
+    },
+    cartQuantity: {
+        position: "absolute",
+        top: "50%",
+        right: "50%",
+        transform: " translate(50%, -50%)",
+        color: "white",
+        fontSize: "18px"
+    }
 }));
 
 export default function AdminHeader() {
     const classes = useStyles();
     // const history = useHistory();
+    const [cartQuantity, setCartQuantity] = useState(0)
 
+    useEffect(() => {
+        let arrayCart = localStorage.getItem("cart")
+        if (arrayCart)
+        setCartQuantity(JSON.parse(arrayCart).length)
+    }, [])
 
     return (
         // <div style={{ background: "white" }}>
-            <Container maxWidth="lg" >
-                <Container maxWidth="lg" className={classes.header_managment_panel}>
-                    <div className={classes.header_logo_flex}>
-                        <NavLink to="/" exact>
-                            <img className={classes.logo} src={logo} />
-                        </NavLink>
-                        <Typography variant="h5" className={classes.margin_titre}>
-                            فروشگاه کتاب
-                        </Typography>
-                    </div>
-                    <div className={classes.icon}>
-                        <Link to="/admin-panel"><RiAdminLine className={classes.shopIcon} /></Link>
-                        <Link to="/cart"><TiShoppingCart className={classes.shopIcon} /></Link>
-                    </div>
+        <Container maxWidth="lg" >
+            <Container maxWidth="lg" className={classes.header_managment_panel}>
+                <div className={classes.header_logo_flex}>
+                    <NavLink to="/" exact>
+                        <img className={classes.logo} src={logo} />
+                    </NavLink>
+                    <Typography variant="h5" className={classes.margin_titre}>
+                        فروشگاه کتاب
+                    </Typography>
+                </div>
+                <div className={classes.icon}>
+                    <Link to="/admin-panel"><RiAdminLine className={classes.shopIcon} /></Link>
+                    <Link to="/cart" style={{ position: "relative" }}>
+                        <TiShoppingCart className={classes.shopIcon} />
+                        {cartQuantity > 0 ?
+                            <span className={classes.parent_cartQuantity}>
+                                <span className={classes.cartQuantity}>{cartQuantity}</span>
+                            </span> : false}
+                    </Link>
+                </div>
 
 
-                </Container>
-                {/* <hr className={classes.hr} /> */}
             </Container>
+            {/* <hr className={classes.hr} /> */}
+        </Container>
         // </div>
     )
 }

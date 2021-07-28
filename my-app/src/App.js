@@ -41,6 +41,7 @@ export default function App() {
               <Route path="/category/:title" component={CategoryPage} exact />
               <Route path="/product/:id" component={ProductPage} exact />
               <Route path="/cart" component={CartPage} exact />
+              {/* <Route path="/cart/informatiom_form" component={} exact /> */}
 
 
               <Route path="/admin-panel" exact component={LoginPage} />

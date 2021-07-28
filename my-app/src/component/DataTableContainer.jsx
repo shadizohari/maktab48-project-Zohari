@@ -14,6 +14,7 @@ const useStyles = makeStyles((theme) => ({
     }, flex_center: {
         display: "flex",
         justifyContent: "center",
+        // padding:"0px"
     },
 }));
 
