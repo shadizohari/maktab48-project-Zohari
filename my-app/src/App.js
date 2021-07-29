@@ -14,6 +14,7 @@ import HomePage from './pages/store/HomePage';
 import CategoryPage from './pages/store/CategoryPage';
 import  ProductPage from './pages/store/ProductPage';
 import  CartPage from './pages/store/CartPage';
+import OrderInfoPage from './pages/store/OrderInfoPage'
 
 // import MenuSide from './storeComponents/MenuSIde'
 // rtl
@@ -41,7 +42,7 @@ export default function App() {
               <Route path="/category/:title" component={CategoryPage} exact />
               <Route path="/product/:id" component={ProductPage} exact />
               <Route path="/cart" component={CartPage} exact />
-              {/* <Route path="/cart/informatiom_form" component={} exact /> */}
+              <Route path="/cart/order_info" component={OrderInfoPage} exact />
 
 
               <Route path="/admin-panel" exact component={LoginPage} />

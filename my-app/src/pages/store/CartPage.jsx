@@ -32,16 +32,17 @@ const useStyles = makeStyles((theme) => ({
     btn: {
         background: COLORS.accentColor,
         color: "white",
+        fontSize: "20px",
         "&:hover": {
             background: COLORS.primeryColor,
         },
         [theme.breakpoints.down('sm')]: {
-            marginTop:"20px",
+            marginTop: "20px",
         }
     },
     delete_icon: {
         color: COLORS.accentColor,
-        fontSize: "30px",
+        fontSize: "24px",
         cursor: "pointer",
         "&:hover": {
             color: COLORS.primeryColor
@@ -63,6 +64,9 @@ const useStyles = makeStyles((theme) => ({
             flexDirection: "column",
             justifyContent: "flex-start"
         }
+    },
+    price: {
+        borderBottom: `3px solid ${COLORS.accentColor}`
     }
 }));
 <fieldset disabled="disabled"></fieldset>
@@ -126,27 +130,28 @@ function CartPage({ ...props }) {
         }, 1000);
     }
     function finilizeCart() {
-        let arrayCart = JSON.parse(localStorage.getItem("cart"));
-        axios.get('http://localhost:5000/books')
-            .then(response => {
-                if (response.data) {
-                    console.log(response.data)
-                    for (let i = 0; i < arrayCart.length; i++) {
-                        console.log(arrayCart[i])
-                        for (let j = 0; j < response.data.length; j++) {
-                            if (response.data[j].id == arrayCart[i].id) {
-                                if (Number(response.data[j].quantity) < Number(arrayCart[i].number)) {
-                                    arrayCart.splice(i, 1)
-                                    localStorage.setItem("cart", JSON.stringify(arrayCart))
-                                    window.location.reload();
-                                    return false
-                                }
-                            }
-                        }
-                    }
-                }
-                history.push("/cart/informatiom_form");
-            })
+        history.push("/cart/order_info");
+        // let arrayCart = JSON.parse(localStorage.getItem("cart"));
+        // axios.get('http://localhost:5000/books')
+        //     .then(response => {
+        //         if (response.data) {
+        //             console.log(response.data)
+        //             for (let i = 0; i < arrayCart.length; i++) {
+        //                 console.log(arrayCart[i])
+        //                 for (let j = 0; j < response.data.length; j++) {
+        //                     if (response.data[j].id == arrayCart[i].id) {
+        //                         if (Number(response.data[j].quantity) < Number(arrayCart[i].number)) {
+        //                             arrayCart.splice(i, 1)
+        //                             localStorage.setItem("cart", JSON.stringify(arrayCart))
+        //                             window.location.reload();
+        //                             return false
+        //                         }
+        //                     }
+        //                 }
+        //             }
+        //         }
+
+        // })
 
         // dispatch(setLoading(true));
         // setTimeout(() => {
@@ -206,7 +211,7 @@ function CartPage({ ...props }) {
 
                     </div>
                     <Container className={classes.parent_btnCart}>
-                        <Typography variant="h5" >
+                        <Typography className={classes.price} variant="h5" >
                             جمع کل: {formatPrice(sumCart)}
                         </Typography>
                         <Button className={classes.btn} onClick={finilizeCart}>نهایی کردن سبد خرید</Button>

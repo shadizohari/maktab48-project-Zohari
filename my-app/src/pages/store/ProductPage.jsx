@@ -23,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
     parent_price:{
         width:"100%",
         display: "flex",
+        flexDirection:"row-reverse",
         marginTop: "20px",
         justifyContent:"space-between",
         [theme.breakpoints.down('sm')]: {
@@ -158,7 +159,7 @@ function ProductPage({...props}) {
                             {book?.description}
                         </p>
                         <div className={classes.parent_price}>
-                            <Typography variant="h5" className={classes.marginTop}>
+                            <Typography style={{borderBottom:`3px solid ${COLORS.accentColor}`}} variant="h5" className={classes.marginTop}>
                                 قیمت: {formatPrice(book?.price)} تومان
                             </Typography>
                             <Button onClick={addToCart} className={classes.btn}>افزودن به سبدخرید</Button>
