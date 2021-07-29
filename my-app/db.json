@@ -233,10 +233,10 @@
           "number": 2
         }
       ],
-      "status": "enroute",
+      "status": "delivered",
       "orderTime": "1400/04/08",
       "selectedDeliveryTime": "1400/04/19",
-      "actualDeliveryTime": "1400/4/27"
+      "actualDeliveryTime": "۱۴۰۰/۵/۸"
     },
     {
       "id": 5,

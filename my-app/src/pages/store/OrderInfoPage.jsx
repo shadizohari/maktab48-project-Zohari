@@ -17,7 +17,9 @@ import { setLoading } from '../../store/actions/isLoading';
 import { createMuiTheme } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
 // 
-import moment from "moment";
+import * as moment from 'jalali-moment';
+// 
+// import moment from "moment";
 import jMoment from "moment-jalaali";
 import JalaliUtils from "@date-io/jalaali";
 import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
@@ -61,10 +63,30 @@ const defaultMaterialTheme = createMuiTheme({
 function OrderInfoPage(params) {
     const classesTitle = styleTitle()
     const classes = useStyles()
-    /*
-       * 'use-date-picker' 
-       */
-    const [selectedDate, handleDateChange] = useState(moment());
+    const history = useHistory()
+
+    // 'use-date-picker' 
+    const [selectedDate, handleDateChange] = useState();
+    
+    const [firstName, setFirstName] = useState()
+    const [lastName, setLastName] = useState()
+    const [address, setAddress] = useState()
+    const [phone, setPhone] = useState()
+    function orderInfo(e) {
+        e.preventDefault();
+        console.log({
+            "userName": `${firstName} ${lastName}`,
+            "mobile": phone,
+            "address": address,
+            "status": "enroute",
+            "orderTime": moment().locale('fa').format('YYYY/M/D'),
+            "selectedDeliveryTime": selectedDate.locale('fa').format('YYYY/M/D'),
+            "actualDeliveryTime": "",
+            "orderList": JSON.parse(localStorage.getItem("cart"))
+        })
+        history.push("/shaparak.ir")
+
+    }
     return (
         <LayoutPage>
             <MuiPickersUtilsProvider utils={JalaliUtils} locale="fa">
@@ -74,7 +96,7 @@ function OrderInfoPage(params) {
                     </Typography>
 
 
-                    <form onSubmit={(e) => console.log(e)} className={classes.form} noValidate>
+                    <form onSubmit={(e) => orderInfo(e)} className={classes.form} noValidate>
                         <Grid container spacing={3}>
                             <Grid item xs={12} md={6}>
                                 <CssTextField
@@ -82,8 +104,10 @@ function OrderInfoPage(params) {
                                     required
                                     fullWidth
                                     label="نام"
+                                    value={firstName}
                                     name="nameUser"
                                     autoFocus
+                                    onChange={(e) => setFirstName(e.target.value)}
                                 />
                             </Grid>
                             <Grid item xs={12} md={6}>
@@ -92,7 +116,10 @@ function OrderInfoPage(params) {
                                     required
                                     fullWidth
                                     label="نام خانوادگی"
+                                    value={lastName}
                                     name="lastNameUser"
+                                    onChange={(e) => setLastName(e.target.value)}
+
                                 />
                             </Grid>
                             <Grid item xs={12} md={6}>
@@ -102,6 +129,8 @@ function OrderInfoPage(params) {
                                     fullWidth
                                     label="آدرس"
                                     name="address"
+                                    value={address}
+                                    onChange={(e) => setAddress(e.target.value)}
                                 /></Grid>
                             <Grid item xs={12} md={6}>
                                 <CssTextField
@@ -109,8 +138,10 @@ function OrderInfoPage(params) {
                                     required
                                     fullWidth
                                     label="تلفن همراه"
+                                    value={phone}
                                     type="number"
                                     name="phone"
+                                    onChange={(e) => setPhone(e.target.value)}
                                 /></Grid>
                             <Grid item xs={12} md={6}>
                                 <ThemeProvider theme={defaultMaterialTheme}>
@@ -127,18 +158,23 @@ function OrderInfoPage(params) {
                                     />
                                 </ThemeProvider>
                             </Grid>
-                            <Button
-                                type="submit"
-                                variant="contained"
-                                className={classes.margin_3}
-                                style={{ background: COLORS.accentColor }}
-                                fullWidth
-                            >
-                                <Typography variant="h6" className={classes.align_center}>
-                                    پرداخت
-                                </Typography>
-                            </Button>
+
                         </Grid>
+                        <div style={{ display: "flex", justifyContent: "center" }}>
+                            <Grid item xs={12} md={2}>
+                                <Button
+                                    type="submit"
+                                    variant="contained"
+                                    style={{ background: "#68C687", color: "white", marginTop: "30px" }}
+                                    fullWidth
+
+                                >
+                                    <Typography variant="h6" className={classes.align_center}>
+                                        پرداخت
+                                    </Typography>
+                                </Button>
+                            </Grid>
+                        </div>
                     </form>
 
 

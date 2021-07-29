@@ -1,7 +1,7 @@
 import { COLORS, MARGIN } from '../styles/constants';
 import Container from '@material-ui/core/Container';
 import logo from '../assets/img/logo3-orange.png';
-import React,{useEffect,useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { TiShoppingCart } from "react-icons/ti";
@@ -106,13 +106,18 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AdminHeader() {
     const classes = useStyles();
+    const [login, setLogin] = useState(false)
     // const history = useHistory();
     const [cartQuantity, setCartQuantity] = useState(0)
 
     useEffect(() => {
         let arrayCart = localStorage.getItem("cart")
-        if (arrayCart)
-        setCartQuantity(JSON.parse(arrayCart).length)
+        if (arrayCart) {
+            setCartQuantity(JSON.parse(arrayCart).length)
+        }
+        if (localStorage.getItem("token")) {
+            setLogin(true)
+        }
     }, [])
 
     return (
@@ -128,7 +133,9 @@ export default function AdminHeader() {
                     </Typography>
                 </div>
                 <div className={classes.icon}>
-                    <Link to="/admin-panel"><RiAdminLine className={classes.shopIcon} /></Link>
+                    {login ? <Link to="/admin-panel/products"><RiAdminLine className={classes.shopIcon} /></Link> :
+                        <Link to="/admin-panel"><RiAdminLine className={classes.shopIcon} /></Link>}
+
                     <Link to="/cart" style={{ position: "relative" }}>
                         <TiShoppingCart className={classes.shopIcon} />
                         {cartQuantity > 0 ?
