@@ -9,6 +9,7 @@ import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { setLoading } from '../../store/actions/isLoading';
+import { putBookApi } from '../../api/BooksApi'
 
 
 
@@ -48,14 +49,25 @@ function ShaparakPage(params) {
     const dispatch = useDispatch();
 
     function paymentSuccess() {
-
         axios.post("http://localhost:5000/orders", JSON.parse(localStorage.getItem("infoCart")))
             .then(response => { localStorage.removeItem("cart") })
             .catch(error => {
-                // toast.error("Edited Failed!");
                 console.log(error)
             }
             )
+        let x = JSON.parse(localStorage.getItem("infoCart"))
+        x.orderList.forEach(async (book, indx) => {
+            axios.get(`http://localhost:5000/books/${book.id}`).
+                then(response => {
+                    response.data.quantity = Number(response.data.quantity) - Number(book.number)
+                    axios.put(`http://localhost:5000/books/${book.id}`, response.data).
+                        catch(error => {
+                            console.log(error)
+                        })
+                })
+        });
+
+
         history.push("/payment_result/true")
         dispatch(setLoading(true));
         setTimeout(() => {

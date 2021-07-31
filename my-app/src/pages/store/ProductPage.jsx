@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setLoading } from '../../store/actions/isLoading';
 import { FaLongArrowAltLeft } from "react-icons/fa"
 import { styleTitle } from '../../styles/styleTitle';
+import { toast, ToastContainer } from 'react-toastify';
 
 const useStyles = makeStyles((theme) => ({
     parent_row: {
@@ -66,7 +67,6 @@ const useStyles = makeStyles((theme) => ({
         fontSize: "18px",
         '&:hover': {
             background: COLORS.primeryColor,
-            // color:COLORS.primeryColor
         }
     },
     parent_category: {
@@ -91,27 +91,21 @@ function ProductPage({ ...props }) {
     const dispatch = useDispatch();
 
     const [book, setBook] = useState()
-    // const[price,setPrice]=useState()
     const history = useHistory()
     const path = history.location.pathname
     const index = path.indexOf('/', 1)
     const id = path.slice(index + 1)
-    // const [numberOfInput, setNumberOfInput] = useState(1)
     useEffect(() => {
         axios.get(`http://localhost:5000/books/${id}`)
             .then(response => {
                 if (response.data) {
                     setBook(response.data)
-                    // setPrice(response.data.price)
                 } else {
                     console.log("error")
                 }
             })
     }, [])
-    // function bookNumber(value) {
-    //     if (value)
-    //         console.log(value)
-    // }
+
     function addToCart(bookId) {
 
         if (localStorage.cart && localStorage.cart.length > 0) {
@@ -136,7 +130,10 @@ function ProductPage({ ...props }) {
                     arrayCart[i].number = Number(arrayCart[i].number) + 1
                     localStorage.setItem("cart", JSON.stringify(arrayCart))
                 }else{
-                    alert("this not mojod")
+                    setTimeout(() => {
+                        toast.error("این کالا موجود نیست")
+                    }, 1100);
+                  
                 }
             }
         }
@@ -189,6 +186,7 @@ function ProductPage({ ...props }) {
                     </div>
                 </Container>
             </LayoutAdminPanel >
+            <ToastContainer/>
 
         </>
     )

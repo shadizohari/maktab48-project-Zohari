@@ -81,6 +81,7 @@ function CartPage({ ...props }) {
     const [cartData, setCartData] = useState();
     const [sumCart, setSumCart] = useState(0);
     const [dataBooks, setDataBooks] = useState();
+    const [disabled,setDisabled] = useState("disabled")
     let history = useHistory();
     useEffect(() => {
         setCartData(JSON.parse(localStorage.getItem("cart")));
@@ -99,6 +100,9 @@ function CartPage({ ...props }) {
                 sum += (cartData[i].number) * (cartData[i].price)
             }
             setSumCart(sum);
+            if(sum>0){
+                setDisabled("")
+            }
         }
     }, [cartData])
 
@@ -217,7 +221,7 @@ function CartPage({ ...props }) {
                         <Typography className={classes.price} variant="h5" >
                             جمع کل: {formatPrice(sumCart)}
                         </Typography>
-                        <Button className={classes.btn} onClick={finilizeCart}>نهایی کردن سبد خرید</Button>
+                        <Button disabled={disabled} className={classes.btn} onClick={finilizeCart}>نهایی کردن سبد خرید</Button>
                     </Container>
                 </Container>
             </LayoutAdminPanel>
