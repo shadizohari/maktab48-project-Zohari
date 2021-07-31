@@ -27,6 +27,9 @@ const useStyles = makeStyles((theme) => ({
 
 
     },
+    link:{
+        textDecoration:"none"
+    }
 }));
 
 export default function Home({ title, idList, data, ...props }) {
@@ -52,7 +55,7 @@ export default function Home({ title, idList, data, ...props }) {
     return (
 
         <Container maxWidth="lg" className={classes.root}>
-            <Link to={`category/${title}`}> <Typography variant="h5" className={classesTitle.title} >
+            <Link className={classes.link} to={`category/${title}`}> <Typography variant="h5" className={classesTitle.title} >
                 {`دسته ${title}`}
             </Typography>
             </Link>
@@ -61,7 +64,7 @@ export default function Home({ title, idList, data, ...props }) {
                 {featuredBooks.map((item) => {
                     return (
                         <Grid item xs={12} sm={6} md={4}>
-                            <Link to={`product/${item.id}`}><CardHorizantal title={item.name} img={item.img} price={item.price} /></Link>
+                            <Link className={classes.link} to={`product/${item.id}`}><CardHorizantal title={item.name} img={item.img} price={item.price} /></Link>
                         </Grid>
                     )
                 })}

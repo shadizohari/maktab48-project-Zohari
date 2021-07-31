@@ -20,12 +20,12 @@ const useStyles = makeStyles((theme) => ({
             justifyContent: "flex-start"
         }
     },
-    parent_price:{
-        width:"100%",
+    parent_price: {
+        width: "100%",
         display: "flex",
-        flexDirection:"row-reverse",
+        flexDirection: "row-reverse",
         marginTop: "20px",
-        justifyContent:"space-between",
+        justifyContent: "space-between",
         [theme.breakpoints.down('sm')]: {
             flexDirection: "column",
             justifyContent: "flex-start"
@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
     parent_column: {
         marginLeft: "50px",
         marginTop: "20px",
-        flexGrow:"1",
+        flexGrow: "1",
 
     },
     imgClass: {
@@ -76,7 +76,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-function ProductPage({...props}) {
+function ProductPage({ ...props }) {
     const dispatch = useDispatch();
 
     const [book, setBook] = useState()
@@ -102,10 +102,12 @@ function ProductPage({...props}) {
     //         console.log(value)
     // }
     function addToCart() {
+
         if (localStorage.cart && localStorage.cart.length > 0) {
             appendToStorage()
         } else {
-            localStorage.setItem("cart", JSON.stringify([{ ...book, number: 1 }]))
+            const x = { "bookName": book.name, "price": book.price, "category": book.category, "number": 1 }
+            localStorage.setItem("cart", JSON.stringify([{ ...x}]))
         }
         history.push("/cart")
         dispatch(setLoading(true));
@@ -124,7 +126,8 @@ function ProductPage({...props}) {
             }
         }
         if (!flag) {
-            arrayCart.push({ ...book, number: 1 })
+            const x = { "bookName": book.name, "price": book.price, "category": book.category, "number": 1 }
+            arrayCart.push({ ...x})
             localStorage.setItem("cart", JSON.stringify(arrayCart))
         }
     }
@@ -159,7 +162,7 @@ function ProductPage({...props}) {
                             {book?.description}
                         </p>
                         <div className={classes.parent_price}>
-                            <Typography style={{borderBottom:`3px solid ${COLORS.accentColor}`}} variant="h5" className={classes.marginTop}>
+                            <Typography style={{ borderBottom: `3px solid ${COLORS.accentColor}` }} variant="h5" className={classes.marginTop}>
                                 قیمت: {formatPrice(book?.price)} تومان
                             </Typography>
                             <Button onClick={addToCart} className={classes.btn}>افزودن به سبدخرید</Button>

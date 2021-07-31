@@ -171,6 +171,9 @@ const useStyles = makeStyles((theme) => ({
     paddingCat: {
         paddingLeft: "15px"
     },
+    link_card:{
+        textDecoration:"none"
+    }
 
 }));
 
@@ -347,7 +350,7 @@ function ResponsiveDrawer(props) {
                                 {(category.length > 0) ? category.map((item) => {
                                     return (
                                         <Grid item xs={12} md={6} lg={4}>
-                                            <Link to={`/product/${item.id}`}><CardHorizantal sebCategory={item.subCategory} title={item.name} img={item.img} price={item.price} /></Link>
+                                            <Link className={classes.link_card} to={`/product/${item.id}`}><CardHorizantal sebCategory={item.subCategory} title={item.name} img={item.img} price={item.price} /></Link>
                                         </Grid>
                                     )
                                 }) : false}

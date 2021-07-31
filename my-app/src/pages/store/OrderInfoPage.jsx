@@ -67,14 +67,14 @@ function OrderInfoPage(params) {
 
     // 'use-date-picker' 
     const [selectedDate, handleDateChange] = useState();
-    
+
     const [firstName, setFirstName] = useState()
     const [lastName, setLastName] = useState()
     const [address, setAddress] = useState()
     const [phone, setPhone] = useState()
     function orderInfo(e) {
         e.preventDefault();
-        console.log({
+        localStorage.setItem("infoCart",JSON.stringify({
             "userName": `${firstName} ${lastName}`,
             "mobile": phone,
             "address": address,
@@ -83,7 +83,8 @@ function OrderInfoPage(params) {
             "selectedDeliveryTime": selectedDate.locale('fa').format('YYYY/M/D'),
             "actualDeliveryTime": "",
             "orderList": JSON.parse(localStorage.getItem("cart"))
-        })
+        }))
+
         history.push("/shaparak.ir")
 
     }
@@ -165,7 +166,7 @@ function OrderInfoPage(params) {
                                 <Button
                                     type="submit"
                                     variant="contained"
-                                    style={{ background: "#68C687", color: "white", marginTop: "30px" }}
+                                    style={{ background: COLORS.green, color: "white", marginTop: "30px" }}
                                     fullWidth
 
                                 >

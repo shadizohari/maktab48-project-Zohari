@@ -187,7 +187,7 @@ function CartPage({ ...props }) {
                                 {cartData?.map((item, index) => {
                                     return (<TableRow key={item.id}>
                                         <TableCell>{index + 1}</TableCell>
-                                        <TableCell><Link className={classes.link} to={`/product/${item.id}`}>{item.name}</Link></TableCell>
+                                        <TableCell><Link className={classes.link} to={`/product/${item.id}`}>{item.bookName}</Link></TableCell>
                                         <TableCell>
                                             <TextField
                                                 label="تعداد"
