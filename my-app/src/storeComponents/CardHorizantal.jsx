@@ -23,34 +23,38 @@ const useStyles = makeStyles((theme) => ({
     content: {
         flex: '1 0 auto',
     },
-    imgCard:{
-        margin:"15px",
+    imgCard: {
+        margin: "15px",
         width: "20%",
-        height:"auto"
+        height: "auto"
     }
 }));
 
-export default function CardHorizantal({img,title,price,sebCategory,...prpos}) {
+export default function CardHorizantal({ img, title, price, sebCategory, ...prpos }) {
     const classes = useStyles();
     const theme = useTheme();
 
     return (
         <Card className={classes.root}>
             <div className={classes.details}>
-                <Avatar className={classes.imgCard} src ={img}/>
-            
-                    <CardContent className={classes.content}>
-                        <Typography variant="h6">
-                           {title}
-                        </Typography>
+                <Avatar className={classes.imgCard} src={img} />
+
+                <CardContent className={classes.content}>
+                    <Typography variant="h6">
+                        {title}
+                    </Typography>
+                    <Typography variant="subtitle1">
+                        {sebCategory}
+                    </Typography>
+                    {(price != "ناموجود") ? <Typography variant="subtitle1" color="textSecondary">
+                        {`قیمت:`} {formatPrice(price)} تومان
+                    </Typography> :
                         <Typography variant="subtitle1">
-                           {sebCategory}
-                        </Typography>
-                        <Typography variant="subtitle1" color="textSecondary">
-                            {`قیمت:`} {formatPrice(price)}
-                        </Typography>
-                    </CardContent>
-              
+                          <p style={{color:"red"}}>{price}</p> 
+                        </Typography>}
+
+                </CardContent>
+
 
             </div>
             <CardMedia

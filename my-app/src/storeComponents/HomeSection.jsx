@@ -27,8 +27,8 @@ const useStyles = makeStyles((theme) => ({
 
 
     },
-    link:{
-        textDecoration:"none"
+    link: {
+        textDecoration: "none"
     }
 }));
 
@@ -64,7 +64,13 @@ export default function Home({ title, idList, data, ...props }) {
                 {featuredBooks.map((item) => {
                     return (
                         <Grid item xs={12} sm={6} md={4}>
-                            <Link className={classes.link} to={`product/${item.id}`}><CardHorizantal title={item.name} img={item.img} price={item.price} /></Link>
+                            <Link className={classes.link} to={`product/${item.id}`}>
+                                {item.quantity > 0 ?
+                                    <CardHorizantal title={item.name} img={item.img} price={item.price} /> :
+                                    <CardHorizantal title={item.name} img={item.img} price="ناموجود" />
+                                    // false
+                                }
+                            </Link>
                         </Grid>
                     )
                 })}

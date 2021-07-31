@@ -31,6 +31,10 @@ const useStyles = makeStyles((theme) => ({
             justifyContent: "flex-start"
         }
     },
+    notExisting: {
+        marginTop: "20px",
+        color: "red",
+    },
     parent_column: {
         marginLeft: "50px",
         marginTop: "20px",
@@ -101,13 +105,13 @@ function ProductPage({ ...props }) {
     //     if (value)
     //         console.log(value)
     // }
-    function addToCart() {
+    function addToCart(bookId) {
 
         if (localStorage.cart && localStorage.cart.length > 0) {
-            appendToStorage()
+            appendToStorage(bookId)
         } else {
-            const x = { "bookName": book.name, "price": book.price, "category": book.category, "number": 1 }
-            localStorage.setItem("cart", JSON.stringify([{ ...x}]))
+            const x = { "bookName": book.name, "price": book.price, "category": book.category, "number": 1, "id": book.id, "quantity": book.quantity }
+            localStorage.setItem("cart", JSON.stringify([{ ...x }]))
         }
         history.push("/cart")
         dispatch(setLoading(true));
@@ -115,19 +119,23 @@ function ProductPage({ ...props }) {
             dispatch(setLoading(false));
         }, 1000);
     }
-    function appendToStorage() {
+    function appendToStorage(bookId) {
         let flag = false;
         let arrayCart = JSON.parse(localStorage.getItem("cart"));
         for (let i = 0; i < arrayCart.length; i++) {
-            if (arrayCart[i].id == id) {
+            if (arrayCart[i].id == bookId) {
                 flag = true
-                arrayCart[i].number = Number(arrayCart[i].number) + 1
-                localStorage.setItem("cart", JSON.stringify(arrayCart))
+                if(Number(arrayCart[i].number) + 1 <= book.quantity){
+                    arrayCart[i].number = Number(arrayCart[i].number) + 1
+                    localStorage.setItem("cart", JSON.stringify(arrayCart))
+                }else{
+                    alert("this not mojod")
+                }
             }
         }
         if (!flag) {
-            const x = { "bookName": book.name, "price": book.price, "category": book.category, "number": 1 }
-            arrayCart.push({ ...x})
+            const x = { "bookName": book.name, "price": book.price, "category": book.category, "number": 1, "id": book.id, "quantity": book.quantity }
+            arrayCart.push({ ...x })
             localStorage.setItem("cart", JSON.stringify(arrayCart))
         }
     }
@@ -161,12 +169,16 @@ function ProductPage({ ...props }) {
                         <p className={classes.marginTop}>
                             {book?.description}
                         </p>
-                        <div className={classes.parent_price}>
-                            <Typography style={{ borderBottom: `3px solid ${COLORS.accentColor}` }} variant="h5" className={classes.marginTop}>
-                                قیمت: {formatPrice(book?.price)} تومان
-                            </Typography>
-                            <Button onClick={addToCart} className={classes.btn}>افزودن به سبدخرید</Button>
-                        </div>
+                        {book?.quantity > 0 ?
+                            <div className={classes.parent_price}>
+                                <Typography style={{ borderBottom: `3px solid ${COLORS.accentColor}` }} variant="h5" className={classes.marginTop}>
+                                    قیمت: {formatPrice(book?.price)} تومان
+                                </Typography>
+                                <Button onClick={() => addToCart(book.id)} className={classes.btn}>افزودن به سبدخرید</Button></div> :
+                            <Typography className={classes.notExisting} variant="h4">
+                                ناموجود
+                            </Typography >}
+
                     </div>
                 </Container>
             </LayoutAdminPanel >
