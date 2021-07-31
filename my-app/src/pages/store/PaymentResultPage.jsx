@@ -6,6 +6,7 @@ import { styleTitle } from '../../styles/styleTitle';
 import { RiCloseCircleFill } from "react-icons/ri";
 import { makeStyles } from '@material-ui/core/styles';
 import { FaCheckCircle } from "react-icons/fa";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     parent: {
@@ -20,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     icon_dispensing: {
         color: "red",
         fontSize: "150px",
-        
+
         [theme.breakpoints.down('sm')]: {
             marginBottom: "30px",
             marginRight: "0px",
@@ -50,13 +51,13 @@ function PaymentResultPage(params) {
     const classes = useStyles()
     const [component, setComponent] = useState()
     const classesTitle = styleTitle();
+    const history = useHistory();
 
     useEffect(() => {
-        if (localStorage.getItem("cart")) {
-            setComponent(false)
-        } else {
-            setComponent(true)
-        }
+        (history.location.pathname.includes("true")?
+        setComponent(true):
+        setComponent(false)
+        )
 
     }, [])
 
@@ -72,7 +73,7 @@ function PaymentResultPage(params) {
                             (<>
                                 <FaCheckCircle className={classes.icon_success} />
                                 <Typography variant="h5" className={classes.text}>
-                                    با تشکر از خرید شما سفارش شما ثبت شد. <br/> جهت هماهنگی ارسال با شما تماس گرفته خواهد شد.
+                                    با تشکر از خرید شما سفارش شما ثبت شد. <br /> جهت هماهنگی ارسال با شما تماس گرفته خواهد شد.
                                 </Typography>
                             </>)
                             : (<>

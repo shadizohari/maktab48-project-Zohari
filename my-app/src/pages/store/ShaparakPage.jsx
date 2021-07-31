@@ -56,16 +56,15 @@ function ShaparakPage(params) {
                 console.log(error)
             }
             )
-        history.push("/payment_result")
+        history.push("/payment_result/true")
         dispatch(setLoading(true));
         setTimeout(() => {
-            console.log("ok")
             dispatch(setLoading(false));
         }, 1000);
 
     }
     function dispensing() {
-        history.push("/payment_result")
+        history.push("/payment_result/false")
         dispatch(setLoading(true));
         setTimeout(() => {
             dispatch(setLoading(false));

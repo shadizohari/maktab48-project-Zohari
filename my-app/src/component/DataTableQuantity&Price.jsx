@@ -166,8 +166,7 @@ export default function DataTableQuanitityandPrices() {
                 const data = await response.json();
                 let i = booksData.findIndex((book, index) => book.id == id);
                 e.target.type = "text"
-                // e.target.value = formatPrice(data[input]);
-                booksData[i][input] = data[input];
+                booksData[i][input] = formatPrice(data[input]);
                 setBookData([...booksData]);
                 e.target.className = `MuiInputBase-input`;
             } catch (err) {
@@ -178,11 +177,6 @@ export default function DataTableQuanitityandPrices() {
                 modifiedData.splice(index, 1)
                 setModifiedData([...modifiedData])
             }
-            // let i = (idChange.findIndex((i) => i == id))
-            // if (i > -1) {
-            //     idChange.splice(i, 1)
-            //     setIdChange([...idChange])
-            // }
         }
     };
 

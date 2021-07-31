@@ -64,7 +64,6 @@ function OrderInfoPage(params) {
     const classesTitle = styleTitle()
     const classes = useStyles()
     const history = useHistory()
-
     // 'use-date-picker' 
     const [selectedDate, handleDateChange] = useState();
 
@@ -72,20 +71,41 @@ function OrderInfoPage(params) {
     const [lastName, setLastName] = useState()
     const [address, setAddress] = useState()
     const [phone, setPhone] = useState()
+
+    function checkMobile(value) {
+        let regularNumber = /(\+98|0)?9\d{9}$/;
+        return String(value).match(regularNumber);
+    }
     function orderInfo(e) {
         e.preventDefault();
-        localStorage.setItem("infoCart",JSON.stringify({
-            "userName": `${firstName} ${lastName}`,
-            "mobile": phone,
-            "address": address,
-            "status": "enroute",
-            "orderTime": moment().locale('fa').format('YYYY/M/D'),
-            "selectedDeliveryTime": selectedDate.locale('fa').format('YYYY/M/D'),
-            "actualDeliveryTime": "",
-            "orderList": JSON.parse(localStorage.getItem("cart"))
-        }))
+        if (selectedDate && firstName && lastName && address && phone) {
+            if (checkMobile(phone)) {
+                localStorage.setItem("infoCart", JSON.stringify({
+                    "userName": `${firstName} ${lastName}`,
+                    "mobile": phone,
+                    "address": address,
+                    "status": "enroute",
+                    "orderTime": moment().locale('fa').format('YYYY/M/D'),
+                    "selectedDeliveryTime": selectedDate.locale('fa').format('YYYY/M/D'),
+                    "actualDeliveryTime": "",
+                    "orderList": JSON.parse(localStorage.getItem("cart"))
+                }))
+                history.push("/shaparak.ir")
+            } else {
+                toast.error("!شماره موبایل معتبر نیست")
+            }
+        } else if (!firstName) {
+            toast.error("!پر کردن نام الزامی است")
+        } else if (!lastName) {
+            toast.error("!پر کردن نام خانوادگی الزامی است")
+        } else if (!address) {
+            toast.error("!پر کردن آدرس الزامی است")
+        } else if (!phone) {
+            toast.error("!پر کردن موبایل الزامی است")
+        } else if (!selectedDate) {
+            toast.error("!تاریخ تحویل کالا را مشخص کنید")
+        }
 
-        history.push("/shaparak.ir")
 
     }
     return (
@@ -176,6 +196,7 @@ function OrderInfoPage(params) {
                                 </Button>
                             </Grid>
                         </div>
+                        <ToastContainer />
                     </form>
 
 

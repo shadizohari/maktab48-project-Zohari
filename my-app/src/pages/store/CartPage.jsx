@@ -66,7 +66,10 @@ const useStyles = makeStyles((theme) => ({
         }
     },
     price: {
-        borderBottom: `3px solid ${COLORS.accentColor}`
+        borderBottom: `3px solid ${COLORS.accentColor}`,
+        [theme.breakpoints.down('sm')]: {
+            border:"0px"
+        }
     }
 }));
 <fieldset disabled="disabled"></fieldset>

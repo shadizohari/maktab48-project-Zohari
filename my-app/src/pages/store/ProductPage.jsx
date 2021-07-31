@@ -52,6 +52,13 @@ const useStyles = makeStyles((theme) => ({
         marginTop: "20px"
 
     },
+    price:{
+        marginTop: "20px",
+        borderBottom: `3px solid ${COLORS.accentColor}`,
+        [theme.breakpoints.down('sm')]: {
+            borderBottom: `0px`,
+        }
+    },
     btn: {
         background: COLORS.accentColor,
         marginTop: "20px",
@@ -171,7 +178,7 @@ function ProductPage({ ...props }) {
                         </p>
                         {book?.quantity > 0 ?
                             <div className={classes.parent_price}>
-                                <Typography style={{ borderBottom: `3px solid ${COLORS.accentColor}` }} variant="h5" className={classes.marginTop}>
+                                <Typography variant="h5" className={classes.price}>
                                     قیمت: {formatPrice(book?.price)} تومان
                                 </Typography>
                                 <Button onClick={() => addToCart(book.id)} className={classes.btn}>افزودن به سبدخرید</Button></div> :

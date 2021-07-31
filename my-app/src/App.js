@@ -12,8 +12,8 @@ import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 import HomePage from './pages/store/HomePage';
 import CategoryPage from './pages/store/CategoryPage';
-import  ProductPage from './pages/store/ProductPage';
-import  CartPage from './pages/store/CartPage';
+import ProductPage from './pages/store/ProductPage';
+import CartPage from './pages/store/CartPage';
 import OrderInfoPage from './pages/store/OrderInfoPage'
 import ShaparakPage from './pages/store/ShaparakPage'
 import PaymentResultPage from './pages/store/PaymentResultPage'
@@ -48,7 +48,9 @@ export default function App() {
               <Route path="/cart" component={CartPage} exact />
               <Route path="/cart/order_info" component={OrderInfoPage} exact />
               <Route path="/shaparak.ir" component={ShaparakPage} exact />
-              <Route path="/payment_result" component={PaymentResultPage} exact />
+              <Route path="/payment_result/true" component={PaymentResultPage} exact />
+              <Route path="/payment_result/false" component={PaymentResultPage} exact />
+
 
               <Route path="/admin-panel" exact component={LoginPage} />
               <ProtectedRoute path="/admin-panel/products" exact component={ProductsPage} />
