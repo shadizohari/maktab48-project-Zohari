@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
 
     },
     link: {
-        textDecoration: "none"
+        textDecoration: "none",
     }
 }));
 
@@ -61,9 +61,9 @@ export default function Home({ title, idList, data, ...props }) {
             </Link>
 
             <Grid container spacing={3}>
-                {featuredBooks.map((item) => {
+                {featuredBooks.map((item,index) => {
                     return (
-                        <Grid item xs={12} sm={6} md={4}>
+                        <Grid item xs={12} sm={6} md={4}  key={index}>
                             <Link className={classes.link} to={`product/${item.id}`}>
                                 {item.quantity > 0 ?
                                     <CardHorizantal title={item.name} img={item.img} price={item.price} /> :

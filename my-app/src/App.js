@@ -12,6 +12,7 @@ import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
 import HomePage from './pages/store/HomePage';
 import CategoryPage from './pages/store/CategoryPage';
+import SubCategoryPage from './pages/store/SubCategoryPage';
 import ProductPage from './pages/store/ProductPage';
 import CartPage from './pages/store/CartPage';
 import OrderInfoPage from './pages/store/OrderInfoPage'
@@ -44,6 +45,7 @@ export default function App() {
             <Switch>
               <Route path="/" component={HomePage} exact />
               <Route path="/category/:title" component={CategoryPage} exact />
+              <Route path="/category/:title/:subcategory" component={SubCategoryPage} exact />
               <Route path="/product/:id" component={ProductPage} exact />
               <Route path="/cart" component={CartPage} exact />
               <Route path="/cart/order_info" component={OrderInfoPage} exact />
