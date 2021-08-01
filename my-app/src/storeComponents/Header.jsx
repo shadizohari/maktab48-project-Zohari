@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
     margin_titre: {
         fontWeight: "500",
         [theme.breakpoints.down('sm')]: {
-            marginBottom: MARGIN.margin_2,
+            // marginBottom: MARGIN.margin_2,
         }
     },
     icon: {

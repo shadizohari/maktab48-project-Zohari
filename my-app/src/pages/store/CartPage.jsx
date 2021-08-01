@@ -20,6 +20,7 @@ import { RiDeleteBin2Fill } from "react-icons/ri";
 import { toast, ToastContainer } from 'react-toastify';
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+import { TiShoppingCart } from "react-icons/ti";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -68,8 +69,16 @@ const useStyles = makeStyles((theme) => ({
     price: {
         borderBottom: `3px solid ${COLORS.accentColor}`,
         [theme.breakpoints.down('sm')]: {
-            border:"0px"
+            border: "0px"
         }
+    },
+    parent_empty_cart:{
+        display:"flex",
+        flexDirection:"column",
+        alignItems:"center",
+        textAlign:"center",
+        justifyContent:"center",
+        padding:"60px"
     }
 }));
 <fieldset disabled="disabled"></fieldset>
@@ -81,7 +90,7 @@ function CartPage({ ...props }) {
     const [cartData, setCartData] = useState();
     const [sumCart, setSumCart] = useState(0);
     const [dataBooks, setDataBooks] = useState();
-    const [disabled,setDisabled] = useState("disabled")
+    const [disabled, setDisabled] = useState("disabled")
     let history = useHistory();
     useEffect(() => {
         setCartData(JSON.parse(localStorage.getItem("cart")));
@@ -91,7 +100,7 @@ function CartPage({ ...props }) {
                     setDataBooks(response.data)
                 }
             })
-            console.log(cartData)
+        console.log(cartData)
     }, [])
 
     useEffect(() => {
@@ -101,7 +110,7 @@ function CartPage({ ...props }) {
                 sum += (cartData[i].number) * (cartData[i].price)
             }
             setSumCart(sum);
-            if(sum>0){
+            if (sum > 0) {
                 setDisabled("")
             }
         }
@@ -139,32 +148,6 @@ function CartPage({ ...props }) {
     }
     function finilizeCart() {
         history.push("/cart/order_info");
-        // let arrayCart = JSON.parse(localStorage.getItem("cart"));
-        // axios.get('http://localhost:5000/books')
-        //     .then(response => {
-        //         if (response.data) {
-        //             console.log(response.data)
-        //             for (let i = 0; i < arrayCart.length; i++) {
-        //                 console.log(arrayCart[i])
-        //                 for (let j = 0; j < response.data.length; j++) {
-        //                     if (response.data[j].id == arrayCart[i].id) {
-        //                         if (Number(response.data[j].quantity) < Number(arrayCart[i].number)) {
-        //                             arrayCart.splice(i, 1)
-        //                             localStorage.setItem("cart", JSON.stringify(arrayCart))
-        //                             window.location.reload();
-        //                             return false
-        //                         }
-        //                     }
-        //                 }
-        //             }
-        //         }
-
-        // })
-
-        // dispatch(setLoading(true));
-        // setTimeout(() => {
-        //     dispatch(setLoading(false));
-        // }, 1000);
 
     }
     return (
@@ -176,58 +159,63 @@ function CartPage({ ...props }) {
                             سبد خرید
                         </Typography>
                     </Container>
-                    <div className={classes.parent_table}>
-                        {/* <Table className={classes.table}> */}
-                        < DataTableContainer>
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell>#</TableCell>
-                                    <TableCell>کالا</TableCell>
-                                    <TableCell>تعداد</TableCell>
-                                    <TableCell>قیمت</TableCell>
-                                    <TableCell></TableCell>
+                    {cartData?.length > 0 ?
+                        <>
+                            <div className={classes.parent_table}>
+                                {/* <Table className={classes.table}> */}
+                                < DataTableContainer>
+                                    <TableHead>
+                                        <TableRow>
+                                            <TableCell>#</TableCell>
+                                            <TableCell>کالا</TableCell>
+                                            <TableCell>تعداد</TableCell>
+                                            <TableCell>قیمت</TableCell>
+                                            <TableCell></TableCell>
 
 
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
 
-                                {cartData?.map((item, index) => {
-                                    return (<TableRow key={item.id}>
-                                        <TableCell>{index + 1}</TableCell>
-                                        <TableCell><Link className={classes.link} to={`/product/${item.id}`}>{item.bookName}</Link></TableCell>
-                                        <TableCell>
-                                            <TextField
-                                                label="تعداد"
-                                                value={item.number}
-                                                type="number"
-                                                InputProps={{ inputProps: { min: 1, max: item.quantity } }}
-                                                onChange={(e) => bookNumber(e.target.value, item.id)}
-                                            />
-                                        </TableCell>
-                                        <TableCell>{formatPrice(item.price * item.number)}</TableCell>
-                                        <TableCell><p onClick={() => deleteItem(item.id)}><RiDeleteBin2Fill className={classes.delete_icon} /></p></TableCell>
-                                    </TableRow >)
-                                })}
+                                        {cartData.map((item, index) => {
+                                            return (<TableRow key={item.id}>
+                                                <TableCell>{index + 1}</TableCell>
+                                                <TableCell><Link className={classes.link} to={`/product/${item.id}`}>{item.bookName}</Link></TableCell>
+                                                <TableCell>
+                                                    <TextField
+                                                        label="تعداد"
+                                                        value={item.number}
+                                                        type="number"
+                                                        InputProps={{ inputProps: { min: 1, max: item.quantity } }}
+                                                        onChange={(e) => bookNumber(e.target.value, item.id)}
+                                                    />
+                                                </TableCell>
+                                                <TableCell>{formatPrice(item.price * item.number)}</TableCell>
+                                                <TableCell><p onClick={() => deleteItem(item.id)}><RiDeleteBin2Fill className={classes.delete_icon} /></p></TableCell>
+                                            </TableRow >)
+                                        })}
 
-
-
-                            </TableBody>
-                        </DataTableContainer>
-                        {/* </Table> */}
+                                    </TableBody>
+                                </DataTableContainer>
+                                {/* </Table> */}
 
 
-                    </div>
-                    <Container className={classes.parent_btnCart}>
-                        <Typography className={classes.price} variant="h5" >
-                            جمع کل: {formatPrice(sumCart)}
-                        </Typography>
-                        <Button disabled={disabled} className={classes.btn} onClick={finilizeCart}>نهایی کردن سبد خرید</Button>
-                    </Container>
+                            </div>
+                            <Container className={classes.parent_btnCart}>
+                                <Typography className={classes.price} variant="h5" >
+                                    جمع کل: {formatPrice(sumCart)}
+                                </Typography>
+                                <Button disabled={disabled} className={classes.btn} onClick={finilizeCart}>نهایی کردن سبد خرید</Button>
+                            </Container>
+                        </> :
+                        <div className={classes.parent_empty_cart}>
+                            <TiShoppingCart style={{ fontSize: "100px" ,color:COLORS.accentColor}} />
+                            <Typography variant="h5" style={{paddingTop:"10px"}}>سبدخرید شما خالی هست.</Typography>
+                        </div>}
                 </Container>
-            </LayoutAdminPanel>
+            </LayoutAdminPanel >
             <ToastContainer />
-        </LoadingLayout>
+        </LoadingLayout >
     )
 }
 export default CartPage
