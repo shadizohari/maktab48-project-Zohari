@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
         marginTop: "20px"
 
     },
-    price:{
+    price: {
         marginTop: "20px",
         borderBottom: `3px solid ${COLORS.accentColor}`,
         [theme.breakpoints.down('sm')]: {
@@ -122,25 +122,32 @@ function ProductPage({ ...props }) {
     }
     function appendToStorage(bookId) {
         let flag = false;
-        let arrayCart = JSON.parse(localStorage.getItem("cart"));
+        let arrayCart = [];
+        if (JSON.parse(localStorage.getItem("cart"))) {
+            arrayCart = JSON.parse(localStorage.getItem("cart"));
+        }
+        // if (arrayCart) {
         for (let i = 0; i < arrayCart.length; i++) {
             if (arrayCart[i].id == bookId) {
                 flag = true
-                if(Number(arrayCart[i].number) + 1 <= book.quantity){
+                if (Number(arrayCart[i].number) + 1 <= book.quantity) {
                     arrayCart[i].number = Number(arrayCart[i].number) + 1
                     localStorage.setItem("cart", JSON.stringify(arrayCart))
-                }else{
+                } else {
                     setTimeout(() => {
                         toast.error("این کالا موجود نیست")
                     }, 1100);
-                  
+
                 }
             }
         }
+
+        console.log(arrayCart)
         if (!flag) {
             const x = { "bookName": book.name, "price": book.price, "category": book.category, "number": 1, "id": book.id, "quantity": book.quantity }
             arrayCart.push({ ...x })
             localStorage.setItem("cart", JSON.stringify(arrayCart))
+            console.log(arrayCart)
         }
     }
     const classesTitle = styleTitle();
@@ -186,7 +193,7 @@ function ProductPage({ ...props }) {
                     </div>
                 </Container>
             </LayoutAdminPanel >
-            <ToastContainer/>
+            <ToastContainer />
 
         </>
     )

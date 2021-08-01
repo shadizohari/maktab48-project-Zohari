@@ -49,7 +49,9 @@ export default function DataTableOrders({ ...props }) {
     const [array, setArray] = useState([]);
     const [length, setLength] = useState();
     const [orders, setOrders] = useState([]);
-
+    const deliveredStatus = useSelector((store) => store.DeliveredStatus);
+    const [enroute, setEnroute] = useState([]);
+    const [delivered, setDelivered] = useState([]);
 
     // get data when load page
     useEffect(() => {
@@ -57,14 +59,31 @@ export default function DataTableOrders({ ...props }) {
             .then(response => {
                 if (response.data) {
                     setOrders(response.data);
-                    setLength(response.data.length)
+                    // setLength(response.data.length)
                 }
             }).catch((err) => toast.error(".درخواست با خطا مواجه شد!"));
     }, [])
 
+    // division data to enroute and delivered for pagination
+    useEffect(() => {
+        let enrouteArray = [];
+        let deliveredArray = [];
+        orders.forEach(order => {
+            (order.status == "enroute") ? enrouteArray.push(order) : deliveredArray.push(order)
+        });
+        setEnroute([...enrouteArray])
+        setDelivered([...deliveredArray])
+    }, [orders])
 
+    useEffect(() => {
+        if (deliveredStatus == "enroute") {
+            setLength(enroute.length)
+        } else {
+            setLength(delivered.length)
+        }
+    }, [enroute, delivered, deliveredStatus])
 
-    // // table pagenation
+    // table pagenation
     useEffect(() => {
         setArray(paginationCalculate(length, 5))
     }, [length])
@@ -104,36 +123,32 @@ export default function DataTableOrders({ ...props }) {
 
     return (
         <div>
-            {/* <LoadingLayout> */}
-            {/* <DeliveredStatusContext.Provider value={}> */}
-                <DataTableHeader titre="مدیریت سفارش‌ها" button={false} radio={true} searchInput={(e) => searchInput(e)}/>
-                <DataTableContainer>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>#</TableCell>
-                            <TableCell>نام کاربری</TableCell>
-                            <TableCell>مجموع مبلغ</TableCell>
-                            <TableCell>زمان ثبت سفارش‌</TableCell>
-                            <TableCell></TableCell>
+            <DataTableHeader titre="مدیریت سفارش‌ها" button={false} radio={true} searchInput={(e) => searchInput(e)} />
+            <DataTableContainer>
+                <TableHead>
+                    <TableRow>
+                        <TableCell>#</TableCell>
+                        <TableCell>نام کاربری</TableCell>
+                        <TableCell>مجموع مبلغ</TableCell>
+                        <TableCell>زمان ثبت سفارش‌</TableCell>
+                        <TableCell></TableCell>
 
 
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
 
-                       {!searchValue?< MapOrdersList data={orders} start={start} end={end} />:< MapOrdersList data={searchFunc(orders)} start={start} end={end} />} 
+                    {!searchValue ? < MapOrdersList data={orders} start={start} end={end} /> : < MapOrdersList data={searchFunc(orders)} start={start} end={end} />}
 
-                    </TableBody>
+                </TableBody>
 
-                </DataTableContainer>
+            </DataTableContainer>
 
-                <Container maxWidth="lg" className={classes.btn_pagination}>
-                    {array?.map((num, index) => (
-                        <Button style={{ margin: "5px" }} className={activePageNumber === index + 1 ? classes.accentColor : ""} key={num} variant="contained" onClick={() => { changePage(num) }}>{num}</Button>
-                    ))}
-                </Container>
-            {/* </DeliveredStatusContext.Provider> */}
-            {/* </LoadingLayout> */}
+            <Container maxWidth="lg" className={classes.btn_pagination}>
+                {array?.map((num, index) => (
+                    <Button style={{ margin: "5px" }} className={activePageNumber === index + 1 ? classes.accentColor : ""} key={num} variant="contained" onClick={() => { changePage(num) }}>{num}</Button>
+                ))}
+            </Container>
             <ToastContainer />
 
         </div>

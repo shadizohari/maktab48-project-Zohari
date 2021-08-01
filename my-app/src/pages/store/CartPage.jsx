@@ -91,6 +91,7 @@ function CartPage({ ...props }) {
                     setDataBooks(response.data)
                 }
             })
+            console.log(cartData)
     }, [])
 
     useEffect(() => {
