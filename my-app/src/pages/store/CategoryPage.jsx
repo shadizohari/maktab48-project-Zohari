@@ -112,12 +112,12 @@ import Select from '@material-ui/core/Select';
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
-    parentSelect:{
+    parentSelect: {
         display: 'flex',
-        justifyContent:"space-between",
+        justifyContent: "space-between",
     },
-    formControl:{
-        background:COLORS.secondaryColor,
+    formControl: {
+        background: COLORS.secondaryColor,
     },
     root: {
         display: 'flex',
@@ -190,6 +190,14 @@ const useStyles = makeStyles((theme) => ({
     },
     link_card: {
         textDecoration: "none"
+    },
+    select: {
+        '&:before': {
+            borderColor: COLORS.accentColor,
+        },
+        '&:after': {
+            borderColor: COLORS.accentColor,
+        }
     }
 
 }));
@@ -223,9 +231,6 @@ function ResponsiveDrawer(props) {
             })
             setCategory([...category])
         } else {
-            console.log(category)
-            console.log(subcategory)
-
             data.forEach((book) => {
                 if (book.category == subcategory && book.subCategory == title) {
                     category.push(book)
@@ -235,6 +240,18 @@ function ResponsiveDrawer(props) {
         }
     }, [data])
 
+    // sort
+    const [sort, setSort] = useState("newest")
+    const sortCategory = function (a, b) {
+        if (sort == "newest") { return b.id - a.id } else if (sort == "cheapest") {
+            return a.price - b.price
+        } else if (sort == "mostExpensive") {
+            return b.price - a.price
+        }
+    }
+    function filter(e) {
+        setSort(e.target.value)
+    }
 
 
 
@@ -368,24 +385,23 @@ function ResponsiveDrawer(props) {
                 <main className={classes.content}>
                     <LayoutPage classHeader={classes.marginTopres}>
                         <Container>
-                            <Container maxWidth="lg" style={{display:"flex",justifyContent:"space-between"}} className={classesTitle.title}>
+                            <Container maxWidth="lg" style={{ display: "flex", justifyContent: "space-between" }} className={classesTitle.title}>
 
-                                <Typography variant="h5">
+                                <Typography variant="h5" style={{display:"flex", alignItems:"center"}}>
                                     {!subcategory ? `دسته ${title}` : <> دسته {subcategory} <FaLongArrowAltLeft style={{ color: COLORS.accentColor, margin: "0px 10px" }} /> {title} </>}
                                 </Typography>
 
                                 <FormControl className={classes.formControl}>
                                     {/* <InputLabel style={{ color: COLORS.accentColor }}>دسته‌بندی</InputLabel> */}
                                     <Select
-                                    style={{padding:"4px"}}
+                                        style={{ padding: "4px" }}
                                         native
                                         className={classes.select}
-                                    // onChange={filter}
+                                        onChange={(e) => filter(e)}
                                     >
-                                        <option value="همه">همه</option>
-                                        <option value="جدیدترین">جدیدترین</option>
-                                        <option value="ارزانترین">ارزانترین</option>
-                                        <option value="گرانترین">گرانترین</option>
+                                        <option value="newest">جدیدترین</option>
+                                        <option value="cheapest">ارزانترین</option>
+                                        <option value="mostExpensive">گرانترین</option>
 
                                     </Select>
                                 </FormControl>
@@ -393,9 +409,9 @@ function ResponsiveDrawer(props) {
                         </Container>
                         <Container maxWidth="lg" className={classes.root}>
                             <Grid container spacing={3}>
-                                {(category.length > 0) ? category.map((item) => {
+                                {(category.length > 0) ? category.sort(sortCategory).map((item,index) => {
                                     return (
-                                        <Grid item xs={12} md={6} lg={4}>
+                                        <Grid item xs={12} md={6} lg={4} key={index}>
                                             <Link className={classes.link_card} to={`/product/${item.id}`}><CardHorizantal sebCategory={item.subCategory} title={item.name} img={item.img} price={item.price} /></Link>
                                         </Grid>
                                     )

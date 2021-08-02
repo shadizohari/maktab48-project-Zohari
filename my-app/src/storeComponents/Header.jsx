@@ -107,26 +107,23 @@ const useStyles = makeStyles((theme) => ({
         color: "white",
         fontSize: "18px"
     },
-    searchBoxRes:{
+    searchBoxRes: {
         [theme.breakpoints.down('xs')]: {
             display: "none"
-            // marginBottom: MARGIN.margin_2,
         }
     },
-    searchBoxInRes:{
-        display:"none",
+    searchresHomePage: {
+        display: "none",
+        marginTop: "25px",
         [theme.breakpoints.down('xs')]: {
-            display:"block",
-            '& .makeStyles-root-14':{
-                width:"100%",
-                marginTop:"25px"
-            }
-            // marginBottom: MARGIN.margin_2,
+            display: "block",
+            width: "100%",
+            marginTop: "25px"
         }
     }
 }));
 
-export default function AdminHeader({ classHeader, searchInput, isSearch, ...props }) {
+export default function AdminHeader({ classHeader, searchInput, isSearch,searchresHomePage, ...props }) {
     const classes = useStyles();
     const history = useHistory();
     const [login, setLogin] = useState(false)
@@ -170,7 +167,7 @@ export default function AdminHeader({ classHeader, searchInput, isSearch, ...pro
 
 
             </Container>
-             {isSearch && <div className={classes.searchBoxInRes}><SearchInput searchInput={searchInput}/></div>}
+            {isSearch && <SearchInput searchInput={searchInput} searchresHomePage={classes.searchresHomePage}/>}
         </Container>
     )
 }

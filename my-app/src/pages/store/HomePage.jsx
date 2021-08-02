@@ -6,6 +6,12 @@ import LayoutPage from '../../storeComponents/LayoutPage'
 import { Container } from '@material-ui/core';
 import baner from '../../assets/img/banner-2.jpg'
 const useStyles = makeStyles((theme) => ({
+    baner:{
+        [theme.breakpoints.down('xs')]: {
+            display:"none",
+            
+        }
+    }
 }));
 
 export default function Home() {
@@ -38,9 +44,9 @@ export default function Home() {
         <>
             <LayoutPage searchInput={(e) => setValueSearch(e.target.value)} isSearch="true">
                 <Container>
-                    <img src={baner} style={{width:"100%",marginTop:'25px'}} />
+                    <img src={baner} className={classes.baner} style={{width:"100%",marginTop:'25px'}} />
                 </Container>
-                {(!valueSearch && featured.length > 0 && books.length > 0) && (featured.map((item) => { return <HomeSection title={item.category} idList={item.products} data={books} search={valueSearch} /> }))}
+                {(!valueSearch && featured.length > 0 && books.length > 0) && (featured.map((item,index) => { return <HomeSection key={index} title={item.category} idList={item.products} data={books} search={valueSearch} /> }))}
                 {(valueSearch && <HomeSection data={books} search={valueSearch} />)}
             </LayoutPage>
         </>

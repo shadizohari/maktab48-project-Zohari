@@ -31,12 +31,12 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function CustomizedInputBase({searchInput,...props}) {
+export default function CustomizedInputBase({searchInput,searchresHomePage,...props}) {
     const classes = useStyles();
 
     return (
 
-        <Paper component="form" className={classes.root}>
+        <Paper component="form" className={classes.root} className={`${searchresHomePage}`}>
             <IconButton type="submit" className={classes.iconButton, classes.customInputSearch} aria-label="search">
                 <BiSearchAlt />
             </IconButton>
