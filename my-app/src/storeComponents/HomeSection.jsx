@@ -7,8 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import { Link } from "react-router-dom";
 import { COLORS } from '../styles/constants';
 import { styleTitle } from '../styles/styleTitle';
-
-
+import { MdDoNotDisturbAlt } from 'react-icons/md';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -30,6 +29,13 @@ const useStyles = makeStyles((theme) => ({
     },
     link: {
         textDecoration: "none",
+    },
+    notFound: {
+        marginTop: "50px",
+        color: COLORS.primeryColor,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center"
     }
 }));
 
@@ -66,7 +72,7 @@ export default function Home({ title, idList, data, search, ...props }) {
                 <>
                     <Link className={classes.link} to={`category/${title}`}> <Typography variant="h5" className={classesTitle.title} >
                         {`دسته ${title}`}
-                        
+
                     </Typography>
                     </Link>
 
@@ -86,24 +92,30 @@ export default function Home({ title, idList, data, search, ...props }) {
                         })}
                     </Grid>
                 </> :
+                <>
+                    <Grid container spacing={3}>
+                        {dataSearch?.length > 0 && dataSearch.map((item, index) => {
+                            return (
+                                <Grid item xs={12} sm={6} md={4} key={index}>
+                                    <Link className={classes.link} to={`product/${item.id}`}>
+                                        {item.quantity > 0 ?
+                                            <CardHorizantal title={item.name} img={item.img} price={item.price} /> :
+                                            <CardHorizantal title={item.name} img={item.img} price="ناموجود" />
+                                        }
+                                    </Link>
+                                </Grid>
+                            )
+                        })
+                        }
+                    </Grid>
 
-                <Grid container spacing={3}>
-                    {dataSearch?.map((item, index) => {
-                        return (
-                            <Grid item xs={12} sm={6} md={4} key={index}>
-                                <Link className={classes.link} to={`product/${item.id}`}>
-                                    {item.quantity > 0 ?
-                                        <CardHorizantal title={item.name} img={item.img} price={item.price} /> :
-                                        <CardHorizantal title={item.name} img={item.img} price="ناموجود" />
-                                        // false
-                                    }
-                                </Link>
-                            </Grid>
-                        )
-                    })
-                    }
-                </Grid>}
-        </Container>
+                    {dataSearch?.length < 1 && <Typography align="center" variant="h5" className={classes.notFound}>
+                        <MdDoNotDisturbAlt style={{ color: COLORS.accentColor }} />کالایی یافت نشد.
+                    </Typography>}
+                </>
+            }
+
+        </Container >
 
     );
 }
