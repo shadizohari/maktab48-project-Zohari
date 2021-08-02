@@ -11,6 +11,7 @@ const useStyles = makeStyles((theme) => ({
     data_table_header: {
         display: "flex",
         justifyContent: "space-between",
+        alignItems:"center",
         marginBottom: "24px",
         [theme.breakpoints.down('sm')]: {
             flexDirection: 'column',

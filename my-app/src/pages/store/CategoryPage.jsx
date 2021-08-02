@@ -103,12 +103,19 @@ import { FiMenu } from 'react-icons/fi';
 import { COLORS } from "../../styles/constants";
 import { FaBookOpen } from 'react-icons/fa';
 import LayoutPage from '../../storeComponents/LayoutPage';
-import { styleTitle} from '../../styles/styleTitle';
+import { styleTitle } from '../../styles/styleTitle';
+import { FaLongArrowAltLeft } from "react-icons/fa"
+
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
+    },
+    marginTopres: {
+        [theme.breakpoints.down('sm')]: {
+            marginTop:"40px"
+        },
     },
     drawer: {
         [theme.breakpoints.up('sm')]: {
@@ -120,7 +127,7 @@ const useStyles = makeStyles((theme) => ({
         background: COLORS.primeryColor,
         heigth: "100vh",
         [theme.breakpoints.up('sm')]: {
-            minHeight:"100%",
+            minHeight: "100%",
 
         },
     },
@@ -163,7 +170,7 @@ const useStyles = makeStyles((theme) => ({
     icon: {
         color: COLORS.accentColor,
         fontSize: "20px",
-        
+
     },
     paddingSub: {
         paddingLeft: "70px"
@@ -171,8 +178,8 @@ const useStyles = makeStyles((theme) => ({
     paddingCat: {
         paddingLeft: "15px"
     },
-    link_card:{
-        textDecoration:"none"
+    link_card: {
+        textDecoration: "none"
     }
 
 }));
@@ -180,6 +187,7 @@ const useStyles = makeStyles((theme) => ({
 function ResponsiveDrawer(props) {
 
     const { title } = useParams();
+    const { subcategory } = useParams();
     const [data, setData] = useState([])
     const [category, setCategory] = useState([])
 
@@ -189,7 +197,6 @@ function ResponsiveDrawer(props) {
         axios.get('http://localhost:5000/books')
             .then(response => {
                 if (response.data) {
-                    console.log(data)
                     setData([...response.data])
                 } else {
                     console.log("error")
@@ -198,12 +205,29 @@ function ResponsiveDrawer(props) {
     }, [title])
 
     useEffect(() => {
-        data.forEach((book) => {
-            if (book.category == title) {
-                category.push(book)
-            }
-        })
-        setCategory([...category])
+        if (!subcategory) {
+            data.forEach((book) => {
+                if (book.category == title) {
+                    category.push(book)
+                }
+            })
+            setCategory([...category])
+        } else {
+            console.log(category)
+            console.log(subcategory)
+
+            data.forEach((book) => {
+                if (book.category == subcategory && book.subCategory == title) {
+                    category.push(book)
+                }
+            })
+            setCategory([...category])
+        }
+        // console.log(category)
+        // console.log(subcategory)
+        // console.log(title)
+
+
     }, [data])
 
 
@@ -254,15 +278,15 @@ function ResponsiveDrawer(props) {
                     </ListItem></Link>
                 </List>
                 <List>
-                    <Link className={classes.link} to='/category/تاریخ'><ListItem button>
+                    <Link className={classes.link} to='/category/تاریخی'><ListItem button>
                         <FaBookOpen className={classes.icon} />
-                        <ListItemText primary="تاریخ" className={classes.paddingCat} />
+                        <ListItemText primary="تاریخی" className={classes.paddingCat} />
                     </ListItem></Link>
-                    <Link className={classes.link} to='/category/ایران/تاریخ'> <ListItem button>
+                    <Link className={classes.link} to='/category/ایران/تاریخی'> <ListItem button>
                         <ListItemText primary="ایران" className={classes.paddingSub} />
                     </ListItem>
                     </Link>
-                    <Link className={classes.link} to='/category/جهان/تاریخ'> <ListItem button divider>
+                    <Link className={classes.link} to='/category/جهان/تاریخی'> <ListItem button divider>
                         <ListItemText primary="جهان" className={classes.paddingSub} />
                     </ListItem></Link>
                 </List>
@@ -337,10 +361,10 @@ function ResponsiveDrawer(props) {
                 </nav>
 
                 <main className={classes.content}>
-                    <LayoutPage style={{ width: "10%" }}>
+                    <LayoutPage classHeader={classes.marginTopres}>
                         <Container maxWidth="lg" className={classes.root}>
                             <Typography variant="h5" className={classesTitle.title} >
-                                {`دسته ${title}`}
+                                {!subcategory ? `دسته ${title}` : <> دسته {subcategory} <FaLongArrowAltLeft style={{ color: COLORS.accentColor, margin: "0px 10px" }} /> {title} </>}
                             </Typography>
 
                         </Container>

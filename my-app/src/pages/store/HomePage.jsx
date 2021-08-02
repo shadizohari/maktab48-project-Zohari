@@ -3,7 +3,8 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import HomeSection from '../../storeComponents/HomeSection'
 import axios from "axios";
 import LayoutPage from '../../storeComponents/LayoutPage'
-
+import SearchInput from '../../component/SearchInput'
+import { Container } from '@material-ui/core';
 const useStyles = makeStyles((theme) => ({
 }));
 
@@ -35,6 +36,9 @@ export default function Home() {
     return (
         <>
             <LayoutPage>
+                <Container>
+                    <SearchInput />
+                </Container>
                 {(featured.length > 0 && books.length > 0) ? featured.map((item) => { return <HomeSection title={item.category} idList={item.products} data={books} /> }) : false}
             </LayoutPage>
         </>

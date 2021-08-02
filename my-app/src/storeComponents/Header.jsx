@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     logo: {
         width: "100px",
         marginRight: "20px",
-        marginTop: MARGIN.margin_2,
+        marginTop: MARGIN.margin_1,
         marginBottom: MARGIN.margin_1,
 
 
@@ -35,10 +35,11 @@ const useStyles = makeStyles((theme) => ({
     header_logo_flex: {
         display: "flex",
         alignItems: "center",
+        marginBottom: "-25px",
         [theme.breakpoints.down('sm')]: {
-            flexDirection: 'column',
-            alignItems: "flex-start",
-            paddingRight: 0,
+            // flexDirection: 'column',
+            // alignItems: "flex-start",
+            // paddingRight: 0,
             // marginTop:"50px",
         },
     },
@@ -51,17 +52,19 @@ const useStyles = makeStyles((theme) => ({
     },
     margin_titre: {
         fontWeight: "500",
-        [theme.breakpoints.down('sm')]: {
+        [theme.breakpoints.down('xs')]: {
+            display: "none"
             // marginBottom: MARGIN.margin_2,
         }
     },
     icon: {
-        fontSize: "35px",
+        fontSize: "30px",
         display: "flex",
         cursor: "pointer",
         alignItems: "center",
     },
     shopIcon: {
+        position: "relative",
         marginRight: "15px",
         color: COLORS.primeryColor,
         '&:hover': {
@@ -86,13 +89,13 @@ const useStyles = makeStyles((theme) => ({
     },
     parent_cartQuantity: {
         position: "absolute",
-        bottom: "85%",
-        right: "50%",
+        bottom: "60%",
+        right: "20%",
         background: COLORS.accentColor,
         padding: "2px",
         borderRadius: "50%",
-        width: "24px",
-        height: "24px",
+        width: "20px",
+        height: "20px",
     },
     cartQuantity: {
         position: "absolute",
@@ -104,8 +107,9 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function AdminHeader() {
+export default function AdminHeader({ classHeader, ...props }) {
     const classes = useStyles();
+    const history = useHistory();
     const [login, setLogin] = useState(false)
     // const history = useHistory();
     const [cartQuantity, setCartQuantity] = useState(0)
@@ -121,8 +125,7 @@ export default function AdminHeader() {
     }, [])
 
     return (
-        // <div style={{ background: "white" }}>
-        <Container maxWidth="lg" >
+        <Container maxWidth="lg" className={classHeader}>
             <Container maxWidth="lg" className={classes.header_managment_panel}>
                 <div className={classes.header_logo_flex}>
                     <NavLink to="/" exact>
@@ -132,24 +135,19 @@ export default function AdminHeader() {
                         فروشگاه کتاب
                     </Typography>
                 </div>
-                <div className={classes.icon}>
-                    {login ? <Link to="/admin-panel/products"><RiAdminLine className={classes.shopIcon} /></Link> :
-                        <Link to="/admin-panel"><RiAdminLine className={classes.shopIcon} /></Link>}
-
-                    <Link to="/cart" style={{ position: "relative" }}>
-                        <TiShoppingCart className={classes.shopIcon} />
+                <div className={classes.icon} style={{position:"relative"}}>
+                    <RiAdminLine className={classes.shopIcon} onClick={() => login ? history.push("/admin-panel/products") : history.push("/admin-panel")} />
+                    <TiShoppingCart className={classes.shopIcon} onClick={() => history.push("/cart")} />
                         {cartQuantity > 0 ?
                             <span className={classes.parent_cartQuantity}>
                                 <span className={classes.cartQuantity}>{cartQuantity}</span>
                             </span> : false}
-                    </Link>
+                    
                 </div>
 
 
             </Container>
-            {/* <hr className={classes.hr} /> */}
         </Container>
-        // </div>
     )
 }
 

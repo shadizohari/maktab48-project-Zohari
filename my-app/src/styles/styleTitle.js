@@ -9,6 +9,8 @@ export const styleTitle = makeStyles((theme) => ({
         background:COLORS.primeryColor,
         color:"white",
         borderTop:`8px solid ${COLORS.accentColor}`,
+        display:"flex",
+        alignItems:"center"
         // borderLeft:`8px solid ${COLORS.accentColor}`,
         },
     
