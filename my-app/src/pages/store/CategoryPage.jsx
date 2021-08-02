@@ -104,17 +104,27 @@ import { COLORS } from "../../styles/constants";
 import { FaBookOpen } from 'react-icons/fa';
 import LayoutPage from '../../storeComponents/LayoutPage';
 import { styleTitle } from '../../styles/styleTitle';
-import { FaLongArrowAltLeft } from "react-icons/fa"
+import { FaLongArrowAltLeft } from "react-icons/fa";
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+import Select from '@material-ui/core/Select';
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
+    parentSelect:{
+        display: 'flex',
+        justifyContent:"space-between",
+    },
+    formControl:{
+        background:COLORS.secondaryColor,
+    },
     root: {
         display: 'flex',
     },
     marginTopres: {
         [theme.breakpoints.down('sm')]: {
-            marginTop:"40px"
+            marginTop: "55px"
         },
     },
     drawer: {
@@ -223,11 +233,6 @@ function ResponsiveDrawer(props) {
             })
             setCategory([...category])
         }
-        // console.log(category)
-        // console.log(subcategory)
-        // console.log(title)
-
-
     }, [data])
 
 
@@ -362,13 +367,30 @@ function ResponsiveDrawer(props) {
 
                 <main className={classes.content}>
                     <LayoutPage classHeader={classes.marginTopres}>
-                        <Container maxWidth="lg" className={classes.root}>
-                            <Typography variant="h5" className={classesTitle.title} >
-                                {!subcategory ? `دسته ${title}` : <> دسته {subcategory} <FaLongArrowAltLeft style={{ color: COLORS.accentColor, margin: "0px 10px" }} /> {title} </>}
-                            </Typography>
+                        <Container>
+                            <Container maxWidth="lg" style={{display:"flex",justifyContent:"space-between"}} className={classesTitle.title}>
 
+                                <Typography variant="h5">
+                                    {!subcategory ? `دسته ${title}` : <> دسته {subcategory} <FaLongArrowAltLeft style={{ color: COLORS.accentColor, margin: "0px 10px" }} /> {title} </>}
+                                </Typography>
+
+                                <FormControl className={classes.formControl}>
+                                    {/* <InputLabel style={{ color: COLORS.accentColor }}>دسته‌بندی</InputLabel> */}
+                                    <Select
+                                    style={{padding:"4px"}}
+                                        native
+                                        className={classes.select}
+                                    // onChange={filter}
+                                    >
+                                        <option value="همه">همه</option>
+                                        <option value="جدیدترین">جدیدترین</option>
+                                        <option value="ارزانترین">ارزانترین</option>
+                                        <option value="گرانترین">گرانترین</option>
+
+                                    </Select>
+                                </FormControl>
+                            </Container>
                         </Container>
-
                         <Container maxWidth="lg" className={classes.root}>
                             <Grid container spacing={3}>
                                 {(category.length > 0) ? category.map((item) => {

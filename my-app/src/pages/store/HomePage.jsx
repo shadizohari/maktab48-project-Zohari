@@ -3,8 +3,8 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import HomeSection from '../../storeComponents/HomeSection'
 import axios from "axios";
 import LayoutPage from '../../storeComponents/LayoutPage'
-import SearchInput from '../../component/SearchInput'
 import { Container } from '@material-ui/core';
+import baner from '../../assets/img/banner-2.jpg'
 const useStyles = makeStyles((theme) => ({
 }));
 
@@ -32,14 +32,16 @@ export default function Home() {
 
 
     }, [])
+    const [valueSearch, setValueSearch] = useState()
 
     return (
         <>
-            <LayoutPage>
+            <LayoutPage searchInput={(e) => setValueSearch(e.target.value)} isSearch="true">
                 <Container>
-                    <SearchInput />
+                    <img src={baner} style={{width:"100%",marginTop:'25px'}} />
                 </Container>
-                {(featured.length > 0 && books.length > 0) ? featured.map((item) => { return <HomeSection title={item.category} idList={item.products} data={books} /> }) : false}
+                {(!valueSearch && featured.length > 0 && books.length > 0) && (featured.map((item) => { return <HomeSection title={item.category} idList={item.products} data={books} search={valueSearch} /> }))}
+                {(valueSearch && <HomeSection data={books} search={valueSearch} />)}
             </LayoutPage>
         </>
     );

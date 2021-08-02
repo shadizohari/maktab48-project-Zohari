@@ -7,6 +7,8 @@ import Typography from '@material-ui/core/Typography';
 import { TiShoppingCart } from "react-icons/ti";
 import { RiAdminLine } from "react-icons/ri";
 import { NavLink, useHistory } from "react-router-dom";
+import SearchInput from '../component/SearchInput'
+
 // 
 
 import Slide from '@material-ui/core/Slide';
@@ -52,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
     },
     margin_titre: {
         fontWeight: "500",
-        [theme.breakpoints.down('xs')]: {
+        [theme.breakpoints.down('sm')]: {
             display: "none"
             // marginBottom: MARGIN.margin_2,
         }
@@ -104,10 +106,27 @@ const useStyles = makeStyles((theme) => ({
         transform: " translate(50%, -50%)",
         color: "white",
         fontSize: "18px"
+    },
+    searchBoxRes:{
+        [theme.breakpoints.down('xs')]: {
+            display: "none"
+            // marginBottom: MARGIN.margin_2,
+        }
+    },
+    searchBoxInRes:{
+        display:"none",
+        [theme.breakpoints.down('xs')]: {
+            display:"block",
+            '& .makeStyles-root-14':{
+                width:"100%",
+                marginTop:"25px"
+            }
+            // marginBottom: MARGIN.margin_2,
+        }
     }
 }));
 
-export default function AdminHeader({ classHeader, ...props }) {
+export default function AdminHeader({ classHeader, searchInput, isSearch, ...props }) {
     const classes = useStyles();
     const history = useHistory();
     const [login, setLogin] = useState(false)
@@ -135,18 +154,23 @@ export default function AdminHeader({ classHeader, ...props }) {
                         فروشگاه کتاب
                     </Typography>
                 </div>
-                <div className={classes.icon} style={{position:"relative"}}>
-                    <RiAdminLine className={classes.shopIcon} onClick={() => login ? history.push("/admin-panel/products") : history.push("/admin-panel")} />
+
+                <div className={classes.icon} style={{ position: "relative" }}>
+                    {isSearch && <div className={classes.searchBoxRes}><SearchInput searchInput={searchInput} /></div>}
+
+                    <RiAdminLine style={{ marginRight: "25px" }} className={classes.shopIcon} onClick={() => login ? history.push("/admin-panel/products") : history.push("/admin-panel")} />
                     <TiShoppingCart className={classes.shopIcon} onClick={() => history.push("/cart")} />
-                        {cartQuantity > 0 ?
-                            <span className={classes.parent_cartQuantity}>
-                                <span className={classes.cartQuantity}>{cartQuantity}</span>
-                            </span> : false}
-                    
+                    {cartQuantity > 0 &&
+                        <span className={classes.parent_cartQuantity}>
+                            <span className={classes.cartQuantity}>{cartQuantity}</span>
+                        </span>}
+
                 </div>
 
 
+
             </Container>
+             {isSearch && <div className={classes.searchBoxInRes}><SearchInput searchInput={searchInput}/></div>}
         </Container>
     )
 }

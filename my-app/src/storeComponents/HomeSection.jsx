@@ -10,6 +10,7 @@ import { styleTitle } from '../styles/styleTitle';
 
 
 
+
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
@@ -32,13 +33,13 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function Home({ title, idList, data, ...props }) {
+export default function Home({ title, idList, data, search, ...props }) {
     const classes = useStyles();
     const [featuredBooks, setFeaturedBooks] = useState([]);
     const classesTitle = styleTitle();
 
     useEffect(() => {
-        for (let i = 0; i < idList.length; i++) {
+        for (let i = 0; i < idList?.length; i++) {
             for (let j = 0; j < data.length; j++) {
                 if (idList[i] == data[j].id) {
                     featuredBooks.push(data[j])
@@ -49,33 +50,60 @@ export default function Home({ title, idList, data, ...props }) {
 
 
     }, [idList, data])
-
+    const searchFunc = function (array) {
+        return array.filter((book) => { return (book.name.includes(search)) });
+    }
+    const [dataSearch, setDataSearch] = useState()
+    useEffect(() => {
+        setDataSearch(searchFunc(data))
+    }, [search, data])
 
 
     return (
 
         <Container maxWidth="lg" className={classes.root}>
-            <Link className={classes.link} to={`category/${title}`}> <Typography variant="h5" className={classesTitle.title} >
-                {`دسته ${title}`}
-            </Typography>
-            </Link>
+            {!search ?
+                <>
+                    <Link className={classes.link} to={`category/${title}`}> <Typography variant="h5" className={classesTitle.title} >
+                        {`دسته ${title}`}
+                        
+                    </Typography>
+                    </Link>
 
-            <Grid container spacing={3}>
-                {featuredBooks.map((item,index) => {
-                    return (
-                        <Grid item xs={12} sm={6} md={4}  key={index}>
-                            <Link className={classes.link} to={`product/${item.id}`}>
-                                {item.quantity > 0 ?
-                                    <CardHorizantal title={item.name} img={item.img} price={item.price} /> :
-                                    <CardHorizantal title={item.name} img={item.img} price="ناموجود" />
-                                    // false
-                                }
-                            </Link>
-                        </Grid>
-                    )
-                })}
-            </Grid>
-            {/* <hr className={classes.hr} /> */}
+                    <Grid container spacing={3}>
+                        {featuredBooks.map((item, index) => {
+                            return (
+                                <Grid item xs={12} sm={6} md={4} key={index}>
+                                    <Link className={classes.link} to={`product/${item.id}`}>
+                                        {item.quantity > 0 ?
+                                            <CardHorizantal title={item.name} img={item.img} price={item.price} /> :
+                                            <CardHorizantal title={item.name} img={item.img} price="ناموجود" />
+                                            // false
+                                        }
+                                    </Link>
+                                </Grid>
+                            )
+                        })}
+                    </Grid>
+                </> :
+
+                <Grid container spacing={3}>
+                    {dataSearch?.map((item, index) => {
+                        return (
+                            <Grid item xs={12} sm={6} md={4} key={index}>
+                                <Link className={classes.link} to={`product/${item.id}`}>
+                                    {item.quantity > 0 ?
+                                        <CardHorizantal title={item.name} img={item.img} price={item.price} /> :
+                                        <CardHorizantal title={item.name} img={item.img} price="ناموجود" />
+                                        // false
+                                    }
+                                </Link>
+                            </Grid>
+                        )
+                    })
+                    }
+                </Grid>}
         </Container>
+
     );
 }

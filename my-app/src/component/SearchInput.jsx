@@ -35,6 +35,7 @@ export default function CustomizedInputBase({searchInput,...props}) {
     const classes = useStyles();
 
     return (
+
         <Paper component="form" className={classes.root}>
             <IconButton type="submit" className={classes.iconButton, classes.customInputSearch} aria-label="search">
                 <BiSearchAlt />
