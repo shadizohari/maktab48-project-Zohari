@@ -93,7 +93,7 @@ export default function Home({ title, idList, data, search, ...props }) {
                     </Grid>
                 </> :
                 <>
-                    <Grid container spacing={3}>
+                    <Grid container spacing={3} style={{marginTop:"25px"}}>
                         {dataSearch?.length > 0 && dataSearch.map((item, index) => {
                             return (
                                 <Grid item xs={12} sm={6} md={4} key={index}>

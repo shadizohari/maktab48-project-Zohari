@@ -168,8 +168,8 @@ export default function DataTableProducts({ ...props }) {
                 </TableHead>
                 <TableBody>
                     {(!value ?
-                        (!searchValue ? < MapBookList data={data} start={start} end={end} /> : < MapBookList data={searchFunc(data)} start={start} end={end} />) :
-                        (!searchValue ? < MapBookList data={filterResult} start={start} end={end} /> : < MapBookList data={searchFunc(filterResult)} start={start} end={end} />))}
+                        (!searchValue ? < MapBookList data={data} start={start} end={end} /> : < MapBookList data={searchFunc(data)} start={start} end={15} />) :
+                        (!searchValue ? < MapBookList data={filterResult} start={start} end={end} /> : < MapBookList data={searchFunc(filterResult)} start={start} end={15} />))}
                 </TableBody>
 
             </DataTableContainer>

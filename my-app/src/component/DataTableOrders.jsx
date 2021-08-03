@@ -81,6 +81,7 @@ export default function DataTableOrders({ ...props }) {
         } else {
             setLength(delivered.length)
         }
+        changePage(1) 
     }, [enroute, delivered, deliveredStatus])
 
     // table pagenation
