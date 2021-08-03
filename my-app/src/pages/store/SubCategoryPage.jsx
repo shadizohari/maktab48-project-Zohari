@@ -76,7 +76,7 @@ const useStyles = makeStyles((theme) => ({
         textDecoration: "none",
         '&:hover': {
             color: COLORS.accentColor,
-        }
+        },
     },
     icon: {
         color: COLORS.accentColor,
