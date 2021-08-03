@@ -14,7 +14,7 @@ import { setBookList } from '../store/actions/bookList';
 import Button from '@material-ui/core/Button';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';  
+import Select from '@material-ui/core/Select';
 import Container from '@material-ui/core/Container';
 import MapBookList from './MapBookList';
 import { paginationCalculate } from '../utils/auth';
@@ -95,7 +95,6 @@ export default function DataTableProducts({ ...props }) {
         }
     }
 
-
     // // table pagenation
     useEffect(() => {
         setArray(paginationCalculate(length, 5))
@@ -128,12 +127,14 @@ export default function DataTableProducts({ ...props }) {
     const [searchValue, setSearchValue] = useState("")
     function searchInput(e) {
         setSearchValue(e.target.value)
+
+
     }
     const searchFunc = function (array) {
         return array.filter((book) => { return (book.name.includes(searchValue)) });
     }
 
-    
+
     return (
         <div>
             <DataTableHeader titre="مدیریت کالا" textBtn="اضافه کردن کالا" handelClick={handleOpen} searchInput={(e) => searchInput(e)} />
@@ -167,17 +168,17 @@ export default function DataTableProducts({ ...props }) {
                 </TableHead>
                 <TableBody>
                     {(!value ?
-                         (!searchValue ? < MapBookList data={data} start={start} end={end} /> : < MapBookList data={searchFunc(data)} start={start} end={end} />) : 
-                         (!searchValue ? < MapBookList data={filterResult} start={start} end={end} /> : < MapBookList data={searchFunc(filterResult)} start={start} end={end} />))}
+                        (!searchValue ? < MapBookList data={data} start={start} end={end} /> : < MapBookList data={searchFunc(data)} start={start} end={end} />) :
+                        (!searchValue ? < MapBookList data={filterResult} start={start} end={end} /> : < MapBookList data={searchFunc(filterResult)} start={start} end={end} />))}
                 </TableBody>
 
             </DataTableContainer>
-
-            <Container maxWidth="lg" className={classes.btn_pagination}>
+            {!searchValue && <Container maxWidth="lg" className={classes.btn_pagination}>
                 {array?.map((num, index) => (
                     <Button style={{ margin: "5px" }} className={activePageNumber === index + 1 ? classes.accentColor : ""} key={num} variant="contained" onClick={() => { changePage(num) }}>{num}</Button>
                 ))}
-            </Container>
+            </Container>}
+
 
             <Modal
                 className={styleClassModal.modal}

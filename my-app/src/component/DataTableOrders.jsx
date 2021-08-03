@@ -144,11 +144,11 @@ export default function DataTableOrders({ ...props }) {
 
             </DataTableContainer>
 
-            <Container maxWidth="lg" className={classes.btn_pagination}>
+            {!searchValue && <Container maxWidth="lg" className={classes.btn_pagination}>
                 {array?.map((num, index) => (
                     <Button style={{ margin: "5px" }} className={activePageNumber === index + 1 ? classes.accentColor : ""} key={num} variant="contained" onClick={() => { changePage(num) }}>{num}</Button>
                 ))}
-            </Container>
+            </Container>}
             <ToastContainer />
 
         </div>

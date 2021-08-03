@@ -21,7 +21,7 @@ import { FiMenu } from 'react-icons/fi';
 import { COLORS } from "../../styles/constants";
 import { FaBookOpen } from 'react-icons/fa';
 import LayoutPage from '../../storeComponents/LayoutPage';
-import { styleTitle} from '../../styles/styleTitle';
+import { styleTitle } from '../../styles/styleTitle';
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
         background: COLORS.primeryColor,
         heigth: "100vh",
         [theme.breakpoints.up('sm')]: {
-            minHeight:"100%",
+            minHeight: "100%",
 
         },
     },
@@ -81,7 +81,7 @@ const useStyles = makeStyles((theme) => ({
     icon: {
         color: COLORS.accentColor,
         fontSize: "20px",
-        
+
     },
     paddingSub: {
         paddingLeft: "70px"
@@ -89,8 +89,8 @@ const useStyles = makeStyles((theme) => ({
     paddingCat: {
         paddingLeft: "15px"
     },
-    link_card:{
-        textDecoration:"none"
+    link_card: {
+        textDecoration: "none"
     }
 
 }));
@@ -267,7 +267,9 @@ function ResponsiveDrawer(props) {
                                 {(category.length > 0) ? category.map((item) => {
                                     return (
                                         <Grid item xs={12} md={6} lg={4}>
-                                            <Link className={classes.link_card} to={`/product/${item.id}`}><CardHorizantal sebCategory={item.subCategory} title={item.name} img={item.img} price={item.price} /></Link>
+                                            <Link className={classes.link_card} to={`/product/${item.id}`}>
+                                                <CardHorizantal sebCategory={item.subCategory} title={item.name} img={item.img} price={item.price} />
+                                            </Link>
                                         </Grid>
                                     )
                                 }) : false}

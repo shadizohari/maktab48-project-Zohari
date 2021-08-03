@@ -15,19 +15,19 @@ import { formatPrice } from '../utils/auth';
 const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
-},
+    },
     details: {
-    display: 'flex',
-    // flexDirection: 'column',
-},
+        display: 'flex',
+        // flexDirection: 'column',
+    },
     content: {
-    flex: '1 0 auto',
-},
+        flex: '1 0 auto',
+    },
     imgCard: {
-    margin: "15px",
-    width: "20%",
-    height: "auto"
-}
+        margin: "15px",
+        width: "20%",
+        height: "auto"
+    }
 }));
 
 export default function CardHorizantal({ img, title, price, sebCategory, ...prpos }) {
@@ -46,12 +46,12 @@ export default function CardHorizantal({ img, title, price, sebCategory, ...prpo
                     <Typography variant="subtitle1">
                         {sebCategory}
                     </Typography>
-                    {(price != "ناموجود") ? <Typography variant="subtitle1" color="textSecondary">
+                    {(price>0) ? <Typography variant="subtitle1" color="textSecondary">
                         {`قیمت:`} {formatPrice(price)} تومان
                     </Typography> :
-                        <Typography variant="subtitle1">
-                            <p style={{ color: "red" }}>{price}</p>
-                        </Typography>}
+                    <Typography variant="subtitle1">
+                        <p style={{ color: "red" }}>ناموجود</p>
+                    </Typography>}
 
                 </CardContent>
 

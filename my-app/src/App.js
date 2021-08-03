@@ -18,14 +18,12 @@ import CartPage from './pages/store/CartPage';
 import OrderInfoPage from './pages/store/OrderInfoPage'
 import ShaparakPage from './pages/store/ShaparakPage'
 import PaymentResultPage from './pages/store/PaymentResultPage'
-
-
-
-// import MenuSide from './storeComponents/MenuSIde'
+import NotFoundPage from './pages/store/NotFoundPage';
 // rtl
 import { create } from 'jss';
 import rtl from 'jss-rtl';
 import { StylesProvider, jssPreset } from '@material-ui/core/styles';
+
 const jss = create({ plugins: [...jssPreset().plugins, rtl()] });
 
 const theme = createMuiTheme({
@@ -58,6 +56,7 @@ export default function App() {
               <ProtectedRoute path="/admin-panel/products" exact component={ProductsPage} />
               <ProtectedRoute path="/admin-panel/quantity_and_price" exact component={ProductsPage} />
               <ProtectedRoute path="/admin-panel/orders" exact component={ProductsPage} />
+              <Route exact component={NotFoundPage} />
 
 
               {/* <ProtectedRoute path="/admin-panel/stock-prices" exact />

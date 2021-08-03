@@ -91,7 +91,7 @@ const useStyles = makeStyles((theme) => ({
     },
     parent_cartQuantity: {
         position: "absolute",
-        bottom: "60%",
+        bottom: "75%",
         right: "20%",
         background: COLORS.accentColor,
         padding: "2px",
@@ -123,7 +123,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function AdminHeader({ classHeader, searchInput, isSearch,searchresHomePage, ...props }) {
+export default function AdminHeader({ classHeader, searchInput, isSearch, searchresHomePage, ...props }) {
     const classes = useStyles();
     const history = useHistory();
     const [login, setLogin] = useState(false)
@@ -151,23 +151,24 @@ export default function AdminHeader({ classHeader, searchInput, isSearch,searchr
                         فروشگاه کتاب
                     </Typography>
                 </div>
-
-                <div className={classes.icon} style={{ position: "relative" }}>
+                <div className={classes.icon}>
                     {isSearch && <div className={classes.searchBoxRes}><SearchInput searchInput={searchInput} /></div>}
+                    <div className={classes.icon} style={{ position: "relative" }}>
 
-                    <RiAdminLine style={{ marginRight: "25px" }} className={classes.shopIcon} onClick={() => login ? history.push("/admin-panel/products") : history.push("/admin-panel")} />
-                    <TiShoppingCart className={classes.shopIcon} onClick={() => history.push("/cart")} />
-                    {cartQuantity > 0 &&
-                        <span className={classes.parent_cartQuantity}>
-                            <span className={classes.cartQuantity}>{cartQuantity}</span>
-                        </span>}
 
+                        <RiAdminLine style={{ marginRight: "25px" }} className={classes.shopIcon} onClick={() => login ? history.push("/admin-panel/products") : history.push("/admin-panel")} />
+                        <TiShoppingCart className={classes.shopIcon} onClick={() => history.push("/cart")} />
+                        {cartQuantity > 0 &&
+                            <span className={classes.parent_cartQuantity}>
+                                <span className={classes.cartQuantity}>{cartQuantity}</span>
+                            </span>}
+
+                    </div>
                 </div>
 
 
-
             </Container>
-            {isSearch && <SearchInput searchInput={searchInput} searchresHomePage={classes.searchresHomePage}/>}
+            {isSearch && <SearchInput searchInput={searchInput} searchresHomePage={classes.searchresHomePage} />}
         </Container>
     )
 }
